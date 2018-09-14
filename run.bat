@@ -1,0 +1,1 @@
+%~dp0bin/protoc.exe -I=%~dp0/example --parse_out=%~dp0example --plugin=protoc-gen-parse=runparse.bat %~dp0/example/AddressBook.proto

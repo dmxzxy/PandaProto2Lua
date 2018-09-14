@@ -7,10 +7,10 @@ from cStringIO import StringIO
 from string import strip
 
 import json
-import plugin_pb2
+import google.protobuf.plugin_pb2 as plugin_pb2
 import google.protobuf.descriptor_pb2 as descriptor_pb2
 
-FDP = plugin_pb2.descriptor_pb2.FieldDescriptorProto
+FDP = descriptor_pb2.FieldDescriptorProto
 
 if sys.platform == "win32":
     import msvcrt, os
