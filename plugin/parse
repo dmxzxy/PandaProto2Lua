@@ -3,11 +3,9 @@
 
 import sys
 import os.path as path
-from cStringIO import StringIO
-from string import strip
 
 import json
-import google.protobuf.plugin_pb2 as plugin_pb2
+import google.protobuf.compiler.plugin_pb2 as plugin_pb2
 import google.protobuf.descriptor_pb2 as descriptor_pb2
 
 FDP = descriptor_pb2.FieldDescriptorProto
@@ -100,7 +98,8 @@ def get_path_comments(proto_file, path):
 	for location in proto_file.source_code_info.location:
 		locationPathStr = str(location.path);
 		if str(path) == locationPathStr:
-			comments = strip(location.leading_comments+' '+location.trailing_comments)
+			comments = location.leading_comments+' '+location.trailing_comments
+			comments = comments.strip()
 			return comments
 
 
