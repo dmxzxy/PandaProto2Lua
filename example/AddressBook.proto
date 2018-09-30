@@ -4,9 +4,6 @@ syntax = "proto2";
 
 package tutorial;
 
-option java_package = "com.example.tutorial";
-option java_outer_classname = "AddressBookProtos";
-
 message Person {
   required string name = 1;
   required int32 id = 2;        // Unique ID number for this person.
@@ -27,6 +24,6 @@ message Person {
 }
 
 // Our address book file is just one of these.
-message AddressBook {
+message AddressBook { // id = 12
   repeated Person person = 1;
 }
