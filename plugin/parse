@@ -99,7 +99,7 @@ def get_path_comments(proto_file, path):
 		locationPathStr = str(location.path);
 		if str(path) == locationPathStr:
 			comments = location.leading_comments+' '+location.trailing_comments
-			comments = comments.strip()
+			comments = comments.strip().replace("\n", "")
 			return comments
 
 
