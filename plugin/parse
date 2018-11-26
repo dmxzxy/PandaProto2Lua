@@ -91,19 +91,14 @@ class Field:
 			if field_desc.options.HasField("packed"):
 				self.packed = field_desc.options.packed
 
+class File:
+	pass
 
 
+def get_path_comments(pfile, path):
+	return pfile.all_comments[str(path)]
 
-def get_path_comments(proto_file, path):
-	for location in proto_file.source_code_info.location:
-		locationPathStr = str(location.path);
-		if str(path) == locationPathStr:
-			comments = location.leading_comments+' '+location.trailing_comments
-			comments = comments.strip().replace("\n", "")
-			return comments
-
-
-def export_message(proto_file, msg, msg_desc):
+def export_message(pfile, msg, msg_desc):
 
 	field_index=0
 	for field_desc in msg_desc.field:
@@ -113,7 +108,7 @@ def export_message(proto_file, msg, msg_desc):
 			field.path.append(p);
 		field.path.append(2);
 		field.path.append(field_index);
-		field.desc = get_path_comments(proto_file, field.path)
+		field.desc = get_path_comments(pfile, field.path)
 		msg.fieldlist.append(field.__dict__)
 		field_index += 1
 	sorted(msg.fieldlist, key=lambda d:d['number'])
@@ -127,8 +122,8 @@ def export_message(proto_file, msg, msg_desc):
 			nested_msg.path.append(p);
 		nested_msg.path.append(3);
 		nested_msg.path.append(msg_index);
-		nested_msg.desc = get_path_comments(proto_file, nested_msg.path)
-		export_message(proto_file, nested_msg, msg_nested_desc)
+		nested_msg.desc = get_path_comments(pfile, nested_msg.path)
+		export_message(pfile, nested_msg, msg_nested_desc)
 		msg.nestedtypelist.append(nested_msg.__dict__)
 		msg_index += 1;
 
@@ -141,7 +136,7 @@ def export_message(proto_file, msg, msg_desc):
 			enum.path.append(p);
 		enum.path.append(4);
 		enum.path.append(msg_index);
-		enum.desc = get_path_comments(proto_file, enum.path)
+		enum.desc = get_path_comments(pfile, enum.path)
 		enumvalue_index = 0
 		for enumvalue_desc in msg_enum_desc.value:
 			enumvalue = EnumValue(enumvalue_desc)
@@ -150,7 +145,7 @@ def export_message(proto_file, msg, msg_desc):
 				enumvalue.path.append(p);
 			enumvalue.path.append(2);
 			enumvalue.path.append(enumvalue_index);
-			enumvalue.desc = get_path_comments(proto_file, enumvalue.path)
+			enumvalue.desc = get_path_comments(pfile, enumvalue.path)
 			enum.valuelist.append(enumvalue.__dict__)
 			enumvalue_index += 1
 
@@ -167,6 +162,7 @@ def main():
 	proj = Project();
 	content = '';	
 	for proto_file in code_gen_req.proto_file:
+		pfile = File()
 		module = proj.getModule(proto_file.package);
 		if module == None:
 			newmodule = Module()
@@ -174,9 +170,17 @@ def main():
 			module = newmodule.__dict__
 			proj.modulelist.append(module)
 
+		all_comments = {}
+		for location in proto_file.source_code_info.location:
+			locationPathStr = str(location.path);
+			comments = location.leading_comments+' '+location.trailing_comments
+			comments = comments.strip().replace("\n", "")
+			all_comments[locationPathStr] = comments
+		pfile.all_comments = all_comments
+
 		path = [2]
 		module['path'] = path
-		module['desc'] = get_path_comments(proto_file, path)
+		module['desc'] = get_path_comments(pfile, path)
 
 		enum_index = 0
 		for enum_desc in proto_file.enum_type:
@@ -184,7 +188,7 @@ def main():
 			enum.name = enum_desc.name
 			enum.fullname = module['package'] + '.' + enum_desc.name
 			enum.path = [5, enum_index]
-			enum.desc = get_path_comments(proto_file, enum.path)
+			enum.desc = get_path_comments(pfile, enum.path)
 			enumvalue_index = 0
 			for enumvalue_desc in enum_desc.value:
 				enumvalue = EnumValue(enumvalue_desc)
@@ -193,7 +197,7 @@ def main():
 					enumvalue.path.append(p);
 				enumvalue.path.append(2);
 				enumvalue.path.append(enumvalue_index);
-				enumvalue.desc = get_path_comments(proto_file, enumvalue.path)
+				enumvalue.desc = get_path_comments(pfile, enumvalue.path)
 				enum.valuelist.append(enumvalue.__dict__)
 				enumvalue_index += 1
 			module['enumlist'].append(enum.__dict__)
@@ -205,23 +209,13 @@ def main():
 			msg.name = msg_desc.name
 			msg.fullname = module['package'] + '.' + msg_desc.name
 			msg.path = [4, msg_index]
-			msg.desc = get_path_comments(proto_file, msg.path)
-			export_message(proto_file, msg, msg_desc)
+			msg.desc = get_path_comments(pfile, msg.path)
+			export_message(pfile, msg, msg_desc)
 			_id = msg.searchId(proto_file, module);
 			if not _id == None:
 				msg.id = _id
 			module['messagelist'].append(msg.__dict__)
 			msg_index += 1;
-
-		#for sc in proto_file.source_code_info.location:
-			#if len(sc.trailing_comments):
-				#content += str(sc.path)
-				#content += strip(sc.trailing_comments)
-				#content += '\n'
-			#if len(sc.leading_comments):
-				#content += str(sc.path)
-				#content += strip(sc.leading_comments)
-				#content += '\n'
 
 
 	content += '\n\n\n\n\n' 
