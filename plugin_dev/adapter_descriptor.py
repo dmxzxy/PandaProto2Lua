@@ -10,8 +10,13 @@ def getProjectModuleNotNone(pProject, namespace):
     
     #not found, add it
     module = Module()
+    if namespace.find(pProject.namespace) == -1:
+        print("error error")
+
+    module.name = namespace[len(pProject.namespace):len(namespace)]
     module.namespace = namespace
     pProject.modules.append(module)
+    return module
 
 class AdapterPbDescriptor:
     context = None
@@ -42,7 +47,8 @@ class AdapterPbDescriptor:
 
         for proto_file in code_gen_req.proto_file:
             module = getProjectModuleNotNone(pProject, proto_file.package)
-            print(proto_file.package)
+            
+            print(proto_file.package, module.__dict__)
 
         return pProject
     
