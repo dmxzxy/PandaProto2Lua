@@ -1,0 +1,60 @@
+// module1 sub2 comment
+syntax = "proto2";
+
+package msg.panda.module1;
+
+import "module_global.proto";
+
+// module1 sub2 enum1 comment
+enum EnumM1S2N1
+{
+	EnumM1S2N1_TYPE_1 	= 1; // 这里是中文的注释 枚举1字段1
+};
+
+//module1 sub2 message1 comment
+message BaseM1S2N1
+{
+    enum EnumBaseM1S2N1Nested1
+    {
+        TYPE_1 	= 1;
+    };
+
+    message BaseBaseM1S2N1Nested2
+    {
+        required uint32 field1 = 1;
+    };
+
+    optional EnumBaseM1S2N1Nested1 field1 = 1;
+    optional BaseBaseM1S2N1Nested2 field2 = 2;
+    required EnumM1S2N1 field3 = 3;
+};
+
+// module1 sub2 protocol1 comment
+message MessageM1S2N1
+{
+    message BaseMessageM1S2N1Nested1
+    {
+        enum EnumBaseMessageM1S2N1Nested1Nested1
+        {
+            TYPE_1 	= 1;
+        };
+
+        message BaseBaseMessageM1S2N1Nested1Nested2
+        {
+            required uint32 field1 = 1;
+        };
+
+        message BaseBaseMessageM1S2N1Nested1Nested3
+        {
+            required BaseBaseMessageM1S2N1Nested1Nested2 field1 = 1;
+        };
+        
+        required EnumBaseMessageM1S2N1Nested1Nested1 field1 = 1;
+        repeated BaseBaseMessageM1S2N1Nested1Nested3 field2 = 2;
+    };
+    
+    optional BaseM1S2N1 field1 = 1;
+    required uint64 field2 = 2; // field2 is uint64
+    required string field3 = 3;
+    repeated BaseMessageM1S2N1Nested1 field4 = 4;
+};

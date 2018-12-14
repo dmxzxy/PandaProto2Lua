@@ -1,0 +1,21 @@
+// module_global comment
+syntax = "proto2";
+
+package msg.panda.module_global;
+
+// module_global message1 comment
+message BaseModuleGlobal1
+{
+    optional int32 field1 = 1; //这里是中文注释 字段1
+    optional int64 field2 = 2; //这里是中文注释 字段2
+    optional uint32 field3 = 3;
+    optional uint64 field4 = 4;
+    optional string field5 = 5;
+    optional float field6 = 6;
+};
+
+// module_global message2 comment
+message BaseModuleGlobal2
+{
+
+};
