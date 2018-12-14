@@ -11,10 +11,20 @@ import google.protobuf.descriptor_pb2 as descriptor_pb2
 
 FDP = descriptor_pb2.FieldDescriptorProto
 
-if sys.platform == "win32":
-    import msvcrt, os
-    msvcrt.setmode(sys.stdin.fileno(), os.O_BINARY)
-    msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
+# Windows will mangle our line-endings unless we do this.
+def fix_line_ending():
+    if sys.platform == "win32":
+        import os
+        import msvcrt  # pylint: disable=import-error
+
+        msvcrt.setmode(sys.stdout.fileno(),
+                       os.O_BINARY)  # pylint: disable=E1103 ; the Windows version of os has O_BINARY
+        msvcrt.setmode(sys.stderr.fileno(),
+                       os.O_BINARY)  # pylint: disable=E1103 ; the Windows version of os has O_BINARY
+        msvcrt.setmode(sys.stdin.fileno(),
+                       os.O_BINARY)  # pylint: disable=E1103 ; the Windows version of os has O_BINARY
+
+fix_line_ending()
 
 class Project:
 	def __init__(self):
@@ -154,11 +164,12 @@ def export_message(pfile, msg, msg_desc):
 		enum_index += 1;
 
 from adapter_descriptor import AdapterPbDescriptor
+import export_to_pb
 class Context:
 	pass
 
 def main():
-	fp = open("test.txt", 'rb')
+	fp = open("test.bin", 'rb')
 	plugin_require_bin = fp.read()
 	fp.close()
 
@@ -168,7 +179,8 @@ def main():
 	context = Context()
 	context.code_gen_req = code_gen_req
 	adapter = AdapterPbDescriptor(context)
-	adapter.translate()
+	context.project = adapter.translate()
+	export_to_pb.do_export(context)
 	return
 
 	proj = Project();
@@ -252,4 +264,3 @@ import profile
 if __name__ == "__main__":
 	# profile.run("main()")
 	main()
-
