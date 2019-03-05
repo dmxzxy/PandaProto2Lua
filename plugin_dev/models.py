@@ -46,24 +46,24 @@ def get_object(t, **kw):
 def add_object(object):
 	database = ProjectDatabase()
 	if isinstance(object, Module):
-		print("---> create module: %s"%object.fullname)
+		# print("---> create module: %s"%object.fullname)
 		database.allModules.append(object)
 		return len(database.allModules) - 1
 	elif isinstance(object, Enum):
-		print("---> create enum: %s"%object.fullname)
+		# print("---> create enum: %s"%object.fullname)
 		database.allEnums.append(object)
 		return len(database.allEnums) - 1
 	elif isinstance(object, Message):
-		print("---> create message: %s"%object.fullname)
+		# print("---> create message: %s"%object.fullname)
 		database.allMessages.append(object)
 		return len(database.allMessages) - 1
 	elif isinstance(object, Protocol):
-		print("---> create protocol: %s"%object.fullname)
+		# print("---> create protocol: %s"%object.fullname)
 		database.allProtocols.append(object)
 		return len(database.allProtocols) - 1
 	elif isinstance(object, Comment):
 		if object.content and len(object.content) > 0:
-			print("---> create comment: %s %s"%(object.path,object.content))
+			# print("---> create comment: %s %s"%(object.path,object.content))
 			database.allComments[object.path] = object
 		return object.path
 	return -1
@@ -97,11 +97,11 @@ class Comment(BaseData):
 class Project(BaseData):
 	namespace = ""
 	modules = None
+	database = ProjectDatabase()
 
 	def __init__(self, **kw):
 		self.__module_reflist = []
 		super(Project, self).__init__(**kw)
-		print("---------------------create project: %s---------------------"%self.namespace)
 
 	def recive(self, data):
 		if isinstance(data, Module):
