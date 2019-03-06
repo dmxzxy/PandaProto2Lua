@@ -120,7 +120,7 @@ class Module(BaseData):
 
 # required string path
 # required string content
-class Comment():
+class Comment(object):
     path = None
     content = None
     def __init__(self, path, content):
@@ -133,7 +133,7 @@ class Comment():
 
 # repeated Module modules  
 # repeated Comment comments
-class Project():
+class Project(object):
     modules = None
     comments = None
 
@@ -147,6 +147,8 @@ class Project():
         return module
 
     def add_comment(self, path, content):
+        if len(content) == 0:
+            return None
         comment = Comment(path, content)
         self.comments[path] = comment
         return comment
