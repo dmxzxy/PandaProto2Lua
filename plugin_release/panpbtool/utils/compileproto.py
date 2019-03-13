@@ -2,9 +2,10 @@
 # -*- encoding:utf8 -*-
 import os
 import utils
+from panpbtool.conf import globalsetting
 
 def compile_proto(context, proto_path, out_dir):
-    compile_binpath = os.path.dirname(os.path.realpath(__file__)) + "/" + "bin/win32/protoc.exe"
+    compile_binpath = globalsetting.BASE_DIR + "/" + "utils/bin/win32/protoc.exe"
     proto_dir = os.path.dirname(proto_path)
     proto_name = os.path.basename(proto_path)
     proto_name = proto_name.split('.')[0]

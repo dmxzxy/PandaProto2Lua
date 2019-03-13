@@ -1,4 +1,8 @@
+#!/usr/bin/env python
+# -*- encoding:utf8 -*-
 
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 PROTO_RAW_OUTPUT_FOLDER = "raw"
 
