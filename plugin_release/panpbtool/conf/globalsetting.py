@@ -1,0 +1,6 @@
+
+
+PROTO_RAW_OUTPUT_FOLDER = "raw"
+
+LUA_OUTPUT_FOLDER = "lua"
+LUA_OUTPUT_FILENAME = "protocols.lua"
