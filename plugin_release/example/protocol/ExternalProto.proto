@@ -1,0 +1,6690 @@
+package protobuf;    
+
+
+//  ***** 通用信息 ***** - ServerProto 与 ExternalProto共用
+
+message BasePairValueProto {
+	required int32 keyVal = 1;
+	required int32 valVal = 2;
+}
+
+message BasePairValueInt32Int64Proto {
+	required int32 k = 1;
+	required int64 v = 2;
+}
+
+message BasePairValueInt64Int64Proto {
+	required int64 k = 1;
+	required int64 v = 2;
+}
+
+message BasePairValueUint64Int64Proto {
+	required uint64 k = 1;
+	required int64 v = 2;
+}
+
+message BaseRewardStateDataProto {
+	required BasePairValueUint64Int64Proto dayInfo = 1;
+	required int32 rewardState = 2;
+}
+
+message BasePairValuesProto {
+	required int32 keyVal = 1;
+	repeated BasePairValueProto valsVal = 2;
+}
+
+message BaseIntValuesProto {
+	repeated int32 intVals = 1;
+}
+
+message BaseStringPairValueProto {
+	required string key = 1;
+	required string value = 2;
+}
+
+// 基本物品信息
+message BaseItemInfoProto {
+	required int32 itemID = 1;
+	required int32 itemType = 2;
+	required int32 itemNum = 3;
+}
+
+// 简明基本物品信息
+message BaseBriefItemInfoProto {
+	required int32 itemID = 1;
+	required int32 itemNum = 2;
+}
+
+
+// 战斗记录
+message BattleCardsLog {
+	required int32 cardID = 1;
+	required bool isCritical = 2;
+	required int32 score = 3;
+}
+
+// 单人卡池模块用到的通用结构..............................................................................
+// 事件类型3：图鉴事件
+message BaseTuJianEventInfoProto {
+	repeated int32 eventSerial = 1;      // 未完成事件序列
+	repeated BasePairValueProto doneEvent = 2;   // 已经完成事件集合
+	required bool obtainRewardFlag = 3;          // 是否领过奖标记位
+}
+
+message BaseBuffDataInfoProto {
+	repeated BasePairValueProto buff = 1;             // 当前的Buff
+	repeated BasePairValueProto rewardRecord = 2;     // 领奖的记录
+	required int32 issueID = 3;                       // 分期ID
+	required int32 buffScore = 4;                     // 当前Buff积分
+	repeated BasePairValueProto cardInfo = 5;         // 卡牌信息
+}
+
+message BaseItemsInfoProto {
+	repeated BaseItemInfoProto itemInfos = 1;
+}
+
+message BaseItemDropInfoProto {
+	required int32 itemIndex = 1;	
+	required int32 itemNum = 2;
+	required int32 itemDropNum = 3;
+}
+
+// 卡牌上阵数据
+message BaseCardsDeployInfoProto {
+	repeated int32 leaderCardIDs = 1;
+}
+
+message BaseCardSkillInfoProto {
+	required int32 skillID = 1;
+	required int32 learnSkillID = 2;
+	required bool haveFreeLearn = 3;	// 是否使用过初次解锁时的免费机会
+}
+
+message BaseCardInfoProto {	
+	required int32 cardID = 1;
+	required int32 cardNum = 2;
+	required int32 cardRank = 3;
+	required int32 cardLevel = 4;
+	required int32 cardExp = 5;
+	required int32 cardSkillLevel = 6;
+	required bool cardEvolutionFlag = 7;
+	repeated int32 cardRewardsSubmitIDs = 8;
+	repeated int32 unlockedTalent = 9;
+	repeated int32 paramAdd = 10;	// 附加的属性值，共有四个维度 
+	repeated BaseCardSkillInfoProto skills = 11;
+	optional bool frameUnlock = 12;
+	optional int32 talentStatus = 13;
+}
+
+
+// 对手卡牌简要信息
+message BaseCardBriefInfoProto {
+	required int32 cardPos = 1;	
+	required int32 cardID = 2;	
+	required int32 cardRank = 3;
+	required int32 cardLevel = 4;
+	required bool cardEvolution = 5;
+	required bool frameUnlock = 6;
+	required int32 talentStatus = 7;
+}
+
+message UserSpaceInfoProto {
+	repeated BasePairValueProto showCards = 1;
+	required int32 power = 2;
+	required string spaceDesc = 3;
+	required int32 cardCollectRate = 4;
+	required int32 achiveCompRate = 5;
+}
+
+message UserSpaceOthersInfoProto {
+	repeated BaseCardBriefInfoProto showCards = 1;
+	required int32 power = 2;
+	required string spaceDesc = 3;
+	required int32 cardCollectRate = 4;
+	required int32 achiveCompRate = 5;
+}
+
+
+// 对手卡牌信息
+message BasePeerCardInfoProto {
+	required int32 cardID = 1;	
+	required int32 cardRank = 2;
+	required int32 cardLevel = 3;
+	repeated int32 cardProps = 4;
+	required int32 cardSkillLevel = 5;
+	required int32 cardEvolution = 6;
+	optional int32 cardCriticalRate = 7;
+	optional int32 cardCriticalBonus = 8;
+	optional int32 cardCriticalPropID = 9;
+	optional bool frameUnlock = 10;
+	optional int32 talentStatus = 11;
+}
+
+// 竞技场战绩数据
+message ArenaDefenceInfoProto {
+	required int64 accntID = 1;
+	required int32 result = 2;
+	required int32 rankDelta = 3;
+	required int64 time = 4;
+	required BasePeerInfoProto peerInfo = 5;
+}
+
+// 对手数据
+message BasePeerInfoProto {
+	required int32 peerID = 1;
+	required int64 accntID = 2;
+	required string charName = 3;
+	required int32 charHeadID = 4;
+	required string firmName = 5;
+	required int32 firmLevel = 6;
+	required string userDesc = 7;
+	repeated int32 firmProps = 8;	
+	required int32 charScore = 9;
+	required int32 straightWinCnt = 10;	
+	repeated BasePeerCardInfoProto leaderCardInfos = 11;
+	optional int32 peerRank = 12;
+	optional int32 charHeadFrameID = 13;
+	optional UserSpaceOthersInfoProto spaceInfo = 14;
+}
+
+// 女主属性信息
+message BaseFirmPropInfoProto {
+	required int32 firmPropType = 1;
+	required int32 firmPropExp = 2;
+	required int32 firmPropLevel = 3;
+}
+
+// 设计图数据
+message BaseCardDesignInfoProto {
+	required int32 cardID = 1;
+	required int32 designCnt = 2;
+}
+
+// 卡牌角色统计数据
+message BaseCardMaleRoleInfoProto {
+	required int32 maleRoleID = 1;
+	required int32 cardCnt = 2;
+}
+
+// 卡牌统计数据
+message BaseCardStatisticsInfoProto {
+	required int32 totalCardCnt = 1;
+	repeated BaseCardMaleRoleInfoProto cardMaleRoleInfos = 2;
+	repeated BasePairValueProto cardCntInfos = 3;
+}
+
+// boss副本数据
+message BaseBossTaskInfoProto {
+	required int32 activityRankId = 1;
+	required int64 serverBossScore = 2;
+}
+
+// 基本副本数据
+message BaseTaskInfoProto{
+	required int32 taskID = 1;
+	required string programName = 2;
+	required int32 taskGrade = 3;
+	required int32 taskScore = 4;
+	required int32 taskScoreEx = 5;
+	required int32 taskPassNum = 6;
+	required BaseCardsDeployInfoProto cardsDeployInfo = 7;
+}
+
+message BaseEliteTaskInfoProto {
+	required int32 taskID = 1;
+	required int64 lastChallengeTime = 2; 
+	required int32 challengeCnt = 3;
+	
+	required int64 lastBuyTime = 4;
+	required int32 totalBuyCnt = 5;
+}
+
+message BaseMaleRoleTaskInfoProto {
+	required int32 taskID = 1;
+	required int64 lastChallengeTime = 2; 
+	required int32 challengeCnt = 3;
+	
+	required int64 lastBuyTime = 4;
+	required int32 totalBuyCnt = 5;
+}
+
+message BaseMaterialTaskInfoProto {
+	required int32 taskID = 1;
+	required bool hadFirstClearReward = 2;
+}
+
+message BaseActivityTaskInfoProto {
+	required int32 taskID = 1;
+	required int64 lastChallengeTime = 2; 
+	required int32 challengeCnt = 3;
+	required int64 lastBuyTime = 4;
+	required int32 totalBuyCnt = 5;
+}
+
+// 职员数据
+message BaseStaffInfoProto {
+	required int32 staffID = 1;
+	required int64 hireTime = 2;
+	optional int32 staffLevel = 3;
+}
+
+// 抽卡数据
+message BaseCardCallTypeInfoProto {
+	required int32 cardCallTypeID = 1;
+	required int64 cardCallFreeTime = 2;
+	required int32 cardCallFlagID = 3;
+}
+
+// 竞技场数据
+message BaseArenaInfoProto {
+	required int32 arenaID = 1;
+	required int32 arenaLevel = 2;
+	required int32 arenaRank = 3;
+	required bool levelRewardFlag = 4;	
+	required bool rankRewardFlag = 5;
+}
+
+message BaseArenaThemeInfoProto {
+	required int32 themeID = 1;
+	required BaseCardsDeployInfoProto cardsDeployInfo = 8;	
+}
+
+message BaseArenaRankInfoProto {
+	required int32 arenaID = 1;
+	required int32 arenaRank = 2;
+}
+
+// 邮件数据
+message BaseMailBriefProto {
+	required int64 mailID = 1;					    // 邮件ID
+	required int32 mailSubType = 2;				// 邮件子类型
+	required int64 mailSenderID = 3;				// 邮件发件人ID
+	required string mailSender = 4;				// 邮件发件人
+	required int32 mailSenderHeadID = 5;			// 邮件发件人头像ID
+	required string mailTitle = 6;					// 邮件Title
+	required int64 mailDeadline = 7;
+	required bool mailRewardsFlag = 8;	            // 邮件奖励标志
+	optional int32 mailSenderHeadFrameID = 9; 		// 邮件发件人头像ID
+}
+
+message BaseMailDetailProto {					        // 邮件ID	
+	required string mailDesc = 1;					    // 邮件内容
+	repeated BaseItemInfoProto mailRewards = 2;	    // 邮件奖励
+}
+
+// 用户状态数据
+message BaseUserStatusInfoProto {
+	required int32 statusID = 1;
+	required int64 statusEndTime = 2;
+}
+
+// 基础排行榜数据
+message BaseRankInfoProto {
+	required int64 accntID = 1;
+	optional string charName = 2;
+	optional string firmName = 3;
+	optional int32 firmLevel = 4;
+	optional int32 charHeadID = 5;
+	optional int32 charScore = 6;
+	optional int32 vipLevel = 7;
+	optional string userDesc = 8;
+	optional int32 charRank = 9;
+	optional int32 charHeadFrameID = 10;
+	optional UserSpaceOthersInfoProto spaceInfo = 11;
+}
+
+message RanksInfoProto {
+	repeated BaseRankInfoProto ranks = 1;
+	optional int32 selfScore = 2;
+	optional int32 selfPercent = 3;
+	optional int32 selfRank = 4;
+	optional int32 totalRank = 5;
+}
+
+// V2基础排行榜数据
+message ArenaV2RankInfoProto {
+	required BaseRankInfoProto rankInfo = 1;
+	repeated BasePeerCardInfoProto leaderCardInfos = 11;
+}
+
+// 基础用户好友数据
+message BaseUserBriefInfoProto {
+	required int64 accntID = 1;
+	required string charName = 2;
+	required string firmName = 3;
+	required int32 firmLevel = 4;
+	required int32 charHeadID = 5;
+	required int32 vipLevel = 6;
+	required string userDesc = 7;
+	required int64 userOnlineTime = 8;
+	optional int32 charHeadFrameID = 9;
+	optional UserSpaceOthersInfoProto spaceInfo = 10;
+}
+
+// 成就及日常任务相关数据
+message BaseAchvUserBaseInfoProto {
+	required int64 jewelGainCnt = 1;
+	required int64 jewelConsumeCnt = 2;
+	
+	required int64 goldGainCnt = 3;
+	required int64 goldConsumeCnt = 4;
+	
+	repeated BasePairValueProto voucherSubmitInfos = 5;
+	required int32 voucherQuickCnt = 6;
+	
+	required int32 staffHireCnt = 7;
+	required int32 staffFireCnt = 8;
+	required int32 staffRefreshCnt = 9;
+	required int32 staffLevelUpCnt = 10;
+	required int32 staffBuyCnt = 11;
+}
+
+message BaseAchvTaskInfoProto {
+	required int32 taskFailCnt = 1;
+	
+	required int32 norTaskPassMaxScore = 2;
+	required int32 eliteTaskPassMaxScore = 3;
+	required int32 maleRoleTaskPassMaxScore = 4;
+		
+	required int32 norTaskStoryPassCnt = 5;
+	required int32 eliteTaskStoryPassCnt = 6;	
+	
+	repeated BasePairValueProto maleRoleTaskStoryPassInfos = 7;
+	repeated BasePairValueProto maleRoleLoopTaskCnt = 8;
+}
+
+message BaseAchvCardInfoProto {
+	repeated BasePairValuesProto cardUnlockInfos = 1;
+	required int32 cardUpgradeCnt = 2;
+	required int32 cardEvolutionCnt = 3;
+	required int32 cardResolveCnt = 4;
+	repeated BasePairValueProto cardDesignInfos = 5;
+	required int32 cardAdvanceCnt = 6;
+	
+	required int32 jewelCardCallCnt = 7;
+	required int32 goldCardCallCnt = 8;
+	optional int32 cardUpgradeItemCnt = 9;
+}
+
+message BaseAchvMsgInfoProto {
+	repeated BasePairValueProto shortMsgSendInfos = 1;
+	repeated BasePairValueProto shortMsgRecvInfos = 2;
+	required int32 phoneMsgRecvCnt = 3;
+	required int32 friendMsgSendCnt = 4;
+	required int32 friendMsgReplyCnt = 5;
+}
+
+message BaseAchvArenaInfoProto {
+	required int32 arenaLoseCnt = 1;
+	required int32 arenaWinCnt = 2;
+	required int32 arenaConWinCnt = 3;
+	required int32 arenaAttendCnt = 4;
+	required int32 arenaBestRank = 5;
+	required int32 arenaBestScore = 6;	
+	
+	required int32 lastArenaID = 7;
+	required int32 arenaSeasonCnt = 8;
+	required int32 arenaConLoseCnt = 9;
+}
+
+message BaseAchvResDungeonInfoProto {
+	required int32 passCnt = 1;
+	required int32 allPassCnt = 2;
+}
+
+// 日常任务相关数据
+message BaseDailyQuestUserBaseInfoProto {
+	required int64 jewelGainCnt = 1;
+	required int64 jewelConsumeCnt = 2;
+	
+	required int64 goldGainCnt = 3;
+	required int64 goldConsumeCnt = 4;
+	
+	required int32 voucherSubmitCnt = 5;
+	
+	required int32 sendHeartMailCnt = 6;
+	
+	required int32 staffFireCnt = 7;
+	required int32 staffHireCnt = 8;
+	required int32 staffLevelUpCnt = 9;
+	required int32 staffBuyCnt = 10;	
+}
+
+message BaseDailyQuestTaskInfoProto {
+	repeated BasePairValueProto norTaskPassInfos = 1;
+	repeated BasePairValueProto eliteTaskPassInfos = 2;
+	repeated BasePairValuesProto maleRoleTaskPassInfos = 3;
+	
+	required int32 trackTaskAttendCnt = 4;
+	repeated BasePairValueProto maleRoleLoopTaskCnt = 5;
+	optional int32 materialTaskPassCnt = 6;
+}
+
+message BaseDailyQuestGoodsInfoProto {
+	required int32 goodsCollectCnt = 1;
+}
+
+message BaseDailyQuestCardInfoProto {
+	required int32 cardUpgradeCnt = 1;
+	required int32 cardDesignCnt = 2;
+	required int32 cardResolveCnt = 3;
+	required int32 cardEvolutionCnt = 4;
+	required int32 cardAdvanceCnt = 5;
+	
+	required int32 jewelCardCallCnt = 6;
+	required int32 goldCardCallCnt = 7;
+}
+
+message BaseDailyQuestArenaInfoProto {
+	required int32 arenaAttendCnt = 1;
+	required int32 arenaWinCnt = 2;
+	required int32 arenaBestRank = 3;
+}
+
+message BaseDailyQuestResDungeonInfoProto {
+	required int32 passCnt = 1;
+	required int32 allPassCnt = 2;
+}
+
+message BaseDailyQuestBillboardInfoProto {
+	required int32 interactCnt = 1;
+	required int32 dateJoinCnt = 2;
+}
+
+message BaseWeeklyRewardHistoryInfoProto{
+	required int64 receivedTime = 1;
+	required BaseItemInfoProto rewardItem = 2;
+}
+
+// 基本活动
+message BaseDefaultActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+}
+
+
+// 基本组活动数据
+message BaseActivitySubmitInfoProto {
+	required int32 activitySubID = 1;
+	required int32 activitySubmitCnt = 2;
+	required int64 lastActivitySubmitTime = 3;
+}
+
+message BaseGroupActivityUserBaseInfoProto {
+
+	required int32 staffHireCnt = 1;
+	required int32 staffFireCnt = 2;
+	required int32 staffRefreshCnt = 3;
+	required int32 staffLevelUpCnt = 4;
+	required int32 staffBuyCnt = 5;
+}
+
+
+message BaseGroupActivityCardInfoProto {
+	required int32 cardUpgradeCnt = 1;
+	
+	required int32 cardEvolutionCnt = 2;
+	
+	required int32 cardResolveCnt = 3;
+	
+	required int32 cardDesignCnt = 4;
+	repeated BasePairValueProto cardDesignInfos= 5;
+	
+	required int32 cardSkillUpgradeCnt = 6;
+	
+	required int32 jewelCardCallCnt = 7;
+	required int32 goldCardCallCnt = 8;
+	optional int32 cardAdvanceCnt = 9;
+}
+
+message BaseGroupActivityTaskInfoProto {
+	repeated BasePairValueProto taskPassInfos = 1;
+	optional int32 trackTaskPassCnt = 2;
+	repeated BasePairValueProto maleRoleLoopTaskCnt = 3;
+	repeated BasePairValueProto materialTaskPassCnt = 4;
+}
+
+message BaseGroupActivityArenaInfoProto {
+	required int32 arenaWinCnt = 1;
+	required int32 arenaAttendCnt = 2;
+	required int32 arenaBestRank = 3;
+}
+
+message BaseGroupActivityFirmInfoProto {
+	required int32 voucherSubmitCnt = 1;
+}
+
+message BaseInvitationInfoProto {
+	required string InvitationContent = 1;
+	required bool InvitationFlag = 2;
+}
+
+message BaseGroupActivityUserBaseExInfoProto{
+	required int64 jewelGainCnt = 1; 
+	required int64 jewelConsumeCnt = 2;
+
+	required int64 goldGainCnt = 3;
+	required int64 goldConsumeCnt = 4;
+
+	required int32 checkInCnt = 5;
+	required int32 heartMailSentCnt = 6;
+	optional int32 resDungeonPassCnt = 7;
+	optional int32 talentTreeUnlockCnt = 8;
+}
+
+message BaseGainConsumeInfoProto{
+	required int64 jewelGainCnt = 1; 
+	required int64 jewelConsumeCnt = 2;
+
+	required int64 goldGainCnt = 3;
+	required int64 goldConsumeCnt = 4;
+	repeated BasePairValueProto counters = 5;
+	repeated BasePairValueProto norTaskPassInfos = 6;
+	repeated BasePairValueProto loopTaskCntInfos = 7;
+}
+
+message BaseSpringFortuneInfoProto {
+	required int32 fortuneID = 1;
+	required int32 redbagID = 2;
+	required int64 lastRequestTime = 3;
+	required int32 redbagFlag = 4;
+}
+
+message BaseWaterDailyInfoProto{
+	required int32 operateTimes = 1;
+	required int64 lastOperateTime = 2;
+}
+
+// 答题分数
+message BaseActivityAnswerExamScoreProto{
+	required int64 time = 1;
+	required int32 score = 2;
+}
+
+message BaseActivityAnswerExamInfoProto {
+	required int32 activityID = 1;             // 活动ID
+	required bool canExam = 2;                 // 今天是否答过题
+	required bool canFreeExam = 3;             // 免费答题
+	required int64 freeExamTime = 4;           // 免费答题时间戳
+	required int32 todayExamTimes = 5;         // 今天答题次数 
+	repeated BaseActivityAnswerExamScoreProto scoreList = 6;    // 分数记录
+	required int32 days = 7;   // 当前的天数
+	required int32 answerCnt = 8;
+}
+
+message BaseDefendTaskInfoProto{
+	required int32 taskID = 1;
+	required int32 taskScore = 2;
+	required int32 taskPassNum = 3;
+	required bool  rewardFlag = 4;
+}
+
+message BaseActivitySnowTaskInfoProto {
+	required int64 pvStartTime = 1;
+	required bool merged = 2;
+	required bool shared = 3;
+	required bool shareRewarded = 4;
+	required bool watchPV = 5;
+	optional string completeWords = 6;
+}
+
+message BaseGroupActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+	
+	repeated BaseActivitySubmitInfoProto activityInfos = 8;	
+	
+	required BaseGroupActivityCardInfoProto cardInfo = 9;
+	required BaseGroupActivityTaskInfoProto taskInfo = 10;
+	required BaseGroupActivityArenaInfoProto arenaInfo = 11;
+	optional BaseGroupActivityFirmInfoProto firmInfo = 12;	
+	required int32 activityRecommend = 13;
+	optional BaseGroupActivityUserBaseInfoProto userBaseInfo = 14;
+	optional BaseInvitationInfoProto InvitationInfo = 15;
+	optional BaseGroupActivityUserBaseExInfoProto userBaseExInfo = 16;
+	repeated BaseQuestInfo commonQuestInfos = 17;
+	optional BaseActivitySnowTaskInfoProto snowTaskInfo = 18;
+}
+
+// 累充领奖活动
+message BaseRechargeActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+		
+	repeated int32 activitySubmitIDs = 8;	
+	required int64 lastActivityTime = 9;
+	required int32 rechargeExp = 10;
+	required int32 activityRecommend = 11;
+	optional int64 lastRechargeTime = 12;
+	optional int64 lastRechargeRefreshTime = 13; // 上次rechargeExp改变时间 
+}
+
+// 直接送（短信）活动
+message BaseDirectRewardActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+		
+	repeated int32 activitySubmitIDs = 8;	
+	required int64 lastActivityTime = 9;
+	required int32 activityRecommend = 11;
+}
+
+
+// 基金领奖活动
+message BaseFundActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+		
+	repeated int32 activitySubmitIDs = 8;	
+	required int64 lastActivityTime = 9;
+	required int32 fundChargeFlag = 10;
+	required int32 activityRecommend = 11;
+}
+
+// 首充礼包活动
+message BaseFirstChargePackActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+		
+	repeated int32 activitySubmitIDs = 8;	
+	required int64 lastActivityTime = 9;
+	required int32 chargeFlag = 10;
+	required int32 activityRecommend = 11;
+}
+
+// 首充返利活动
+message BaseFirstChargeReturnActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+		
+	repeated int32 activitySubmitIDs = 8;	
+	required int64 lastActivityTime = 9;
+	required int32 chargeFlag = 10;
+	required int32 activityRecommend = 11;
+}
+
+// 每日领奖活动
+message BaseDailyActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+		
+	repeated int32 activitySubmitIDs = 8;	
+	required int64 lastActivityTime = 9;	
+	required int32 activityRecommend = 10;
+}
+
+message BaseGoodsExchangeActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+		
+	repeated int32 activitySubmitIDs = 8;	
+	required int64 lastActivityTime = 9;	
+	required int32 activityRecommend = 10;
+	required int32 activityScore = 11;
+}
+
+message BaseDailyExActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+			
+	required bool activityRedDot = 7;
+		
+	repeated int32 activitySubmitIDs = 8;
+	required int32 activityRecommend = 9;
+}
+
+// 抽奖活动
+message BaseCardCallActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+		
+	required bool activityRedDot = 7;
+	
+	repeated BaseCardCallTypeInfoProto cardCallTypeInfos = 8;
+
+	required int32 activityRecommend = 9;
+	
+	required int64 lastCardCallTime = 10;
+	required int32 dailyCardCallCnt = 11;
+}
+
+// 活动副本额外奖励
+message BaseTaskInfoExProto {
+	required int32 taskID = 1;
+	required int32 cardExRewards = 2;
+}
+
+// 副本活动
+message BaseTaskActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+		
+	required bool activityRedDot = 7;
+	
+	repeated BaseTaskInfoProto taskInfos = 8;
+	repeated BaseActivityTaskInfoProto activityTaskInfos = 9;
+	repeated int32 taskLineIDs = 10;
+	required int32 activityRecommend = 11;
+}
+
+
+
+// 掉落翻倍活动
+message BaseMultiDropActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+}
+
+// 副本指定道具掉落翻x倍
+message BaseTaskGoldMultiDropActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+}
+
+// 公告类活动
+message BaseNoticeActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+}
+
+// 定时领奖活动
+message BaseTimeActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+	
+	required int64 lastSubmitTime = 8;	
+	required int32 activityRecommend = 9;
+}
+
+// 邮件活动
+message BaseMailActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+	
+	repeated BaseActivitySubmitInfoProto activityInfos = 8;
+	required int32 activityRecommend = 9;
+}
+
+message BaseCommonActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+	
+	required BaseGroupActivityCardInfoProto cardInfo = 8;
+	required BaseGroupActivityTaskInfoProto taskInfo = 9;
+	required BaseGroupActivityArenaInfoProto arenaInfo = 10;
+	optional BaseGroupActivityFirmInfoProto firmInfo = 11;	
+	required int32 activityRecommend = 12;
+	optional BaseGroupActivityUserBaseInfoProto userBaseInfo = 13;	
+
+	required BaseActivitySubmitInfoProto activitySubmitInfo = 14;
+}
+
+//分享次数信息
+message BaseShareSubmitInfoProto {
+	required int32 npcID = 1;
+	repeated BasePairValueProto textSubmitInfos = 2;
+	required bool rewardFlag = 3;
+}
+
+//分享活动
+message BaseShareActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+
+	repeated BaseShareSubmitInfoProto activitySubmitInfo = 8;
+	required int32 activityRecommend = 9;
+}
+
+// 好评分享活动
+message BaseCommentActivitiesInfoProto {
+	required int32 activityID = 1;
+
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+
+	required bool activityRedDot = 7;
+
+	required bool activityCommentFlag = 8;
+	required int32 activityRecommend = 9;
+
+	required UserHistoryCommentActivityInfoProto userHistoryCommentActivityInfo = 10; 		  // 玩家用户引导历史数据
+}
+
+message UserHistoryCommentActivityInfoProto {
+	repeated int32 commentTaskIDs = 1;
+}
+
+message BaseArenaActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+	
+	required BaseGroupActivityArenaInfoProto arenaInfo = 8;
+	required int32 activityRecommend = 9;
+
+	repeated BaseActivitySubmitInfoProto activitySubmitInfo = 10;
+	repeated BasePairValueProto activityExchangeInfo = 11;
+
+	required int64 activityQuestEndTime = 12;
+}
+
+message BaseLoopQuestActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+	
+	required BaseGroupActivityTaskInfoProto taskInfos = 8;
+	required int32 activityRecommend = 9;
+
+	repeated BaseActivitySubmitInfoProto activitySubmitInfo = 10;
+}
+
+message BaseSpringFortuneActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+
+	required BaseSpringFortuneInfoProto springInfo = 9;
+	required int32  sharedTimes = 10;
+	required bool  sharedRewardFlag = 11;
+	optional int32 needShareTimes = 12;
+}
+
+message BaseActivityWaterDiaryProto {
+	required int32 diaryIndex = 1;
+	required int64 unlockTime = 2;
+}
+
+message BaseWaterPlantActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+
+	required int32 waterTimes = 9;
+	required int32 flowerGrowth = 10;
+	required BaseWaterDailyInfoProto waterInfo = 11;
+	required BaseWaterDailyInfoProto fertilizeInfo = 12;
+	required bool rewardFlag = 13;
+	repeated BaseActivityWaterDiaryProto diaryList = 14;
+}
+
+message BaseGainConsumeActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+
+	repeated int32 activitySubmitIDs = 9;
+	required BaseGainConsumeInfoProto dailyInfo = 10;
+	required int64 dailyRefreshTime = 11;
+	required BaseGainConsumeInfoProto totalInfo = 12;
+	repeated int32 activityDailySubmitIDs = 13;
+}
+
+// 副本活动
+message BaseDefendTaskActivitiesInfoProto {
+required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+	
+	repeated BaseDefendTaskInfoProto taskInfos = 9;
+	repeated int32 taskLineIDs = 10;
+	required int32 totalExpScore = 11;
+	required bool rewardFlag = 12;
+}
+
+message BaseSimpleCardPoolRoleInfoProto {
+	repeated int32 eventStory = 1;
+	required BaseTuJianEventInfoProto tuJianInfo = 2;
+}
+
+message BaseSimpleCardPoolActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+	repeated BaseSimpleCardPoolRoleInfoProto roleInfo = 9;
+	required BaseBuffDataInfoProto buffInfo = 10;
+	repeated BasePairValueProto buyGoodsInfo = 11;
+}
+
+
+// 累计完成天数类活动信息
+message BaseDailyAddupActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+
+	repeated int32 activitySubmitIDs = 9;	//已领取奖励的次数
+	required int64 lastActivityTime = 10; //上次完成时间
+	required int32 activityAddupCount = 11;// 累计的完成次数
+
+}
+
+// 新生日活动
+message BaseNewBirthDayActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+	repeated BasePairValueProto fileUnlock = 9;
+	repeated BasePairValueProto stories = 10;
+	optional int32 activityCustomData = 11;
+}
+
+message BaseMaleRoleHomeLotteryInfo {
+	required int32 maleRoleId = 1;
+	required int32 totalBuyCnt = 2; // 总购买次数
+	required int32 todayBuycnt = 3;  // 每日购买折扣使用
+	required int64 lastRefreshTm = 4;
+	required int32 lastLotteryUnitCnt = 5; // 上次随机到家具的次数位置
+	repeated int32 awardedUnits = 6; 
+}
+
+message BaseHomeLotteryActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+	
+	repeated BaseMaleRoleHomeLotteryInfo lotteryInfos = 9;
+	repeated int32 awardedItems = 10;
+}
+
+// 发布活动奖励
+message BasePublishRewardActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+	repeated BasePairValueProto activitySubmitIDs = 9;
+	repeated BasePairValueProto activityStatistics = 10;
+}
+
+
+// 翻牌子记录
+message BasePieceInfoProto{
+	required int32 maxCount = 1;
+	required uint32 gainPieces = 2;
+	required int64 lastGainTimestamp = 3;
+}
+
+// 翻牌子男主的活动记录
+message BaseSpringFestivalPieceInfoProto {
+	required int32 maleID = 1;
+	required int32 KeyWordID = 2;
+	required BasePieceInfoProto pieceInfo = 3;
+	required bool shareReward = 4;
+	required bool hasShared = 5;
+	required bool hasOpened = 6; 
+}
+
+// 春节翻牌子
+message BaseSpringFestivalPieceActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+	repeated BaseSpringFestivalPieceInfoProto pieceInfos = 9;
+}
+
+//一元翻倍记录当日记录
+message BaseDoubleActivityInfoProto {
+	required int32 maleID = 1;
+	required int32 activityState = 2;
+	required int32 dailyRewardCnt = 3;
+}
+
+//一元翻倍
+message BaseDoubleActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+	required int32 cumulationCnt = 9;
+	required BaseDoubleActivityInfoProto activityInfo = 10;
+	required int64 lastRefreshTime = 11;
+	repeated int32 cumulationRewards = 12;
+}
+
+
+message BaseZoneMsgParamProto {
+	required int32 msgID = 1;
+	required string nickname = 2;
+	optional int32 cardID = 3;
+	optional int32 headFrameID = 4;
+	optional int32 headID = 5;
+}
+
+// ***** 服务器与客户端交互信息 ***** 
+
+// Gm命令
+message C2SGMCmdMgrProto {
+	required string strCmd = 1;
+	required int32 itemID = 2;
+	required int32 itemType = 3;
+	required int32 itemNum = 4;
+}
+
+message S2CGMCmdMgrRetProto {
+	required uint32 errCodeID = 1;
+	
+	required string strCmd = 2;
+	required int32 itemID = 3;
+	required int32 itemType = 4;
+	required int32 itemNum = 5;
+}
+
+// Gm命令
+message C2SGMRechargeProto {
+	required int32 jewelCnt = 1;
+}
+
+message S2CGMRechargeRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 jewelCnt = 2;
+}
+
+// Gm命令
+message C2SGMCardCallProto {
+	required int32 callID = 1;
+	required int32 callCount = 2;
+	required int32 useCoupon = 3;
+}
+
+message S2CGMCardCallRetProto {
+	required uint32 errCodeID = 1;
+	required int32 callid = 2;
+	repeated int32 cardID = 3;
+	repeated int32 count = 4;
+	repeated int32 rare = 5;
+	
+}
+
+// 服务器与客户端同步时间
+message S2CSysRealTimeProto {
+	required int64 realTime = 1;
+}
+
+// 服务器将客户端踢下线
+message S2CAccntKickOutProto {
+	required uint32 errCodeID = 1;	
+}
+
+// 服务器广播消息
+message S2CSysMsgProto {
+	required string msgContent = 1;
+	required int32 msgType = 2;
+	required uint32 errCodeID = 3;	
+}
+
+// C2S 进入游戏
+message C2SAccntEnterGameProto {
+	required int64 accntID = 1;
+	required string accntToken = 2;
+	required string clientVer = 3;
+	optional string adParams  = 4;
+}
+
+// 用户公司属性信息
+message UserFirmPropsInfoProto {
+	repeated BaseFirmPropInfoProto firmPropInfos = 1;
+	
+	required int64 voucherArrangeStartTime = 2;
+	repeated BasePairValueProto voucherArrangeInfos = 3;
+	optional bool autoStudyOn = 4;
+	optional int64 autoStudyStartTime = 5;
+	repeated BasePairValueProto autoStudyVoucherUsed = 6;
+}
+
+// 用户通用信息
+message UserCommonInfoProto {
+	repeated BaseUserStatusInfoProto statusInfos = 1;
+	
+	repeated int32 userGuideIDs = 2;
+	required int32 userNameChangeCnt = 3;
+	
+	required int64 charBornTime = 4; 
+	
+	required int64 heartRecoverTime = 5;
+	required int32 heartBuyCnt = 6;
+	required int64 heartBuyLastTime = 7;
+	
+	required int32 goldBuyCnt = 8;
+	required int64 goldBuyLastTime = 9;
+	
+	required int32 memCoinNum = 10;
+	required int32 memSandNum = 11;	
+	optional int32 firmNameChangeCnt = 12;
+	
+	optional int64 filmRecoverTime = 13;
+	optional int32 filmBuyCnt = 14;
+	optional int64 filmBuyLastTime = 15;
+	optional int32 charfilm = 16;
+	
+	optional int32 oldCharHeadId = 17;
+	optional int32 charHeadFrameId = 18;
+
+	optional int32 dawnStoneNum = 19;	
+	
+	optional int32 homeDiamondBuyCnt = 20;
+	optional int64 homeDiamondBuyLastTime = 21;
+	
+	optional bool homeGuideBonusReceived = 22;
+
+	optional int32 homeSpeedupItemBuyCnt = 23;
+	optional int64 homeSpeedupItemBuyLastTime = 24;
+	
+ 	optional int32 materialTaskFirstClearCnt = 25; // 当天新通关次数
+	optional int64 heartKeyLastRefTime = 26;		// 材料副本体力上次刷新时间
+	optional int32 heartKeyCnt = 27;				// 材料副本体力
+	optional int32 heartKeyBuyCnt = 28;				// 材料副本体力购买次数
+	optional int64 heartKeyLastBuyTime = 29;		// 材料副本体力上次购买时间
+
+	optional int64 bbdateticketRecoverTime = 30;
+	optional int32 bbdateticketBuyCnt = 31;
+	optional int64 bbdateticketBuyLastTime = 32;
+	
+	optional int32 bbtimeLimitTicketBuyCnt = 33;
+	optional int64 bbtimeLimitTicketBuyLastTime = 34;
+}
+
+// 用户VIP信息
+message UserVipInfoProto {
+	required int32 vipLevel = 1;
+	required int32 vipExp = 2;
+}
+
+// 用户普通/精英副本信息
+message UserTasksInfoProto {
+	repeated int32 taskLineIDs = 1;
+	
+	repeated BaseTaskInfoProto taskInfos = 2;
+	repeated BaseEliteTaskInfoProto eliteTaskInfos = 3;
+		
+	repeated int32 taskRewardIDs = 4;
+	
+	repeated BaseBossTaskInfoProto bossTaskInfos = 5;
+	
+	repeated int32 taskLineUnlocked = 6;
+}
+
+message C2SUserBossTaskInfoProto  {
+}
+
+message S2CUserBossTaskInfoRetProto {
+	required uint32 errCodeID = 1;
+	repeated BaseBossTaskInfoProto bossTaskInfos = 2;
+}
+
+// 用户人物副本信息
+message UserMaleRoleTasksInfoProto {
+	repeated int32 taskLineIDs = 1;
+	
+	repeated BaseTaskInfoProto taskInfos = 2;
+	repeated BaseMaleRoleTaskInfoProto maleRoleTaskInfos = 3;
+	
+	repeated int32 taskRewardIDs = 4;
+}
+
+// 技能树材料副本信息
+message UserMaterialTasksInfoProto {
+	repeated int32 taskLineIDs = 1;
+	repeated BaseTaskInfoProto taskInfos = 2;
+	repeated BaseMaterialTaskInfoProto materialTaskInfos = 3;
+}
+
+// 用户职员信息
+message UserStaffsInfoProto {
+	repeated BaseStaffInfoProto staffInfos = 1;			// 雇佣职员信息 
+	 
+	required int64 lastRefreshTime = 2;           		// 上次雇佣商店刷新时间
+	required int32 refreshCnt = 3;                    	// 当天累计雇佣商店刷新次数
+	repeated int32 hireStaffIDs = 4;						// 可雇佣职员列表	
+	repeated int32 hiredStaffIDs = 5;                    // 已雇佣职员列表
+	
+	required int32  totalRefreshCnt = 6;               	// 累计雇佣商店刷新次数
+	repeated int32 deployedStaffInfos = 7;  			// 上阵的职员信息
+}
+
+// 用户暗访信息
+message UserCurSecretTaskInfoProto {
+	required int32 taskID = 1;             // 当前副本ID
+	required int32 taskStatus = 2;			// 当前副本状态
+	
+	required int32 taskStoryID = 3;        // 当前剧本ID
+	
+	required string peerCharName = 4;      // 匹配对手名字 
+	required int32 peerFirmLevel = 5;      // 匹配对手等级 
+	
+	repeated int32 peerPropVals = 6;       // 匹配对手血量信息 
+	repeated int32 peerPropValsLeft = 7;   // 匹配对手剩余血量信息
+	
+	repeated int32 propSeq = 8;            // 当前副本属性序列
+	
+	repeated int32 bufferIDs = 9;          // 当前副本buffer信息	
+}
+
+message UserSecretTasksInfoProto {
+	required int64 lastRefreshTime = 1;      // 上次重置时间
+	
+	repeated BasePairValueProto cardStatusInfos = 2;  			// 当前卡牌状态信息 0: 上阵未使用 1: 上阵不可使用 2. 上阵仍可使用
+	repeated BasePairValueProto cardPosInfos = 3;     			// 当前卡牌位置信息
+	
+	required int32 passTaskID = 4; 							// 当前通关的最高关卡数
+	required BaseCardsDeployInfoProto cardsDeployInfo = 5; 	// 上次上阵信息
+	
+	optional UserCurSecretTaskInfoProto curTaskInfo = 6; 			// 当前进行中暗访副本信息
+	
+	repeated int32 secretTaskRewardIDs = 7;						// 暗访副本奖励
+}
+
+// 用户跟踪副本
+message BaseBriefTrackTaskInfoProto {
+	required int32 taskID = 1;            // 跟踪副本ID
+	required int32 taskSubID = 2;         // 跟踪副本已完成子ID
+}
+
+message BaseCurTrackTaskInfoProto {
+	required int32 taskID = 1;            // 跟踪副本ID
+	required int32 taskSubID = 2;         // 跟踪副本已完成子ID
+	required int32 taskStatus = 3;  		// 跟踪副本当前状态
+}
+
+message UserTrackTasksInfoProto {
+	repeated BaseBriefTrackTaskInfoProto trackTaskInfos = 1; 		// 已完成跟踪副本数量
+	
+	required BaseCurTrackTaskInfoProto curTrackTaskInfo = 2;		// 当前进行中跟踪副本ID	
+	
+	required BaseCardsDeployInfoProto cardsDeployInfo = 3; 		// 上次上阵卡牌信息
+	
+	required int32 trackTaskPassCnt = 4;							// 跟踪副本通关数
+	
+	required int32 recentTrackTaskID = 5;							// 最近跟踪副本通关ID
+	required int64 recentTrackTaskTime = 6;						// 最近跟踪副本通关时间
+	
+	required int32 lastTrackTaskRewardID = 7;						// 跟踪副本奖励ID						
+	required int64 lastRewardSubmitTime = 8;						// 跟踪副本奖励领取时间
+	
+	
+}
+
+message BaseGoodExchangeBuyInfoProto {
+	optional int32 boughtGoodsId = 1;
+	optional int32 boughtCnt = 2;
+	optional int64 lastRefreshTm = 3;
+}
+
+message BaseGoodsExchangeTypeInfoProto {
+	optional int32 exchangeType = 1;  	//商店类型
+	optional int64 lastRefreshTime = 2;     // 上次商店刷新时间
+	optional int32 refreshCnt = 3;          // 当天累计刷新次数			
+	repeated int32 boughtGoodsIDs = 4;      // 已购买道具ID列表
+	optional int32 totalRefreshCnt = 5;     // 累计刷新次数
+	repeated BasePairValueProto boughtGoodsCnts = 6; // 累计商品购买次数
+	repeated BaseGoodExchangeBuyInfoProto boughtGoodsInfos = 7; // 累计商品购买次数(带时间)
+}
+
+// 用户道具信息
+message UserGoodsesInfoProto {
+	repeated BaseItemInfoProto goodsInfos = 1;
+	repeated BaseGoodsExchangeTypeInfoProto exchangeTypeInfos = 2;
+}
+
+// 用户卡牌信息
+message UserCardsInfoProto {	
+	required int32 fragStarNum = 1;
+	required int32 starNum = 2;
+	
+	repeated BaseCardInfoProto cardInfos = 3;	
+	required BaseCardsDeployInfoProto cardsDeployInfo = 4;
+		
+	repeated BaseCardDesignInfoProto cardDesignInfos = 5;
+	required BaseCardStatisticsInfoProto cardStatisticsInfo = 6;
+}
+
+// 用户签到信息
+message UserCheckInInfoProto {
+	repeated int32 checkInDays = 1;
+	required int64 checkInRefreshTime = 2;
+	required int64 checkInTime = 3;
+	required bool checkInVipFlag = 4;
+	
+	required int32 checkInAppendCnt = 5;
+	
+	required int32 continuousCheckInCnt = 6;
+	required int32 continuousCheckInMaxCnt = 7;
+	required int32 cumulativeCheckInCnt = 8;
+	
+	repeated int32 checkInRewardIDs = 9;
+
+	optional bool monthlyCardRewardFlag = 10;
+}
+
+// 用户抽卡信息
+message UserCardCallsInfoProto {
+	repeated BaseCardCallTypeInfoProto cardCallTypeInfos = 1;
+	optional int32 dailyCallGoldCnt = 2;
+	optional int32 dailyCallJewelCnt = 3;
+	optional int64 lastDailyCallRefreshTime = 4;
+}
+
+// 用户成就信息
+message UserAchievementsInfoProto {
+	repeated int32 achievementsSubmit = 1;
+	
+	required BaseAchvUserBaseInfoProto userBaseInfo = 2;
+	required BaseAchvTaskInfoProto taskInfo = 3;
+	required BaseAchvCardInfoProto cardInfo = 4;
+	required BaseAchvMsgInfoProto msgInfo = 5;
+	required BaseAchvArenaInfoProto arenaInfo = 6;
+	optional BaseAchvResDungeonInfoProto resdungeonInfo = 7;
+	optional BaseAchvTalentTreeInfoProto talentInfo = 8;
+	optional BaseAchvBillboardInfoProto billboardInfo = 9;
+}
+
+// 用户日常任务信息
+message UserDailyQuestInfoProto {
+	repeated int32 dailyQuestSubmit = 1;
+	required int64 dailyQuestRefreshTime = 2;
+	
+	required int32 totalLivenessVal = 3;	
+	repeated int32 livenessRewardIDs = 4;
+	
+	required BaseDailyQuestUserBaseInfoProto userBaseInfo = 5;
+	required BaseDailyQuestTaskInfoProto taskInfo = 6;
+	required BaseDailyQuestCardInfoProto cardInfo = 7;
+	required BaseDailyQuestGoodsInfoProto goodsInfo = 8;
+	required BaseDailyQuestArenaInfoProto arenaInfo = 9;
+	optional BaseDailyQuestResDungeonInfoProto resdungeonInfo = 10;
+	optional BaseDailyQuestBillboardInfoProto billboardInfo = 11;
+}
+
+// 用户周常任务信息
+message UserWeeklyQuestInfoProto {
+	required int64 weeklyQuestRefreshTime = 1;
+	
+	required int32 totalLivenessVal = 2;
+	repeated int32 livenessRewardIDs = 3;
+
+	repeated BaseWeeklyRewardHistoryInfoProto rewardHistory= 4;
+}
+
+// 用户竞技场信息
+message UserArenaInfoProto {
+	required int32 arenaID = 1;
+	required int32 arenaLevel = 2;
+	
+	required int32 arenaScore = 3;
+	
+	required int32 themeID = 4;
+	required int32 pvpStraightWinCnt = 5;
+	
+	required int64 lastPvpTime = 6;
+	required int32 totalPvpUseCnt = 7;
+	
+	required int64 lastPvpBuyTime = 8;
+	required int32 totalPvpBuyCnt = 9;
+	
+	required BaseCardsDeployInfoProto cardsDeployInfo = 10;
+	
+	required int32 lastArenaID = 11;
+	repeated int32 rankArenaIDs = 12;
+	repeated BaseArenaInfoProto arenaInfos = 13;
+	
+	repeated BaseArenaThemeInfoProto themeInfos = 14;
+
+	optional int32 pvpStraightLoseCnt = 15;
+}
+
+// 用户竞技场信息V2
+message UserArenaV2InfoProto {
+	required int32 arenaID = 1;
+
+	required int32 arenaScore = 2;
+	
+	required int32 themeID = 3;
+	required int32 pvpStraightWinCnt = 4;
+	
+	required int64 lastPvpTime = 5;
+	required int32 totalPvpUseCnt = 6;
+	
+	required int64 lastPvpBuyTime = 7;
+	required int32 totalPvpBuyCnt = 8;
+	
+	required BaseCardsDeployInfoProto cardsDeployInfo = 9;
+	
+	required int32 lastArenaID = 10;
+	repeated int32 rankArenaIDs = 11;
+	repeated BaseArenaInfoProto arenaInfos = 12;
+	
+	required int64 lastArenaPeerRefreshTime = 13;
+	repeated BasePeerInfoProto peerInfos = 14;
+	optional int32 myRankPeerInfos = 15;
+	optional int32 arenaBestRank = 16;
+
+	optional int32 pvpStraightLoseCnt = 17;
+}
+
+// 用户头像框
+message UserHeadFramesInfoProto {
+	repeated int32 headFrameIds = 1;
+}
+
+message UserActivitiesInfoProto {
+	repeated BaseDefaultActivitiesInfoProto defaultActivitiesInfos = 1; 	                 // 基本活动	
+	repeated BaseDailyActivitiesInfoProto dailyActivitiesInfos = 2; 		                 // 每日活动	
+	repeated BaseGroupActivitiesInfoProto groupActivitiesInfos = 3; 		                 // 组活动
+	repeated BaseCardCallActivitiesInfoProto cardCallActivitiesInfos = 4; 	                 // 抽卡活动
+	repeated BaseTaskActivitiesInfoProto taskActivitiesInfos = 5; 			                 // 副本活动
+	repeated BaseMultiDropActivitiesInfoProto multiDropActivitiesInfos = 6;                  // 翻倍掉落活动
+	repeated BaseTimeActivitiesInfoProto timeActivitiesInfos = 7;                            // 定时领奖活动
+	repeated BaseNoticeActivitiesInfoProto noticeActivitiesInfos = 8;                        // 公告活动
+	repeated BaseDailyExActivitiesInfoProto dailyExActivitiesInfos = 9;                      // 增强每日活动
+	repeated BaseMailActivitiesInfoProto mailActivitiesInfos = 10; 		 		             // 邮件类活动	
+	repeated BaseFundActivitiesInfoProto fundActivitiesInfos = 11;           	             // 基金活动
+	repeated BaseRechargeActivitiesInfoProto rechargeActivitiesInfos = 12;                   // 累充活动
+	repeated BaseFirstChargePackActivitiesInfoProto firstChargePackActivitiesInfos = 13;     // 首充礼包活动
+	repeated BaseFirstChargeReturnActivitiesInfoProto firstChargeReturnActivitiesInfos = 14; // 首充返利活动
+	repeated BaseDirectRewardActivitiesInfoProto directRewardActivitiesInfos = 15;         // 直接送（短信）活动
+	repeated BaseCommonActivitiesInfoProto commonActivitiesInfos = 16; 						//通用模板活动
+	repeated BaseShareActivitiesInfoProto shareActivitiesInfos = 17; 						//分享活动
+	repeated BaseCommentActivitiesInfoProto commentActivitiesInfos = 18; 					  // 好评引导活动 
+	repeated BaseDefaultActivitiesInfoProto oneYuanPackActivitiesInfos = 21;   				  // 一元购
+	repeated BaseGoodsExchangeActivitiesInfoProto goodsExchangeActivityesInfos = 22;           // 兑换活动
+	repeated BaseDefaultActivitiesInfoProto loopchangeActivitiesInfos = 23; 					// 跑环换库
+	repeated BaseArenaActivitiesInfoProto arenaActivitiesInfos = 24; 						  //竞技场兑换活动
+	repeated BaseLoopQuestActivitiesInfoProto loopQuestActivitiesInfos = 25;					// 跑环掉落活动
+	repeated BaseSpringFortuneActivitiesInfoProto springFortuneActivitiesInfos = 26; 			// 春节红包活动
+	repeated BaseWaterPlantActivitiesInfoProto waterPlantActivitiesInfos = 27; 					// 植树节活动
+	repeated BaseGainConsumeActivitiesInfoProto gainConsumeActivitiesInfos = 28;				// 日常/累计消耗活动
+	repeated BaseDefendTaskActivitiesInfoProto defendTaskActivitiesInfos = 29; 					// 保卫活动
+	repeated BaseActivityTaskDailyExtInfoProto actDailyExtRewardRecord = 30;                    // 副本附带的每日奖励
+	repeated BaseActivityAnswerExamInfoProto answerExamInfo = 31;                               // 答题
+	repeated BaseSimpleCardPoolActivitiesInfoProto simpleCardPool = 32;                         // 卡池活动
+	repeated BaseRecallTaskActivitiesInfoProto recallTaskActivitiesInfos = 33;					// 召回任务活动
+	repeated BaseRecallActivitiesInfoProto recallActivitiesInfos = 34;							// 召回活动
+	repeated BasePrivilegeCardActivitiesInfo privilegeCardInfos = 35;							// 特权卡购买活动
+	repeated BaseTaskGoldMultiDropActivitiesInfoProto taskGoldMultiDropInfos = 36;      		// 副本指定物品多倍掉落
+	repeated BaseAnswerExam3ActivitiesInfoProto answerExam3Infos = 37;                  		// 答题点就送ver3
+	repeated BaseMainQuestActivitiesInfoProto mainQuestInfos = 38;
+	repeated BaseH5GroupActivitiesInfoProto h5GroupActivitiesInfos = 39; 						//H5活动
+	repeated BaseDailyAddupActivitiesInfoProto dailyAddupInfos = 40;							// 累计完成天数类活动信息
+	repeated BaseDefaultActivitiesInfoProto festivalListActivitiesInfos = 41;           		// 周年庆活动一览
+	repeated BaseDirectRewardActivitiesInfoProto realTimeRewardActivitiesInfos = 42;         	// 实时直接送（短信）活动
+	repeated BaseNewBirthDayActivitiesInfoProto newBirthDayInfos = 43;							// 新生日活动信息
+	repeated BasePublishRewardActivitiesInfoProto publishRewardInfos = 44;						// 发布奖励活动信息
+	repeated BaseSpringFestivalPieceActivitiesInfoProto springFestivalPieceActivitiesListInfos = 45; // 春节翻牌子活动信息
+	repeated BaseDoubleActivitiesInfoProto doubleActivitiesListInfos = 46; 						//一元翻倍活动信息
+	repeated BaseHomeLotteryActivitiesInfoProto homeLotteryInfos = 47;                      	// 小屋lottery活动信息
+}
+
+message BaseOfflineTaskInfoProto {
+	required int32 taskID = 1;
+	required int32 taskType = 2;
+	repeated int32 propSeq = 3;
+
+	repeated int32 leaderCardIDs = 4;
+}
+
+// 用户邮件信息
+message UserMailsInfoProto {
+	required int32 friendMailRecvStatus = 1;
+	
+	required int32 heartMailSubmitCnt = 2;
+	required int64 lastHeartMailSubmitTime = 3;	
+}
+
+// 用户离线信息
+message UserOfflineInfoProto {
+	optional BaseOfflineTaskInfoProto offlineTaskInfo = 1;
+}
+
+// 用户短信消息
+message BaseShortMsgStatisticsInfoProto {
+	required int32 shortMsgID = 1;				// 短消息ID
+	required int32 shortMsgCnt = 2;			// 短消息获取次数
+}
+
+message BaseShortMsgSeqInfoProto {
+	required int32 shortMsgSeqIndex = 1;
+	required int32 shortMsgID = 2;					// 短消息ID
+	required int32 shortMsgStatus = 3;				// 短消息状态
+	repeated int32 msgOptionIDs = 4;			 	// 短消息选项信息
+	required int64 msgOptionTime = 5;    			// 短消息选项最后回复时间	
+}
+
+message BaseShortMsgsInfoProto {
+	required int32 phoneContactID = 1; 				// 手机联系人ID
+	
+	required int32 shortMsgSeqIndex = 2;       
+	
+	required int32 sendShortMsgCnt = 3;					// 发送短消息数量
+	required int32 sendShortMsgIndex = 4;
+	required int64 lastSendShortMsgCompleteTime = 5;		// 上次发送短消息时间
+	
+	required int32 recvShortMsgCnt = 6;					// 接受短消息数量
+	required int32 recvShortMsgIndex = 7;	
+	required int64 lastRecvShortMsgCompleteTime = 8;		// 上次接受短消息时间
+	
+	optional BaseShortMsgSeqInfoProto shortMsgSeqInfo = 9;	// 最后一条短消息信息
+	required int32 shortMsgOptionParam = 10;            	// 短消息选项参数
+		
+	required int64 lastSendDailyShortMsgTime = 11;			// 上一次发送日常消息时间
+	repeated int32 dailyShortMsgIDs = 12;					// 上一次发送日常消息IDs
+}
+
+// 用户公众号消息
+message BasePublicMsgSeqInfoProto {
+	required int32 publicMsgSeqIndex = 1;						// 公众号消息索引
+	required int32 publicMsgID = 2;							// 公众号消息ID
+	required int64 msgTriggerTime = 3;           				// 消息接收时间		
+}
+
+message BasePublicMsgsInfoProto {
+	required int32 publicContactID = 1;						// 公众号联系人ID
+	
+	required int32 publicMsgSeqIndex = 2;  
+	
+	required bool unreadPublicMsgFlag = 3;					// 当前公众号消息未读标志
+	required int32 unreadHistoryPublicMsgCnt = 4;				// 历史未读公众号消息数量
+		
+	optional BasePublicMsgSeqInfoProto publicMsgSeqInfo = 5;
+}
+
+// 用户电话消息
+message BasePhoneMsgSeqInfoProto {
+	required int32 phoneMsgSeqIndex = 1;						// 电话消息索引
+	required int32 phoneMsgID = 2;								// 电话消息ID	
+	required int32 phoneMsgStatus = 3;							// 电话消息状态
+	repeated int32 msgOptionIDs = 4;			 				// 电话消息选项信息
+	required int64 msgOptionTime = 5;    						// 电话消息选项最后回复时间	
+	required int32 msgOptionParam = 6;							// 电话消息选项参数-客户端使用
+}
+
+// 用户电话简明消息
+message BasePhoneMsgBriefMsgInfoProto {
+	required int32 phoneMsgSeqIndex = 1;
+	required int32 phoneMsgID = 2;
+	required int32 phoneMsgStatus = 3;
+}
+
+message BasePhoneMsgsInfoProto {	
+	required int32 lastPhoneMsgSeqIndex = 1;						// 最后电话消息索引
+	required int64 lastPhoneMsgTime = 2;							// 最后电话消息时间
+	
+	required int32 phoneMsgSeqIndex = 3;
+	
+	required int32 unreadPhoneMsgCnt = 4;							// 未读电话消息数量
+	
+	repeated BasePhoneMsgBriefMsgInfoProto phoneMsgInfos = 5;	// 电话信息
+	//repeated BasePhoneMsgSeqInfoProto phoneMsgSeqInfos = 5;		// 电话信息
+}
+
+// 用户朋友圈信息
+message BaseFriendMsgSeqInfoProto {
+	required int32 friendMsgSeqIndex = 1;						// 朋友圈消息序列索引
+	required int32 friendMsgID = 2;							// 朋友圈消息ID
+	required int64 friendMsgPublishTime = 3;           		// 朋友圈发表时间	
+	required int32 msgOptionID = 4;							// 朋友圈回复ID
+	required int64 msgOptionTime = 5;							// 朋友圈回复时间
+}
+
+message BaseFriendMsgsInfoProto {
+	required int32 friendMsgSeqIndex = 1;
+	
+	required int32 sendFriendMsgCnt = 2;	
+	required int32 sendFriendMsgIndex = 3;					
+	required int64 lastSendFriendMsgTime = 4;
+	
+	required bool unreadFriendMsgFlag = 5;						// 朋友圈消息未读标志	
+	  	
+	repeated BaseFriendMsgSeqInfoProto friendMsgSeqInfos = 6;	// 朋友圈消息序列
+}
+
+
+// 用户消息信息
+message UserMsgsInfoProto {
+	required int64 lastSendDailyShortMsgTime = 1;										// 上一次发送日常消息时间	
+	repeated BaseShortMsgsInfoProto shortMsgsInfos = 2;  								// 短消息信息
+	repeated BaseShortMsgStatisticsInfoProto dailyShortMsgStatisticsInfos = 3;
+	
+	required bool publicMsgsUnreadFlag = 4;
+	repeated BasePublicMsgsInfoProto publicMsgsInfos = 5;								// 公众号消息信息
+	
+	required BasePhoneMsgsInfoProto phoneMsgsInfo = 6;									// 电话消息信息
+	
+	required BaseFriendMsgsInfoProto friendMsgsInfo = 7;								// 朋友圈消息信息
+
+	repeated int32 recvShortMsgInfosFavorLater = 8;  									// 延迟接收的短消息队列
+}
+
+// 用户男主信息
+message BaseMaleRoleInfoProto {
+	required int32 maleRoleID = 1;
+	required int32 relatedCardID = 2;
+	required string maleRoleNote = 3;
+	
+	required int32 maleRoleFavorLevel = 4;
+	required int32 maleRoleFavorExp = 5;
+}
+
+message UserMaleRolesInfoProto {
+	repeated BaseMaleRoleInfoProto maleRoleInfos = 1;
+	optional int32 favorMaleRoleID = 2;
+}
+
+// 用户约会信息
+message BaseEngagementInfoProto {
+	required int32 engagementID = 1;
+	repeated int32 engagementOptionIDs = 2;
+	required int64 engagementTime = 3; 	
+}
+
+// 天赋树成就
+message BaseAchvTalentTreeInfoProto {
+	repeated BasePairValueProto frameNodeCnt = 1;
+	repeated BasePairValueProto skillNodeCnt = 2;
+	repeated BasePairValueProto resourceNodeCnt = 3;
+	repeated BasePairValueProto allNodeUnlockCnt = 4;
+	required int32 skillLearnCnt = 5;
+	repeated BasePairValueProto taskChallengeCnt = 6;
+}
+
+// 看板成就
+message BaseAchvBillboardInfoProto{
+	repeated BasePairValueProto LoginStateCnt = 1; 
+	required int32 InteractDayCnt = 2;
+	required int32 InteractGiftCnt = 3;
+	required int32 PerfectDateCnt = 4;
+	required int32 DateJoinCnt = 5;
+	optional int64 IDCLastUpdateTime = 6;
+	optional int32 UnlockedCostumeNum = 7;
+	optional int32 UnlockedBackgroundNum = 8;
+	optional int32 UnlockedVoiceNum = 9;
+	optional int32 UnlockedMusicNum = 10;
+	optional int32 UnlockedAccessoryNum = 11;
+}
+
+message UserEngagementsInfoProto {
+	repeated BaseEngagementInfoProto engagementInfos = 1; 	
+}
+
+message UserFriendsInfoProto {
+	required int64 lastHeartMailRefreshTime = 1;
+	repeated int64 heartMailSendAccntIDs = 2;	
+	required int32 totalHeartMailRecvCnt = 3;
+	
+	required int64 lastFriendRecommendTime = 4;
+}
+
+message UserRechargeInfoProto {
+	required int64 lastFirstRechargeTime = 1;
+
+	repeated BasePackActivitiesInfoProto packActivitiesInfos = 2;  // 充值礼包类活动	
+
+	optional int32 rechargeExp = 3; // 充值经验
+
+	optional int64 priviledgeCardTime = 4; // 特权卡截止日期
+
+	optional int64 LastPriviledgeCardRefreshTime = 5; // 特权卡上次刷新时间（每日奖励）
+
+	optional int32 PriviledgeCardDailySubmitFlag = 6; // 特权卡每日领取标志
+	
+	optional string subScriptProductId = 7;
+	
+	optional int64 subScriptExpiredTm = 8;
+	
+	repeated BaseWeekCardTime weekCardTimes = 9;
+	
+	optional bool isWeekCardCanGetRwd = 10;
+	
+	optional bool isWeekCardCanBuy = 11;
+	
+	repeated int32 availWeekCardPackIds = 12;
+}
+
+message BaseWeekCardTime {
+	optional int32 cardId = 1;
+	optional int64 weekCardStartTime = 2;
+	optional int64 weekCardEndTime = 3;
+	optional int64 lastSubmitTime = 4;
+}
+
+// 用户跑环信息
+message UserLoopTasksInfoProto {
+	required int64 loopTaskRefreshTime = 1;
+	required int64 loopTaskSubmitTime = 2;
+	repeated int32 loopTaskID = 3;
+	repeated int32 loopTaskLoopID = 4;
+	repeated int32 loopTaskStepID = 5;
+	repeated int32 loopTaskSelectedMaleRole = 6;
+	repeated int32 loopTaskLoopCnt = 7;
+	repeated bool  loopTaskLoopRwdFlag = 8;
+	repeated SpecTaskInfo loopTaskSpecTaskInfo = 9;
+	repeated bool loopTaskLoopMaxCntReward = 10;
+}
+
+message SpecTaskInfo {
+	message TaskInfo {
+		optional int32 taskId = 1;
+		optional int32 cnt = 2;
+	}
+	optional int32 maleRoleId = 1;
+	repeated TaskInfo taskInfo = 2;
+} 
+
+message UserExtraStorysInfoProto{
+	repeated int32 extraStoryInfos = 1;
+}
+
+message UserBirthWelfareInfoProto {
+	required int32 month = 1;
+	required int32 day = 2;
+	
+	repeated int32 answer = 3;
+	required bool isGetExamRwd = 4;
+	required int64 birthLoginStamp = 5;
+	repeated BaseItemInfoProto gainBirthRwd = 6;
+	required bool isGetBirthRwd = 7;
+}
+
+message UserHomeDispatchInfoProto {
+	required int64 curMissionEndTime = 1;   // 当前派遣任务结束时间(单位毫秒)
+	repeated int32 availableMissionCnt = 2; // 可派遣的任务数 
+}
+
+message UserExchangeStoreRecordProto {
+	required int32 exchangeGoodID = 1;
+	required int32 exchangeCount = 2;
+	required int64 lastExchangeTimestamp = 3;
+}
+
+message UserExchangeStoreInfoProto {
+	required int32 storeID = 1;
+	required int64 lastRefreshTime = 2;
+	repeated UserExchangeStoreRecordProto records = 3;
+}
+
+message UserExchangeStoreMapProto {
+	repeated UserExchangeStoreInfoProto stores = 1;
+}
+
+// S2C 进入游戏
+message S2CAccntEnterGameRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int64 accntID = 2;
+	
+	required string svrVersion = 3;
+	
+	required int64 curTime = 4;
+	
+	required string charName = 5;
+	
+	required int32 charHeadID = 6;
+	
+	required int32 charGold = 7;
+	required int32 charJewel = 8;
+
+	required string firmName = 9;
+	required int32 firmLevel = 10;
+	required int32 firmExp = 11;
+	required int32 firmHeart = 12;
+	
+	required UserOfflineInfoProto offlineInfo = 13;
+	
+	required UserMailsInfoProto mailsInfo = 14;
+	
+	required UserFirmPropsInfoProto firmPropsInfo = 15;
+	
+	required UserCommonInfoProto commonInfo = 16;
+	
+	required UserVipInfoProto vipInfo = 17;
+	
+	required UserTasksInfoProto tasksInfo = 18;
+	required UserMaleRoleTasksInfoProto maleRoleTasksInfo = 19;
+	required UserStaffsInfoProto staffsInfo = 20;
+	
+	required UserGoodsesInfoProto goodsesInfo = 21;
+	required UserCardsInfoProto cardsInfo = 22;		
+	
+	required UserCheckInInfoProto checkInInfo = 23;
+	
+	required UserCardCallsInfoProto cardCallsInfo = 24;
+	
+	required UserAchievementsInfoProto achievementsInfo = 25;
+	required UserDailyQuestInfoProto dailyQuestsInfo = 26;
+	
+	required UserArenaInfoProto arenaInfo = 27;
+	
+	required UserActivitiesInfoProto activitiesInfo = 28;
+	
+	required UserSecretTasksInfoProto secretTasksInfo = 29;
+	required UserTrackTasksInfoProto trackTasksInfo = 30;
+	
+	required UserMsgsInfoProto msgsInfo = 31;
+	
+	required UserMaleRolesInfoProto maleRolesInfo = 32;
+	
+	required UserEngagementsInfoProto engagementsInfo = 33;
+	
+	required UserFriendsInfoProto friendsInfo = 34;
+	
+	required UserRechargeInfoProto rechargeInfo = 35;
+
+	optional UserLoopTasksInfoProto loopTasksInfo = 36;
+
+	optional UserArenaV2InfoProto arenaV2Info = 37;
+
+	repeated BaseActivityGroupDetailInfoProto activityGroupInfos = 38;  //静态数据
+	
+	optional int32 charHeadFrameID = 39;
+	
+	optional UserHeadFramesInfoProto headFramesInfo = 40;
+
+	optional UserWeeklyQuestInfoProto weeklyQuestInfo = 41;
+	
+	optional UserResDungeonInfoProto resdungeonInfo = 42;
+
+	optional UserExtraStorysInfoProto extraStorysInfo = 43;
+	
+	optional UserBirthWelfareInfoProto birthWelfareInfo = 44;
+	
+	repeated int32 activityExtraStoryIds = 45;	 // 活动小传   
+
+	optional UserFHInfoProto fhInfo = 46;
+	
+	optional UserHomeDispatchInfoProto fhDispatchInfo = 47; //派遣红点相关
+	
+	optional UserFHAchvInfoProto fhAchvInfo = 48;
+	
+	optional UserFHDailyQuestInfoProto fhDailyQuestsInfo = 49;
+
+	optional UserChapterBoxInfoProto chapterBoxInfo = 50;
+
+	optional UserMaterialTasksInfoProto materialTasksInfo = 51;
+
+	optional UserExchangeStoreMapProto exchangeStoreInfo = 52;
+	optional UserSpaceInfoProto spaceInfo = 53;
+	
+}
+
+message BaseQuestInfo {
+	required int32 questType = 1;   // 对应 item type
+	required int32 param = 2;  		// 对应 item id 
+	required int32 count = 3;
+}
+
+message FHMaleRoleAchvInfo {
+	required int32 maleRoleId = 1;
+	repeated int32 achvSubmits = 2;
+	repeated BaseQuestInfo achvInfos = 3;
+}
+
+message UserFHAchvInfoProto {  //主线
+	repeated FHMaleRoleAchvInfo maleRoleAchvInfos = 2;
+}
+
+message UserFHDailyQuestInfoProto {
+	repeated int32 dailyQuestSubmits = 1;
+	required int64 dailyQuestRefreshTime = 2;
+	repeated BaseQuestInfo questInfos = 3;
+	repeated int32 dailyQuestRandIds = 4;
+	optional bool dailyQuestRewardFlag = 5;
+}
+
+// 更改头像
+message C2SUserHeadIDChangeProto {
+	required int32 charHeadID = 1;
+}
+
+message S2CUserHeadIDChangeRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 charHeadID = 2;
+}
+
+// 更改头像框
+message C2SUserHeadFrameIDChangeProto {
+	required int32 charHeadFrameID = 1;
+}
+
+message S2CUserHeadFrameIDChangeRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 charHeadFrameID = 2;
+}
+
+// 更改名字
+message C2SUserNameChangeProto {
+	required string charName = 1;
+}
+
+message S2CUserNameChangeRetProto {
+	required uint32 errCodeID = 1;
+	
+	required string charName = 2;
+	optional string firmName = 3;
+}
+
+// 更改公司名字
+message C2SUserFirmNameChangeProto {
+	required string firmName = 1;
+}
+
+message S2CUserFirmNameChangeRetProto {
+	required uint32 errCodeID = 1;
+	
+	required string firmName = 2;
+}
+
+// 获取玩家简明信息
+message C2SUserGetBriefInfoProto {
+	required int64 accntID = 1;
+}
+
+message S2CUserGetBriefInfoRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int64 accntID = 2;
+	
+	optional BaseUserBriefInfoProto userBriefInfo = 3;
+}
+
+// 新手引导
+message C2SUserUserGuideProto {	
+	required int32 userGuideID = 1;
+	optional string strGuideParam = 2;
+	optional int32 nGuideParam = 3;
+}
+
+message S2CUserUserGuideRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 userGuideID = 2;
+	optional string strGuideParam = 3;
+	optional int32 nGuideParam = 4;
+}
+
+// 购买胶片
+message C2SUserFilmBuyProto {
+	required int32 filmBuyCnt = 1;
+}
+
+message S2CUserFilmBuyRetProto {
+	required uint32 errCodeID = 1;
+	required int32 filmBuyCnt = 2;
+	optional int64 filmBuyTime = 3;
+}
+
+// 购买体力
+message C2SUserHeartBuyProto {
+	required int32 heartBuyCnt = 1;
+}
+
+message S2CUserHeartBuyRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 heartBuyCnt = 2;
+	optional int64 heartBuyTime = 3;
+}
+
+// 购买小屋钻石
+message C2SUserHomeDiamondBuyProto {
+	required int32 buyCnt = 1;  //暂时只支持为1
+}
+
+message S2CUserHomeDiamondBuyRetProto {
+	required uint32 errCodeID = 1;
+	required int32 buyCnt = 2;
+	optional int64 buyTime = 3;
+}
+
+// 购买爱的加速卡
+message C2SUserHomeSpeedupItemBuyProto {
+	required int32 buyCnt = 1;  //暂时只支持为1
+}
+
+message S2CUserHomeSpeedupItemBuyRetProto {
+	required uint32 errCodeID = 1;
+	required int32 buyCnt = 2;
+	optional int64 buyTime = 3;
+}
+
+// 购买看板一日约会门票
+message C2SUserBillboardDateTicketBuyProto {
+	required int32 buyCnt = 1;  //暂时只支持为1
+}
+
+message S2CUserBillboardDateTicketBuyRetProto {
+	required uint32 errCodeID = 1;
+	required int32 buyCnt = 2;
+	optional int64 buyTime = 3;
+}
+
+// 购买看板限时约会门票
+
+message C2SUserBillboardTimeLimitTicketBuyProto {
+	required int32 buyCnt = 1;
+}
+
+message S2CUserBillboardTimeLimitTicketBuyRetProto {
+	required uint32 errCodeID = 1;
+	required int32 buyCnt = 2;
+	optional int64 buyTime = 3;
+}
+
+// 购买金币
+message C2SUserGoldBuyProto {
+	required int32 goldBuyCnt = 1;
+}
+
+message S2CUserGoldBuyRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 goldBuyCnt = 2;
+	optional int64 goldBuyTime = 3;
+}
+
+// 星星兑换
+message C2SUserStarExchangeProto {
+	required int32 starCnt = 1;
+}
+
+message S2CUserStarExchangeRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 starCnt = 2;
+}
+
+// 校对系统时间
+message C2SUserCheckSysRealTimeProto {
+	
+}
+
+message S2CUserCheckSysRealTimeRetProto {
+	required uint32 errCodeID = 1;
+	
+	optional int64 realTime = 2;
+}
+
+// 月卡每日奖励领取
+message C2SUserPriviledgeCardSubmitProto {
+}
+
+message S2CUserPriviledgeCardSubmitRetProto {
+	required uint32 errCodeID = 1;
+}
+
+// 周卡每日奖励领取
+message C2SUserWeekCardSubmitProto {
+	required int32 cardId = 1;
+}
+
+message S2CUserWeekCardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	required int32 cardId = 2;
+}
+
+
+
+// 用户充值
+message C2SUserRechargeProto {
+	required string receiptID = 1;
+	required string productID = 2;
+	required string receiptDetail = 3;
+}
+
+message S2CUserRechargeRetProto {
+	required uint32 errCodeID = 1;
+	
+	required string receiptID = 2;
+	required string productID = 3;
+	required string receiptDetail = 4;
+	
+	required bool isVerifySuccess = 5;
+}
+
+message C2SUserPreOrderProto {
+	required string productID = 1;
+	required int32 rechargeType = 2;
+	required string receiptDetail = 3;
+}
+
+message S2CUserPreOrderRetProto {
+	required uint32 errCodeID = 1;
+	
+	required string receiptID = 2;
+	required string productID = 3;
+	required int32 rechargeType = 4;
+	required string receiptDetail = 5;
+	optional int64 curTime = 6;
+}
+
+message C2SUserDeliverOrderProto {
+	required string receiptID = 1;
+	required string productID = 2;
+	required int32 rechargeType = 3;
+	required string receiptDetail = 4;
+}
+
+message S2CUserDeliverOrderRetProto {
+	required uint32 errCodeID = 1;
+	
+	required string receiptID = 2;
+	required string productID = 3;
+	required int32 rechargeType = 4;
+	required string receiptDetail = 5;
+}
+
+message C2SUserQueryDelivableOrderProto {
+}
+
+message S2CUserQueryDelivableOrderRetProto {
+	required uint32 errCodeID = 1;
+	
+	required string delivableOrders = 2;
+	optional string transactions = 3;
+}
+
+
+// ***普通/精英副本相关***
+// 开始普通/精英副本
+message C2SUserTaskDoProto {
+	required int32 taskID = 1;
+}
+
+message S2CUserTaskDoRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 taskID = 2;
+	
+	repeated int32 propSeq = 3;
+}
+
+
+// 离开普通/精英副本
+message C2SUserTaskLeaveProto {
+	required int32 taskID = 1;
+	required int32 taskComplete = 2;
+	
+	optional string programName = 3;
+	repeated BaseIntValuesProto eventAnswers = 4;
+	
+	repeated int32 leaderCardIDs = 5;
+}
+
+message S2CUserTaskLeaveRetProto {
+	required uint32 errCodeID = 1;	
+	
+	required int32 taskID = 2;
+	required int32 taskComplete = 3;
+	
+	optional int32 rewardMultiTimes = 4;
+	
+	repeated BaseItemInfoProto itemItemsInfo = 5;
+	repeated BaseItemInfoProto dropItemsInfo = 6;
+	repeated BaseItemInfoProto cardItemsInfo = 7;
+		
+	optional int32 taskGrade = 8;
+	optional int32 taskScore = 9;
+	optional int32 taskScoreEx = 10;
+	repeated PushPackActivitesInfoProto pushPacks = 11;
+	repeated BattleCardsLog cardsLog = 12;
+}
+
+// 扫荡普通/精英副本
+message C2SUserTaskSweepProto {
+	required int32 taskID = 1;
+	required int32 sweepNum = 2;
+}
+
+message UserTaskDropRetProto {
+	repeated BaseItemInfoProto itemItemsInfo = 1;
+	
+	repeated BaseItemInfoProto dropItemsInfo = 2;
+	
+	repeated BaseItemInfoProto cardItemsInfo = 3;
+}
+
+message S2CUserTaskSweepRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 taskID = 2;
+	required int32 sweepNum = 3;
+	
+	optional int32 rewardMultiTimes = 4;
+	
+	repeated UserTaskDropRetProto taskDropRetInfos = 5;
+}
+
+// 购买精英副本次数
+message C2SUserTaskBuyEliteCntProto {
+	required int32 taskID = 1;
+	required int32 buyCnt = 2;
+}
+
+message S2CUserTaskBuyEliteCntRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 taskID = 2;
+	required int32 buyCnt = 3;
+	optional int64 buyTime = 4;
+}
+
+// 领取普通/精英副本奖励
+message C2SUserTaskRewardSubmitProto {
+	required int32 rewardID = 1;
+}
+
+message S2CUserTaskRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 rewardID = 2;
+}
+
+// 提交副本主线
+message C2SUserTaskLineSubmitProto {
+	required int32 taskLineID = 1;
+}
+
+message S2CUserTaskLineSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 taskLineID = 2;
+}
+
+// 关卡解锁
+message C2SUserTaskLineUnlockProto {
+	required int32 taskLineID = 1;
+}
+
+message S2CUserTaskLineUnlockRetProto {
+	required uint32 errCodeID = 1;
+	required int32 taskLineID = 2;
+}
+
+
+// ***人物副本相关***
+// 开始人物副本
+message C2SUserMaleRoleTaskDoProto {
+	required int32 taskID = 1;
+}
+
+message S2CUserMaleRoleTaskDoRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 taskID = 2;
+	
+	repeated int32 propSeq = 3;
+}
+
+// 离开人物副本
+message C2SUserMaleRoleTaskLeaveProto {
+	required int32 taskID = 1;
+	required int32 taskComplete = 2;
+	
+	optional string programName = 3;
+	repeated BaseIntValuesProto eventAnswers = 4;
+	
+	repeated int32 leaderCardIDs = 5;
+}
+
+message S2CUserMaleRoleTaskLeaveRetProto {
+	required uint32 errCodeID = 1;	
+	
+	required int32 taskID = 2;
+	required int32 taskComplete = 3;
+	
+	optional int32 rewardMultiTimes = 4;
+	
+	repeated BaseItemInfoProto itemItemsInfo = 5;
+	repeated BaseItemInfoProto dropItemsInfo = 6;
+	repeated BaseItemInfoProto cardItemsInfo = 7;
+		
+	optional int32 taskGrade = 8;
+	optional int32 taskScore = 9;
+	optional int32 taskScoreEx = 10;
+	repeated BattleCardsLog cardsLog = 11;
+}
+
+// 扫荡人物副本
+message C2SUserMaleRoleTaskSweepProto {
+	required int32 taskID = 1;
+	required int32 sweepNum = 2;
+}
+
+message S2CUserMaleRoleTaskSweepRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 taskID = 2;
+	required int32 sweepNum = 3;
+	
+	optional int32 rewardMultiTimes = 4;
+	
+	repeated UserTaskDropRetProto taskDropRetInfos = 5;
+}
+
+// 购买人物副本次数
+message C2SUserMaleRoleTaskBuyCntProto {
+	required int32 taskID = 1;
+	required int32 buyCnt = 2;
+}
+
+message S2CUserMaleRoleTaskBuyCntRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 taskID = 2;
+	required int32 buyCnt = 3;
+	optional int64 buyTime = 4;
+}
+
+// 领取人物副本奖励
+message C2SUserMaleRoleTaskRewardSubmitProto {
+	required int32 rewardID = 1;
+}
+
+message S2CUserMaleRoleTaskRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 rewardID = 2;
+}
+
+// 提交人物副本主线
+message C2SUserMaleRoleTaskLineSubmitProto {
+	required int32 taskLineID = 1;
+}
+
+message S2CUserMaleRoleTaskLineSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 taskLineID = 2;
+}
+
+// ***女主属性相关***
+// 安排学习券
+message C2SUserFirmPropVoucherArrangeProto {
+	required int32 goodsID = 1;
+}
+
+message S2CUserFirmPropVoucherArrangeRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 goodsID = 2;	
+	optional int64 arrangeStartTime = 3;
+	optional int64 curTime = 4;
+}
+
+// 完成学习券
+message C2SUserFirmPropVoucherSubmitProto {
+	repeated int32 arrangeIndexs = 1;
+}
+
+message S2CUserFirmPropVoucherSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	repeated int32 arrangeIndexs = 2;
+	optional int64 arrangeStartTime = 3;
+	optional int64 curTime = 4;
+}
+
+// 取消学习券
+message C2SUserFirmPropVoucherCancelProto {
+	required int32 arrangeIndex = 1;
+}
+
+message S2CUserFirmPropVoucherCancelRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 arrangeIndex = 2;
+	optional int64 arrangeStartTime = 3;
+	optional int64 curTime = 4;
+} 
+
+// 加速学习券
+message C2SUserFirmPropVoucherQuickProto {
+	required int32 arrangeIndex = 1;
+}
+
+message S2CUserFirmPropVoucherQuickRetProto {
+	required uint32 errCodeID = 1;	
+	
+	required int32 arrangeIndex = 2;	
+	optional int64 arrangeStartTime = 3;
+	optional int64 curTime = 4;
+}
+
+// ***道具相关***
+// 出售道具
+message C2SUserGoodsSellProto {
+	repeated BaseBriefItemInfoProto goodsesInfo = 1;	
+}
+
+message S2CUserGoodsSellRetProto {
+	required uint32 errCodeID = 1;
+	
+	repeated BaseBriefItemInfoProto goodsesInfo = 2;	
+}
+
+// 道具兑换
+message C2SUserGoodsExchangeProto {
+	required int32 exchangeID = 1;
+	required int32 exchangeNum = 2;
+}
+
+message S2CUserGoodsExchangeRetProto {
+	required uint32 errCodeID = 1;	
+	
+	required int32 exchangeID = 2;	
+	required int32 exchangeNum = 3;
+	required int32 exchangeType = 4;
+	repeated BaseItemInfoProto goodsWeightsetInfos = 5; // 随机礼包物品
+}
+
+// 道具使用
+message C2SUserGoodsConsumeProto {
+	required int32 goodsID = 1;
+	required int32 goodsNum = 2;
+}
+
+message S2CUserGoodsConsumeRetProto {
+	required uint32 errCodeID = 1;	
+	
+	required int32 goodsID = 2;
+	required int32 goodsNum = 3;
+	
+	repeated BaseItemsInfoProto goodsConsumeInfos = 4;
+}
+
+// 道具兑换刷新
+message C2SUserGoodsExchangeRefreshProto {
+	optional int32 exchangeType = 1;
+}
+
+message S2CUserGoodsExchangeRefreshRetProto {
+	required uint32 errCodeID = 1;	
+	
+	repeated int32 boughtGoodsIDs = 2;
+	optional int32 exchangeType = 3;
+}
+
+
+// ***卡牌相关***
+// 卡牌升级
+message C2SUserCardUpgradeProto {
+	required int32 cardID = 1;
+	repeated BaseItemInfoProto goodsInfos = 2;	
+}
+
+message S2CUserCardUpgradeRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 cardID = 2;
+    repeated BaseItemInfoProto goodsInfos = 3;	
+	
+	optional int32 cardLevel = 4;
+	optional int32 cardExp = 5;
+}
+
+// 卡牌装备
+message C2SUserCardDeployProto {
+	required int32 taskID = 1;
+	repeated int32 leaderCardIDs = 2;
+}
+
+message S2CUserCardDeployRetProto {
+	required uint32 errCodeID = 1;	
+	
+	required int32 taskID = 2;
+	repeated int32 leaderCardIDs = 3;
+}
+
+// 卡牌分解
+message C2SUserCardResolveProto {
+	repeated BaseBriefItemInfoProto cardInfos = 1;	
+}
+
+message S2CUserCardResolveRetProto {
+	required uint32 errCodeID = 1;
+	
+	repeated BaseBriefItemInfoProto cardInfos = 2;	
+		
+	repeated BaseItemInfoProto resolveInfos = 3;
+	optional bool resolveDoubleFlag = 4;
+}
+
+// 卡牌进阶奖励领取
+message C2SUserCardAdvanceRewardsSubmitProto {
+	required int32 cardID = 1;	
+	required int32 rewardCardRank = 2;
+}
+
+message S2CUserCardAdvanceRewardsSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 cardID = 2;
+	required int32 rewardCardRank = 3;
+}
+
+
+// 卡牌进阶
+message C2SUserCardAdvanceProto {
+	required int32 cardID = 1;	
+}
+
+message S2CUserCardAdvanceRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 cardID = 2;	
+}
+
+// 卡牌设计
+message C2SUserCardDesignProto {
+	required int32 cardID = 1;	
+}
+
+message S2CUserCardDesignRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 cardID = 2;	
+}
+
+// 卡牌进化
+message C2SUserCardEvolutionProto {
+	required int32 cardID = 1;
+}
+
+message S2CUserCardEvolutionRetProto {
+	required uint32 errCodeID = 1;	
+	
+	required int32 cardID = 2;	
+}
+
+// ***签到相关***
+// 领取签到奖励
+message C2SUserCheckInSubmitProto {
+	required int32 checkInDay = 1;
+}
+
+message S2CUserCheckInSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 checkInDay = 2;
+	optional int64 checkInTime = 3;
+}
+
+// 领取签到奖励
+message C2SUserCheckInRewardSubmitProto {
+	required int32 rewardID = 1;
+}
+
+message S2CUserCheckInRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 rewardID = 2;
+}
+
+// 领取签到奖励
+message C2SUserCheckInAppendProto {
+	required int32 checkInDay = 1;
+}
+
+message S2CUserCheckInAppendRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 checkInDay = 2;
+}
+
+// 领取签到月奖励
+message C2SUserCheckInMonthlyRewardProto {
+}
+
+message S2CUserCheckInMonthlyRewardRetProto{
+	required uint32 errCodeID = 1;
+}
+
+message C2SUserCheckInGetInfoProto{
+	
+}
+
+message S2CUserCheckInGetInfoRetProto{
+	required uint32 errCodeID = 1;
+	required UserCheckInInfoProto checkinInfo = 2;
+}
+
+// ***抽卡相关***
+// 抽卡
+message C2SUserCardCallSubmitProto {
+	required int32 cardCallID = 1;
+	optional int32 useCoupon = 2;
+}
+
+message S2CUserCardCallSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 cardCallID = 2;
+	repeated BaseItemInfoProto itemsInfo = 3;
+	optional int64 cardCallFreeTime = 4;
+	optional int32 dailyCallGoldCnt = 5;
+	optional int32 dailyCallJewelCnt = 6;
+	optional int64 lastDailyCallRefreshTime = 7;
+}
+
+// ***成就相关***
+// 领取成就奖励
+message C2SUserAchievementSubmitProto {
+	required int32 achievementID = 1;
+}
+
+message S2CUserAchievementSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 achievementID = 2;
+}
+
+// ***每日任务相关***
+// 领取每日任务奖励
+message C2SUserDailyQuestSubmitProto {
+	required int32 questID = 1;
+}
+
+message S2CUserDailyQuestSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 questID = 2;
+}
+
+// 领取活跃度奖励
+message C2SUserLivenessRewardSubmitProto {
+	required int32 rewardID = 1;
+}
+
+message S2CUserLivenessRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 rewardID = 2;
+}
+
+// 领取活跃度奖励
+message C2SUserWeeklyLivenessRewardSubmitProto {
+	required int32 rewardID = 1;
+}
+
+message S2CUserWeeklyLivenessRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 rewardID = 2;
+	optional int64 receivedTime = 3;
+	optional BaseItemInfoProto rewardItem = 4;
+}
+
+// ***约会相关***
+// 领取约会奖励
+message C2SUserEngagementSubmitProto {
+	required int32 engagementID = 1;
+	repeated int32 engagementOptionIDs = 2;
+}
+
+message S2CUserEngagementSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 engagementID = 2;
+	repeated int32 engagementOptionIDs = 3;
+	
+	optional int64 engagementTime = 4;
+}
+
+// ***小传***
+message C2SUserExtraStorySubmitProto {
+	required int32 extraStoryID = 1;
+}
+
+message S2CUserExtraStorySubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 extraStoryID = 2;
+}
+
+// ***兑换码相关***
+// 领取兑换码奖励
+message C2SUserRedeemCodeSubmitProto {
+	required string redeemCode = 1;
+}
+
+message S2CUserRedeemCodeSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required string redeemCode = 2;
+
+	repeated BaseItemInfoProto redeemRewards = 3;
+}
+
+// ***排行榜相关***
+// 副本排行榜
+message C2SUserRankTaskListProto {
+	required int32 taskID = 1;
+}
+
+message S2CUserRankTaskListRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 taskID = 2;
+	repeated BaseRankInfoProto rankInfos = 3;
+	optional int32 taskRank = 4;
+}
+
+// CardCnt排行榜
+message C2SUserRankCardCntListProto {
+	required int32 maleRoleID = 1;
+}
+
+message S2CUserRankCardCntListRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 maleRoleID = 2;
+	repeated BaseRankInfoProto rankInfos = 3;
+	optional int32 cardCntRank = 4;
+}
+
+// ***竞技场相关***
+
+// 获取竞技场V2排行榜
+message C2SUserRankArenaV2ListProto {
+	required int32 arenaID = 1;
+}
+
+message S2CUserRankArenaV2ListRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 arenaID = 2;
+	repeated ArenaV2RankInfoProto rankInfos = 3;
+	optional int32 arenaRank = 4;
+	optional int32 arenaTotalRank = 5;
+}
+
+
+// 获取战力排行榜
+message C2SUserRankPowerListProto {
+	required int32 rankID = 1;
+}
+
+message S2CUserRankPowerListRetProto {
+	required uint32 errCodeID = 1;
+	repeated BaseRankInfoProto rankInfos = 2;
+	optional int32 arenaRank = 3;
+	optional int32 arenaTotalRank = 4;
+}
+
+
+// 获取竞技场排行榜
+message C2SUserRankArenaListProto {
+	required int32 arenaID = 1;
+}
+
+message S2CUserRankArenaListRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 arenaID = 2;
+	repeated BaseRankInfoProto rankInfos = 3;
+	optional int32 arenaRank = 4;
+	optional int32 arenaTotalRank = 5;
+}
+
+// 卡牌上阵
+message C2SUserArenaCardDeployProto {
+	repeated int32 leaderCardIDs = 1;
+}
+
+message S2CUserArenaCardDeployRetProto {
+	required uint32 errCodeID = 1;
+	
+	repeated int32 leaderCardIDs = 2;
+}
+
+// 获取竞技场主界面信息
+message C2SUserArenaMainInfoProto {
+	required int32 arenaID = 1;
+}
+
+message S2CUserArenaMainInfoRetProto {
+	required uint32 errCodeID = 1;
+	required int32 arenaID = 2;
+	repeated BasePeerInfoProto peerInfos = 3;
+	optional int32 arenaRank = 4;
+	optional int32 arenaTotalRank = 5;
+	optional int32 hasReward = 6;
+	optional BaseArenaInfoProto lastArena = 7;
+	repeated ArenaDefenceInfoProto defenceInfos = 8;
+}
+
+// 刷新竞技场对手
+message C2SUserArenaRefreshPeerProto {
+	required int32 arenaID = 1;
+}
+
+message S2CUserArenaRefreshPeerRetProto {
+	required uint32 errCodeID = 1;
+	required int32 arenaID = 2;
+	repeated BasePeerInfoProto peerInfos = 3;
+}
+
+
+// 获取竞技场对手
+message C2SUserArenaGetPeerProto {
+	required int32 arenaID = 1;
+	required int32 peerType = 2;
+}
+
+message S2CUserArenaGetPeerRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 arenaID = 2;
+	required int32 peerType = 3;
+	
+	optional int32 themeID = 4;
+	repeated BasePeerInfoProto peerInfos = 5;
+	
+	optional int32 arenaRank = 6;
+	optional int32 arenaTotalRank = 7;
+}
+
+// 竞技场对手PK
+message C2SUserArenaPvpBattleProto {
+	required int32 arenaID = 1;
+	required int32 peerID = 2;
+	optional int32 forceBattle = 3;
+}
+
+message S2CUserArenaPvpBattleRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 arenaID = 2;
+	required int32 peerID = 3;
+			
+	optional int32 arenaLevel = 4;
+	optional int32 arenaScore = 5;
+	optional bool battleWin = 6;
+	
+	// 下一场竞技场相关信息	
+	optional int32 themeID = 7;
+	repeated BasePeerInfoProto peerInfos = 8;
+	
+	optional int32 arenaRank = 9;
+	optional int32 arenaTotalRank = 10;
+
+	repeated int32 ownScores = 11;			// 己方成绩
+	repeated int32 peerScores = 12; 		// 对手成绩
+	repeated UserPVPBattleLogProto ownCriticals = 13;
+	repeated UserPVPBattleLogProto peerCriticals = 14;
+}
+
+// 获取竞技场排行
+message C2SUserArenaRankInfosProto {
+	required int32 arenaID = 1;
+	repeated int32 arenaIDs = 2;
+}
+
+message S2CUserArenaRankInfosRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 arenaID = 2;
+	repeated int32 arenaIDs = 3;
+	
+	repeated BaseArenaRankInfoProto rankInfos = 4;	
+}
+
+// 领取竞技场奖励
+message C2SUserArenaRewardSubmitProto {
+	required int32 arenaID = 1;
+	required int32 rewardArenaID = 2;
+	required int32 rewardType = 3;
+}
+
+message S2CUserArenaRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 arenaID = 2;
+	required int32 rewardArenaID = 3;
+	required int32 rewardType = 4;
+}
+
+// 购买竞技场次数
+message C2SUserArenaBuyCntProto {
+	required int32 arenaID = 1;
+	required int32 buyCnt = 2;
+}
+
+message S2CUserArenaBuyCntRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 arenaID = 2;
+	required int32 buyCnt = 3;
+	optional int64 buyTime = 4;	
+}
+
+// ***活动相关***
+// 活动开关状态变更
+message S2CUserActivitySwitchChangeRetProto {
+	required int32 activityID = 1;
+	required bool activitySwitch = 2;
+}
+
+// 活动状态变更
+message BaseActivityStatusInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activityNewFlag = 6;
+	required bool activitySwitch = 7;		
+	required bool activityDetail = 8;
+	required int32 activityRecommend = 9;
+	repeated int32 activityPlatforms = 10;
+}
+
+message S2CUserActivityStatusChangeRetProto {
+	repeated BaseActivityStatusInfoProto activityStatusInfos = 1;
+}
+
+message BaseActivityShareTextProto{
+	required int32 textID = 1;
+	required int32 textNpc = 2;
+	required string textTitle = 3;
+	required int32 textBackground = 4;
+	required string textDesc = 5;
+	required string textShare = 6;
+}
+
+message BaseActivityCommentDataProto {
+	required int32 taskLineID = 1;
+	required string commentBackground = 2;
+}
+
+message BaseActivitySpringFortuneUIProto{
+	required int32 fortuneID = 1;
+	required string fortuneUI = 2;
+}
+
+message BaseActivitySpringRedbagInfoProto{
+	required int32 redbagID = 1;
+	repeated BaseItemInfoProto redbagReward = 2;  
+}
+
+message BaseActivityArenaExchangeProto {
+	required int32 exchangeID = 1;
+	required int32 activityID = 2;
+	repeated BaseItemInfoProto exchangePrice = 3;
+	repeated BaseItemInfoProto exchangeRewards = 4;
+	required int32 exchangeLimit = 5;
+}
+
+message BaseActivityGainConsumeInfoProto {
+	required int32 resetType = 1;
+}
+
+message BaseActivityFestivalListInfoProto {
+	required int64 startTime = 1;
+	required int64 endTime = 2;
+}
+
+message BaseActivityExtraInfoProto{
+	repeated BaseActivityShareTextProto shareTextInfos = 1;
+	repeated BaseActivityCommentDataProto commentDataInfos = 2;
+	repeated BaseActivityArenaExchangeProto arenaExchangeInfos = 3;
+	repeated BaseActivitySpringFortuneUIProto springFortuneUIInfos = 4;
+	repeated BaseActivitySpringRedbagInfoProto springRedbagInfos = 5;
+	repeated BaseActivityMainquestAwardboxProto mainquestAwardInfos = 6;
+}
+
+message BaseActivityMainquestAwardboxProto {
+	required int32 id = 1;
+	required BaseItemsInfoProto awardInfo = 2;
+	required BaseItemsInfoProto awardPoint = 3;
+}
+
+message BaseActivityExtendInfoProto {
+	optional BaseActivityGainConsumeInfoProto gainConsumeInfo = 1;
+	optional BaseActivityFestivalListInfoProto festivalListInfo = 2;
+}
+
+message BaseActivityDetailInfoProto {	
+	required int32 activityID = 1;
+	required string activityUnlockNeed = 2;
+	required int32 activitySubID = 3;
+	required int32 activityUnlockSubID = 4;
+	required int32 activityRepeatCnt = 5;
+	required string activityResource = 6;
+	required string activityDesc = 7;
+	required string activityUnlockPrice = 8;
+	required string activityBasicRule = 9;	
+	required string activityDetailRule = 10;
+	required string activityRewards = 11;
+	required int32 activityRecommend = 12;
+	optional BaseActivityExtraInfoProto activityExtraInfo = 13;
+	optional BaseActivityExtendInfoProto activityExtendInfo = 14; //单条 activity subid 对应的扩展字段
+	optional string activityOpenCondition = 15; // 开启条件
+}
+
+message BaseActivityGroupDetailInfoProto {
+	required int32 activityID = 1;
+	repeated BaseActivityDetailInfoProto activityDetailInfos = 2;
+}
+
+// 获取活动信息
+message C2SUserActivityGetInfosProto {
+	repeated int32 activityIDs = 1;
+}
+
+message S2CUserActivityGetInfosRetProto {
+	required uint32 errCodeID = 1;
+	
+	repeated int32 activityIDs = 2;
+	
+	repeated BaseActivityGroupDetailInfoProto activityGroupInfos = 3;
+}
+
+
+// 领取累充活动奖励
+message C2SUserActivityRechargeRewardSubmitProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+}
+
+message S2CUserActivityRechargeRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+	repeated BaseItemInfoProto rewardItemsInfo = 4;
+}
+
+
+// 领取首冲奖励活动奖励
+message C2SUserActivityFirstChargePackRewardSubmitProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+}
+
+message S2CUserActivityFirstChargePackRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+}
+
+// 领取基金活动奖励
+message C2SUserActivityFundRewardSubmitProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+	required int32 lvlRewardID = 3;
+}
+
+message S2CUserActivityFundRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+	optional int32 lvlRewardID = 4;
+}
+
+
+// 领取每日活动奖励
+message C2SUserActivityDailyRewardSubmitProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+}
+
+message S2CUserActivityDailyRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+}
+
+// 领取组活动奖励
+message C2SUserActivityGroupRewardSubmitProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+}
+
+message S2CUserActivityGroupRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+}
+
+// 领取通用活动奖励
+message C2SUserActivityCommonRewardSubmitProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+}
+
+message S2CUserActivityCommonRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+}
+
+// 活动抽卡
+message C2SUserActivityCardCallSubmitProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+	required int32 cardCallID = 3;
+	required int32 useCoupon = 4;
+}
+
+message S2CUserActivityCardCallSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+	
+	required int32 cardCallID = 4;
+	repeated BaseItemInfoProto itemsInfo = 5;
+	optional int64 cardCallFreeTime = 6;
+}
+
+// 开始活动副本
+message C2SUserActivityTaskDoProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+	required int32 taskID = 3;
+}
+
+message S2CUserActivityTaskDoRetProto {
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+	required int32 taskID = 4;
+	repeated int32 propSeq = 5;
+}
+
+// 离开活动副本
+message C2SUserActivityTaskLeaveProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+	required int32 taskID = 3;
+	required int32 taskComplete = 4;
+	optional string programName = 5;
+	repeated BaseIntValuesProto eventAnswers = 6;
+	repeated int32 leaderCardIDs = 7;
+}
+
+message S2CUserActivityTaskLeaveRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+	required int32 taskID = 4;
+	required int32 taskComplete = 5;
+
+	optional UserTaskDropRetProto taskDropRetInfos = 6;
+		
+	optional int32 taskGrade = 7;
+	optional int32 taskScore = 8;
+	optional int32 taskScoreEx = 9;
+	optional BaseTuJianEventInfoProto tujianEventInfo = 10;
+	repeated BattleCardsLog cardsLog = 11;
+}
+
+// 扫荡活动副本
+message C2SUserActivityTaskSweepProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+	required int32 taskID = 3;
+	required int32 sweepNum = 4;
+}
+
+// 领取副本顺带的每日奖励
+message C2SUserActivityTaskDailyRewardObtainProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+}
+
+message BaseActivityTaskDailyExtInfoProto {
+	required int32 activityID = 1;
+	required bool rewardState = 2;  // 奖励领取状态, true 表示可以领取, false 表示已经领取
+
+}
+
+// 领取副本顺带的每日奖励状态
+message S2CUserActivityTaskDailyRewardRetProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+	required bool rewardState = 3;  // 奖励领取状态, true 表示可以领取, false 表示已经领取
+	required uint32 errCodeID = 4;  // 错误码
+}
+
+message S2CUserActivityTaskSweepRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+	required int32 taskID = 4;
+	required int32 sweepNum = 5;
+	
+	repeated UserTaskDropRetProto taskDropRetInfos = 6;
+	optional BaseTuJianEventInfoProto tujianEventInfo = 7;
+}
+
+// 购买活动副本次数
+message C2SUserActivityTaskBuyCntProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+	required int32 taskID = 3;
+	required int32 buyCnt = 4;
+	required int32 buyType = 5;
+}
+
+message S2CUserActivityTaskBuyCntRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+	required int32 taskID = 4;
+	required int32 buyCnt = 5;
+	optional int64 buyTime = 6;
+}
+
+
+// 暗访副本奖励领取
+message C2SUserActivityTaskLineSubmitProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+	required int32 taskLineID = 3;
+}
+
+message S2CUserActivityTaskLineSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+	required int32 taskLineID = 4;
+}
+
+// 领取每日活动奖励
+message C2SUserActivityTimeRewardSubmitProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+}
+
+message S2CUserActivityTimeRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+}
+
+// 领取每日活动奖励
+message C2SUserActivityDailyExRewardSubmitProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+}
+
+message S2CUserActivityDailyExRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+}
+
+// 领取每日活动奖励
+message C2SUserActivityMailRewardSubmitProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+}
+
+message S2CUserActivityMailRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+}
+
+// 分享确认
+message C2SUserActivityShareSubmitProto{
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+	required int32 shareNpcID = 3;
+	required int32 shareTextID = 4;
+}
+
+message S2CUserActivityShareSubmitRetProto{
+
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+	required int32 shareNpcID = 4;
+	required int32 shareTextID = 5;
+}
+
+message C2SUserActivityShareRewardSubmitProto{
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+	required int32 shareNpcID = 3;
+}
+
+message S2CUserActivityShareRewardSubmitRetProto{
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+	required int32 shareNpcID = 4;
+}
+
+message C2SUserActivityCommentSubmitProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+	required int32 taskID = 3;
+}
+
+message S2CUserActivityCommentSubmitRetProto {
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+	required int32 taskID = 4;
+}
+
+message C2SUserActivityInviteSubmitProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+	required string content = 3;
+}
+
+message S2CUserActivityInviteSubmitRetProto{
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+	required string content = 4;
+}
+
+// ***暗访副本相关***
+// 暗访副本开始
+message C2SUserSecretTaskStartProto {
+	required int32 taskID = 1;
+}
+
+message S2CUserSecretTaskStartRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 taskID = 2;
+	
+	optional int32 taskStoryID = 3;
+	optional string peerCharName = 4;
+	optional int32 peerFirmLevel = 5;
+	repeated int32 peerPropVals = 6;
+}
+
+// 暗访副本重置
+message C2SUserSecretTaskResetProto {
+	required int32 taskResetFlag = 1;
+}
+
+message S2CUserSecretTaskResetRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 taskResetFlag = 2;
+	
+	optional int64 taskResetTime = 3;
+}
+
+// 暗访副本更换卡牌
+message C2SUserSecretTaskCardChangeProto {
+	repeated BasePairValueProto cardPosInfos = 1;
+}
+
+message S2CUserSecretTaskCardChangeRetProto {
+    required uint32 errCodeID = 1;
+	
+	repeated BasePairValueProto cardPosInfos = 2;
+}
+
+// 暗访副本上阵卡牌
+message C2SUserSecretTaskCardDeployProto {
+	repeated int32 leaderCardIDs = 1;
+}
+
+message S2CUserSecretTaskCardDeployRetProto {
+	required uint32 errCodeID = 1;
+	
+	repeated int32 leaderCardIDs = 2;
+}
+
+// 暗访副本执行
+message C2SUserSecretTaskDoProto {
+	required int32 taskID = 1;
+	repeated int32 bufferIDs = 2;
+}
+
+message S2CUserSecretTaskDoRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 taskID = 2;
+	repeated int32 bufferIDs = 3;
+	
+	repeated int32 propSeq = 4;
+}
+
+// 暗访副本离开
+message C2SUserSecretTaskLeaveProto {
+	required int32 taskID = 1;
+	required int32 taskComplete = 2;
+	
+	optional string programName = 3;
+	repeated BaseIntValuesProto eventAnswers = 4;
+}
+
+message S2CUserSecretTaskLeaveRetProto {
+	required uint32 errCodeID = 1;	
+	
+	required int32 taskID = 2;
+	required int32 taskComplete = 3;
+	
+	repeated int32 peerPropValsLeft = 4;	
+}
+
+// 暗访副本奖励领取
+message C2SUserSecretTaskRewardSubmitProto {
+	required int32 rewardID = 1;
+}
+
+message S2CUserSecretTaskRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 rewardID = 2;
+}
+
+// ***职员相关***
+// 职员特聘
+message C2SUserStaffDeployProto {
+	required int32 staffID = 1;
+}
+
+message S2CUserStaffDeployRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 staffID = 2;
+}
+
+
+// 职员升级
+message C2SUserStaffUpgradeProto {
+	required int32 staffID = 1;
+}
+
+message S2CUserStaffUpgradeRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 staffID = 2;
+
+	optional int32 newLevel = 3;
+}
+
+
+// 刷新职员商店
+message C2SUserStaffRefreshProto {
+	required int32 refreshIndex = 1;
+}
+
+message S2CUserStaffRefreshRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 refreshIndex = 2;
+	
+	repeated int32 hireStaffIDs = 3;
+	optional int64 refreshTime = 4;
+}
+
+// 雇佣职员
+message C2SUserStaffHireProto {
+	required int32 staffID = 1;
+}
+
+message S2CUserStaffHireRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 staffID = 2;
+	
+	optional int64 staffHireTime = 3;
+}
+
+// 解雇职员
+message C2SUserStaffFireProto {
+	required int32 staffID = 1;
+}
+
+message S2CUserStaffFireRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 staffID = 2;
+}
+
+// ***短消息相关***
+
+// 获取短信消息历史列表
+message C2SUserShortMsgGetHistoryListProto {
+	required int32 phoneContactID = 1;	
+	required int32 endShortMsgSeqIndex = 2;
+	required int32 shortMsgSeqCnt = 3;
+}
+
+message S2CUserShortMsgGetHistoryListRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 phoneContactID = 2;	
+	required int32 endShortMsgSeqIndex = 3;
+	required int32 shortMsgSeqCnt = 4;
+	
+	repeated BasePairValueProto shortMsgSeqInfos = 5;
+}
+
+// 获取历史短信消息 
+message C2SUserShortMsgGetHistoryMsgProto {
+	required int32 phoneContactID = 1;	
+	required int32 shortMsgSeqIndex = 2;
+} 
+	
+message S2CUserShortMsgGetHistoryMsgRetProto {
+	required uint32 errCodeID = 1;
+		
+	required int32 phoneContactID = 2;	
+	required int32 shortMsgSeqIndex = 3;
+		
+	repeated int32 msgOptionIDs = 4;	
+}
+	
+// 获取可发送短信消息列表
+message C2SUserShortMsgGetSendListProto {
+	required int32 phoneContactID = 1;
+	required int32 startSendShortMsgIndex = 2;
+	required int32 sendShortMsgCnt = 3;
+}
+
+message S2CUserShortMsgGetSendListRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 phoneContactID = 2;
+	required int32 startSendShortMsgIndex = 3;
+	required int32 sendShortMsgCnt = 4;
+	
+	repeated BasePairValueProto sendShortMsgInfos = 5;
+}
+
+// 获取最新短信消息
+message C2SUserShortMsgGetRecvMsgsProto {
+	repeated int32 phoneContactIDs = 1;
+}
+
+message BaseShortMsgRecvMsgInfoProto {
+	required int32 phoneContactID = 1;
+	required int32 shortMsgID = 2;	
+}
+
+message S2CUserShortMsgGetRecvMsgsRetProto {
+	required uint32 errCodeID = 1;
+	
+	repeated int32 phoneContactIDs = 2;
+	
+	repeated BaseShortMsgRecvMsgInfoProto recvMsgInfos = 3;
+	
+	optional int64 msgRecvTime = 4;
+}
+
+// 发送短信消息
+message C2SUserShortMsgSendMsgProto {
+	required int32 phoneContactID = 1;
+	required int32 sendMsgType = 2;
+	required int32 sendShortMsgIndex = 3;
+	required int32 msgOptionID = 4;
+}
+
+message S2CUserShortMsgSendMsgRetProto {
+	required uint32 errCodeID = 1;
+
+	required int32 phoneContactID = 2;
+	required int32 sendMsgType = 3;
+	required int32 sendShortMsgIndex = 4;
+	required int32 msgOptionID = 5;
+	
+	optional int64 msgSendTime = 6;
+}
+
+// 回复短信消息
+message C2SUserShortMsgReplyMsgProto {
+	required int32 phoneContactID = 1;
+	required int32 shortMsgSeqIndex = 2;
+	required int32 msgOptionID = 3;
+}
+
+message S2CUserShortMsgReplyMsgRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 phoneContactID = 2;
+	required int32 shortMsgSeqIndex = 3;
+	required int32 msgOptionID = 4;
+	
+	optional int64 msgReplyTime = 5;
+}
+
+// 变更短信消息参数
+message C2SUserShortMsgOptionParamChangeProto {
+	required int32 phoneContactID = 1;
+	required int32 msgOptionParam = 2;
+}
+
+message S2CUserShortMsgOptionParamChangeRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 phoneContactID = 2;
+	required int32 msgOptionParam = 3;
+}
+
+// ***电话消息相关***
+
+// 获取电话消息列表
+message C2SUserPhoneMsgGetRecvMsgsProto {
+	required int32 endPhoneMsgSeqIndex = 1;
+	required int32 phoneMsgSeqCnt = 2;
+}
+
+message S2CUserPhoneMsgGetRecvMsgsRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 endPhoneMsgSeqIndex = 2;
+	required int32 phoneMsgSeqCnt = 3;
+	
+	repeated BasePhoneMsgBriefMsgInfoProto recvMsgInfos = 4;
+	optional int64 lastPhoneMsgTime = 5;
+}
+
+// 变更电话消息状态
+message	C2SUserPhoneMsgSetMsgStatusProto {
+	repeated int32 phoneMsgSeqIndexs = 1;
+}
+
+message	S2CUserPhoneMsgSetMsgStatusRetProto {
+	required uint32 errCodeID = 1;
+	
+	repeated int32 phoneMsgSeqIndexs = 2;
+}
+
+// 获取历史电话消息 
+message C2SUserPhoneMsgGetHistoryMsgProto {
+	required int32 phoneMsgSeqIndex = 2;
+} 
+	
+message S2CUserPhoneMsgGetHistoryMsgRetProto {
+	required uint32 errCodeID = 1;
+		
+	required int32 phoneMsgSeqIndex = 2;
+		
+	repeated int32 msgOptionIDs = 3;	
+	required int64 msgOptionTime = 4;
+	required int32 msgOptionParam = 5;
+}
+
+// 回复电话消息
+message C2SUserPhoneMsgReplyMsgProto {
+	required int32 phoneMsgSeqIndex = 1;
+	required int32 msgOptionType = 2;
+	required int32 msgOptionID = 3;
+}
+
+message S2CUserPhoneMsgReplyMsgRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 phoneMsgSeqIndex = 2;
+	required int32 msgOptionType = 3;
+	required int32 msgOptionID = 4;
+	
+	optional int64 msgReplyTime = 5;
+}
+	
+// ***公众号消息相关***
+
+// 获取公众号消息历史列表
+message C2SUserPublicMsgGetHistoryListProto {
+	required int32 publicContactID = 1;	
+	required int32 endPublicMsgSeqIndex = 2;
+	required int32 publicMsgSeqCnt = 3;
+}
+
+message S2CUserPublicMsgGetHistoryListRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 publicContactID = 2;	
+	required int32 endPublicMsgSeqIndex = 3;
+	required int32 publicMsgSeqCnt = 4;
+	
+	repeated BasePairValueProto publicMsgSeqInfos = 5;
+}
+
+// 获取最新公众号消息
+message C2SUserPublicMsgGetRecvMsgsProto {
+	repeated int32 publicContactIDs = 1;
+}
+
+message BasePublicMsgRecvMsgInfoProto {
+	required int32 publicContactID = 1;
+	required int32 publicMsgSeqIndex = 2;
+	required int32 publicMsgID = 3;
+	required int64 lastPublicMsgTime = 4;
+}
+
+message S2CUserPublicMsgGetRecvMsgsRetProto {
+	required uint32 errCodeID = 1;
+	
+	repeated int32 publicContactIDs = 2;
+	
+	repeated BasePublicMsgRecvMsgInfoProto recvMsgInfos = 3;
+}
+
+// 变更公众号消息状态
+message C2SUserPublicMsgSetMsgStatusProto {
+	required int32 publicContactID = 1;
+	required int32 publicMsgStatus = 2;
+}
+
+message S2CUserPublicMsgSetMsgStatusRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 publicContactID = 2;
+	required int32 publicMsgStatus = 3;
+}
+
+// ***朋友圈消息相关***
+// 获取朋友圈消息列表
+message C2SUserFriendMsgGetRecvMsgsProto {
+	required int32 endFriendMsgSeqIndex = 1;
+	required int32 friendMsgSeqCnt = 2;
+}
+
+message BaseFriendMsgRecvMsgInfoProto {
+	required int32 friendMsgSeqIndex = 1;
+	required int32 friendMsgID = 2;
+	required int64 friendMsgPublishTime = 3;
+	required int32 msgOptionID = 4;
+	required int64 msgOptionTime = 5;
+}
+
+message S2CUserFriendMsgGetRecvMsgsRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 endFriendMsgSeqIndex = 2;
+	required int32 friendMsgSeqCnt = 3;
+	
+	repeated BaseFriendMsgRecvMsgInfoProto recvMsgInfos = 4;
+}
+
+// 获取可发送朋友圈消息列表
+message C2SUserFriendMsgGetSendListProto {
+	required int32 startSendFriendMsgIndex = 1;
+	required int32 sendFriendMsgCnt = 2;
+}
+
+message S2CUserFriendMsgGetSendListRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 startSendFriendMsgIndex = 2;
+	required int32 sendFriendMsgCnt = 3;
+	
+	repeated BasePairValueProto sendFriendMsgInfos = 4;
+}
+
+// 发送朋友圈消息
+message C2SUserFriendMsgSendMsgProto {
+	required int32 sendFriendMsgIndex = 1;
+}
+
+message S2CUserFriendMsgSendMsgRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 sendFriendMsgIndex = 2;
+	
+	optional int64 msgSendTime = 3;
+}
+
+// 回复朋友圈消息
+message C2SUserFriendMsgReplyMsgProto {
+	required int32 friendMsgSeqIndex = 1;
+	required int32 msgOptionID = 2;
+}
+
+message S2CUserFriendMsgReplyMsgRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 friendMsgSeqIndex = 2;
+	required int32 msgOptionID = 3;
+	
+	required int64 msgReplyTime = 4;
+}
+
+// 变更朋友圈消息状态
+message C2SUserFriendMsgSetMsgStatusProto {
+	required int32 friendMsgStatus = 1;
+}
+
+message S2CUserFriendMsgSetMsgStatusRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 friendMsgStatus = 2;
+}
+
+// ***男主相关***
+// 男主备注恢复
+message C2SUserMaleRoleRecoverNoteProto {
+	required int32 maleRoleID = 1;
+} 	
+
+message S2CUserMaleRoleRecoverNoteRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 maleRoleID = 2;
+} 	
+
+// 男主修改备注
+message C2SUserMaleRoleModifyNoteProto {
+	required int32 maleRoleID = 1;
+	required string maleRoleNote = 2;
+} 	
+
+message S2CUserMaleRoleModifyNoteRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 maleRoleID = 2;
+	required string maleRoleNote = 3;
+} 	
+	
+// 男主修改关联卡牌
+message	C2SUserMaleRoleChangeRelatedCardProto {
+	required int32 maleRoleID = 1;
+	required int32 relatedCardID = 2;
+}
+
+message	S2CUserMaleRoleChangeRelatedCardRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 maleRoleID = 2;
+	required int32 relatedCardID = 3;
+}
+
+// ***跟踪副本相关***
+
+// 跟踪副本上阵卡牌
+message C2SUserTrackTaskCardDeployProto {
+	repeated int32 leaderCardIDs = 1;
+}
+
+message S2CUserTrackTaskCardDeployRetProto {
+	required uint32 errCodeID = 1;	
+	
+	repeated int32 leaderCardIDs = 2;
+}
+
+// 跟踪副本生成副本
+message C2SUserTrackTaskGenerateProto {
+	required int32 taskIndex = 1;
+}
+
+message S2CUserTrackTaskGenerateRetProto {
+	required uint32 errCodeID = 1;	
+	
+	required int32 taskIndex = 2;
+	
+	optional int32 taskID = 3;
+	optional int32 taskSubID = 4;
+}	
+	
+// 跟踪副本执行
+message C2SUserTrackTaskDoProto {
+	required int32 taskID = 1;
+	required int32 taskSubID = 2;
+}
+
+message S2CUserTrackTaskDoRetProto {
+	required uint32 errCodeID = 1;	
+	
+	required int32 taskID = 2;
+	required int32 taskSubID = 3;
+}
+
+// 跟踪副本离开
+message C2SUserTrackTaskLeaveProto {
+	required int32 taskID = 1;
+	required int32 taskSubID = 2;
+	required int32 taskComplete = 3;
+	
+	required int32 taskClickCnt = 4;	
+	repeated int32 eventOptionIDs = 5;
+} 
+	
+message S2CUserTrackTaskLeaveRetProto {
+	required uint32 errCodeID = 1;	
+	
+	required int32 taskID = 2;
+	required int32 taskSubID = 3;
+	required int32 taskComplete = 4;
+} 
+
+// 跟踪副本掉落领取
+message C2SUserTrackTaskDropSubmitProto {
+	required int32 taskID = 1;
+	required int32 taskSubID = 2;
+} 
+	
+message S2CUserTrackTaskDropSubmitRetProto {
+	required uint32 errCodeID = 1;	
+	
+	required int32 taskID = 2;
+	required int32 taskSubID = 3;
+} 
+	
+// 跟踪副本奖励领取
+message C2SUserTrackTaskRewardSubmitProto {
+	required int32 rewardID = 1;
+}
+
+message S2CUserTrackTaskRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+		
+	required int32 rewardID = 2;
+	
+	repeated BaseItemInfoProto rewardItemsInfo = 3;
+}
+
+
+// ***好友相关***
+// 获取申请好友列表
+message C2SUserFriendApplyInfosProto {
+	required int64 accntID = 1;
+}
+
+message S2CUserFriendApplyInfosRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int64 accntID = 2;
+	
+	repeated BaseUserBriefInfoProto friendApplyInfos = 3;
+}
+
+// 申请好友
+message C2SUserFriendApplyFriendProto {
+	required int64 friendAccntID = 1;	
+} 
+
+message S2CUserFriendApplyFriendRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int64 friendAccntID = 2;
+} 
+
+// 好友申请管理
+message C2SUserFriendApplyManageProto {
+	required int64 friendAccntID = 1;
+	required int32 applyStatus = 2;
+} 
+
+message S2CUserFriendApplyManageRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int64 friendAccntID = 2;
+	required int32 applyStatus = 3;
+}
+
+// 获取好友列表
+message C2SUserFriendFriendInfosProto {
+	required int64 accntID = 1;
+}
+
+message S2CUserFriendFriendInfosRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int64 accntID = 2;
+	
+	repeated BaseUserBriefInfoProto friendInfos = 3;	
+}
+
+// 删除好友
+message C2SUserFriendRemoveFriendProto {
+	required int64 friendAccntID = 1;
+}
+
+message S2CUserFriendRemoveFriendRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int64 friendAccntID = 2;
+}
+
+// 推荐好友
+message C2SUserFriendRecommendFriendProto {
+	required int64 accntID = 1;
+	required int32 recommendType = 2;
+}
+
+message S2CUserFriendRecommendFriendRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int64 accntID = 2;
+	required int32 recommendType = 3;
+	
+	repeated BaseUserBriefInfoProto recommendFriendInfos = 4;
+	optional int64 lastFriendRecommendTime = 5;
+}
+
+// 发送好友邮件
+message C2SUserFriendSendMailProto {
+	required int64 friendAccntID = 1;
+	required int32 mailType = 2;
+}
+
+message S2CUserFriendSendMailRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int64 friendAccntID = 2;
+	required int32 mailType = 3;
+}
+
+// 发送好友邮件
+message C2SUserFriendBatchSendMailProto {
+	repeated int64 friendAccntID = 1;
+	required int32 mailType = 2;
+}
+
+message S2CUserFriendBatchSendMailRetProto {
+	required uint32 errCodeID = 1;
+	
+	repeated int64 friendAccntID = 2;
+	required int32 mailType = 3;
+}
+
+
+// ***邮件相关***
+// 邮件状态变化
+message S2CUserMailStatusRetProto {
+	required int32 unReadMailNum = 1;     	// 未读系统邮件数量
+	required int64 loadMailID = 2;        	// 已读取系统邮件ID
+	required int32 mailType = 3;			// 邮件类型
+}
+
+message MailBriefInfo {
+	required int64 startMailID = 1;		// 起始系统邮件ID
+	required int32 mailType = 2;           // 邮件类型
+}
+
+// 获取邮件基本信息
+message C2SUserMailBriefInfosProto {
+	repeated MailBriefInfo infos = 1;
+
+}
+
+message MailBriefRetInfo {
+	required int64 startMailID = 1;
+	required int32 mailType = 2;
+	repeated BaseMailBriefProto mailBriefsInfo = 3;
+}
+
+message S2CUserMailBriefInfosRetProto {
+	required uint32 errCodeID = 1;
+	repeated MailBriefRetInfo infos = 2;
+}
+
+// 获取邮件详情
+message C2SUserMailDetailInfoProto {
+	required int64 mailID = 1;
+	required int32 mailType = 2;
+}
+
+message S2CUserMailDetailInfoRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int64 mailID = 2;
+	required int32 mailType = 3;
+	
+	optional BaseMailDetailProto mailDetailInfo = 4;
+}
+
+// 领取邮件奖励
+message C2SUserMailRecvRewardsProto {
+	repeated int64 mailIDs = 1;
+	required int32 mailType = 2;
+}
+
+message S2CUserMailRecvRewardsRetProto {
+	required uint32 errCodeID = 1;	
+	
+	repeated int64 mailIDs = 2;
+	required int32 mailType = 3;
+}
+
+// 设置好友邮件接收状态
+message C2SUserMailFriendMailRecvStatusChangeProto {
+	required int32 mailRecvStatus = 1;
+}
+
+message S2CUserMailFriendMailRecvStatusChangeRetProto {
+	required uint32 errCodeID = 1;	
+	
+	required int32 mailRecvStatus = 2;
+}
+
+// User 基本信息变更
+message S2CUserStatusChangeProto {
+	required int32 statusID = 1;
+	required int64 statusEndTime = 2;
+}
+
+message S2CUserMoneyChangeProto {
+	repeated BaseItemInfoProto moneyInfos = 1;
+}
+
+message S2CUserHeartChangeProto {
+	required int32 firmHeart = 1;
+    required int64 heartRecoverTime = 2;
+}
+
+message S2CUserFilmChangeProto {
+	required int32 charFilm = 1;
+	required int64 filmRecoverTime = 2;
+}
+
+message S2CUserActivitesScoreChangeProto {
+	repeated BasePairValueProto activitiesScore = 1;
+}
+
+message S2CUserSubscriptExpireChangeProto {
+	required string productId = 7;
+	required int64 expireTm = 8;
+}
+
+message S2CUserExpChangeProto {
+	required int32 firmLevel = 1;
+	required int32 firmExp = 2;
+}
+
+message S2CUserFirmPropChangeProto {
+	repeated BaseFirmPropInfoProto firmPropInfos = 1;
+}
+
+message S2CUserGoodsChangeProto {
+	required int32 changeStatus = 1;
+	repeated BaseItemInfoProto goodsInfos = 2;
+}
+
+message S2CUserHeadFramesChangeProto {
+	required int32 changeStatus = 1;
+	repeated BaseItemInfoProto headFrames = 2;
+}
+
+message S2CUserFHUnitPatternChangeProto {
+	required int32 changeStatus = 1;
+	repeated BaseItemInfoProto infos = 2;
+}
+
+message S2CUserCardChangeProto {
+	required int32 changeStatus = 1;
+	repeated BaseBriefItemInfoProto cardInfos = 2;
+}
+
+message S2CUserVipExpChangeProto {
+	required int32 vipLevel = 1;
+	required int32 vipExp = 2;
+}
+
+message S2CUserRechargeExpChangeProto {
+	required int32 rechargeExp = 1;
+	required int32 rechargeExpChange = 2;
+}
+
+message S2CUserPriviledgeCardChangeProto {
+	required int64 priviledgeCardTime = 1;
+}
+
+// 好感度变化
+message BaseFavorExpInfoProto {
+	required int32 maleRoleID = 1;
+	required int32 favorLevel = 2;
+	required int32 favorExp = 3;
+}
+
+message S2CUserMaleRoleFavorExpChangeProto {
+	repeated BaseFavorExpInfoProto favorExpInfos = 1;
+	optional int32 favorMaleRoleID = 2;
+}
+
+message S2CSvrVersionChangeProto {
+	required string svrVersion = 1;
+}
+
+// 短消息变化
+message BaseShortMsgChangeInfoProto {
+	required int32 phoneContactID = 1;
+	required int32 shortMsgType = 2;
+	required int32 shortMsgIndex = 3;
+}
+
+message S2CUserShortMsgChangeProto {
+	repeated BaseShortMsgChangeInfoProto shortMsgChangeInfos = 1;
+}
+
+// 电话消息变化
+message S2CUserPhoneMsgChangeProto {
+	required int32 phoneMsgIndex = 1;
+}
+
+// 公众号消息变化
+message BasePublicMsgChangeInfoProto {
+	required int32 publicContactID = 1;
+	required int32 publicMsgIndex = 2;
+}
+
+message S2CUserPublicMsgChangeProto {
+	repeated BasePublicMsgChangeInfoProto publicMsgChangeInfos = 1;
+}
+
+// 朋友圈消息变化
+message S2CUserFriendMsgChangeProto {
+	required int32 friendMsgType = 1;
+	required int32 friendMsgIndex = 2;
+}
+
+// 心之匙（材料副本次数道具）变化
+message S2CUserHeartKeyChangeProto {
+	required int32 heartKeyCnt = 1;
+	required int32 buyCnt = 2;
+	required int32 firstClearCnt = 3;
+}
+
+
+// 跑环状态
+message C2SUserLoopTaskStatusProto {
+}
+
+message S2CUserLoopTaskStatusRetProto {
+	required uint32 errCodeID = 1;	
+	optional UserLoopTasksInfoProto userLoopTaskStatus = 2;
+}
+
+
+// 提交跑环任务
+message C2SUserLoopTaskSubmitProto {
+	required int32 loopTaskMaleRoleID = 1;
+	required int32 loopTaskLoopID = 2;
+	required int32 loopTaskStepID = 3;
+}
+
+message S2CUserLoopTaskSubmitRetProto {
+	required uint32 errCodeID = 1;	
+	optional UserLoopTasksInfoProto userLoopTaskStatus = 2;
+}
+
+// 跑环奖励领取
+message C2SUserLoopTaskLoopRwdSubmitProto {	
+ 	required int32 maleRoleID = 1;
+	required bool isDmd = 2;      // 是否领取钻石奖励
+}
+
+message S2CUserLoopTaskLoopRwdSubmitRetProto {
+	required uint32 errCodeID = 1;
+	required int32 maleRoleID = 2;
+	required bool isDmd = 3;     // 是否领取钻石奖励
+}
+
+// 跑环任务重置
+message C2SUserLoopTaskLoopResetProto {
+	required int32 maleRoleID = 1;
+}
+
+message S2CUserLoopTaskLoopResetRetProto {
+	required uint32 errCodeID = 1;
+	required int32 maleRoleID = 2;
+	optional UserLoopTasksInfoProto userLoopTaskStatus = 3;
+}
+
+// 跑环扫荡 
+message C2SUserLoopTaskLoopSweepProto {
+	required int32 maleRoleID = 1;
+	required int32 repeatCnt  = 2;
+}
+
+message S2CUserLoopTaskLoopSweepRetProto {
+	repeated BaseItemInfoProto showRewards = 1;       // 跑环扫荡后的返回给客户端要显示的奖励信息
+	optional uint32 errCodeID = 2;
+}
+
+
+
+// ***商城礼包***
+// 礼包数据
+message BaseActivityPackDetailInfoProto {
+	required int32 packID = 1;
+	required int32 packType = 2;
+	required int32 packSubType = 3;
+	required string openNeedStr = 4;
+	required string exchangeNeedStr = 5;
+	required int32 storeType = 6;
+	required int64 uploadStartTime = 7;
+	required int64 uploadEndTime = 8;
+	required int32 packDurationTime = 9;
+	required int32 packRank = 10;
+	required string purchaseRulesStr = 11;
+	required string packPriceStr = 12;
+	required int64 salesStartTime = 13;
+	required int64 salesEndTime = 14;
+	required string rmbSalesNeedStr = 15;
+	required string salesRulesStr = 16;
+	required string rmbSalesPriceStr = 17;
+	required string packTitle = 18;
+	required string packIcon = 19;
+	required string packRewardStr = 20;
+	required int32 specialState = 21;
+	required string packDesc = 22;
+	required string payItemID = 23;
+	required string salesPayItemID = 24;
+	required string itemCode = 25;
+	required string salesItemCode = 26;
+	required string packButtonIcon = 27;
+	required string salesPackTitle = 28;
+	required string salesPackDesc = 29;
+	required string userPackDesc = 30;
+	required string payCode = 31;
+	required string salesPayCode = 32;
+	required int32 activityPackRank = 33;
+	required string activityPackIcon = 34;
+}
+
+// 获取礼包活动信息
+message C2SUserActivityGetPackInfosProto {
+	repeated int32 packIDs = 1;
+
+	required int32 tag = 2;
+}
+
+message S2CUserActivityGetPackInfosRetProto {
+	required uint32 errCodeID = 1;
+
+	repeated BasePackActivitiesInfoProto userPackInfos = 2;
+
+	repeated BaseActivityPackDetailInfoProto packDetails = 3;
+
+	repeated int32 packIDs = 4;
+
+	required int32 tag = 5;
+}
+
+// 购买礼包信息
+message C2SUserActivityBuyPackProto {
+	required int32 packID = 1;
+	required int32 count = 2;
+}
+
+message S2CUserActivityBuyPackRetProto {
+	required uint32 errCodeID = 1;
+
+	required int32 packID = 2;
+	required int32 count = 3;
+}
+
+
+// 玩家礼包数据
+message BasePackActivitiesInfoProto {
+	required int32 packID = 1;
+
+	required int64 packLastRefreshTime = 2;
+
+	required int32 packBuyCnt = 3;
+
+	required int64 packSalesLastRefreshTime = 4;
+
+	required int32 packSalesBuyCnt = 5;
+
+	required int32 packPushStatus = 6;
+	
+	optional int32 packTotalBuyCnt = 7; //历史购买数据
+}
+
+// 推送礼包数据
+message PushPackActivitesInfoProto {
+
+	required BasePackActivitiesInfoProto userPackInfos = 1;
+
+	required BaseActivityPackDetailInfoProto packDetails = 2;
+}
+
+message C2SUserActivityGoodsExchangeRankProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+	required int32 startPos = 3;
+	required int32 endPos = 4;
+	
+}
+
+message S2CUserActivityGoodsExchangeRankRetProto {
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+	required RanksInfoProto info = 4;
+}
+
+message C2SUserActivityGoodsExchangeRewardSubmitProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+}
+
+message S2CUserActivityGoodsExchangeRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+}
+
+message C2SUserActivityArenaQuestSubmitProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+}
+
+message S2CUserActivityArenaQuestSubmitRetProto{
+	required uint32 errCodeID = 1;
+
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+}
+
+message C2SUserActivityArenaExchangeSubmitProto {
+	required int32 activityID = 1;
+	required int32 exchangeID = 2;
+}
+
+message S2CUserActivityArenaExchangeSubmitRetProto{
+	required uint32 errCodeID = 1;
+
+	required int32 activityID = 2;
+	required int32 exchangeID = 3;
+}
+
+message C2SUserActivityLoopQuestSubmitProto {
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+}
+
+message S2CUserActivityLoopQuestSubmitRetProto{
+	required uint32 errCodeID = 1;
+
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+}
+
+message S2CUserAntiAddictionRetProto {
+	required uint32 errCodeID = 1;
+	optional int32 onlineTm = 2;   // 根据 judgetype 不同 表示 单次时长 or 累计时长
+	optional int32 restTm = 3;
+	optional int32 opType = 4;    // 1  建议休息  2  强制下线 3  当日禁止登陆
+	optional int32 judgeType = 5; // 1 单次时长 2 单日累计时长
+}
+
+message C2SUserActivitySpringFortuneGetSubmitProto{
+	required int32 activityID = 1;
+}
+
+message S2CUserActivitySpringFortuneGetSubmitRetProto{
+	required uint32 errCodeID = 1;
+
+	required int32 activityID = 2;
+	required int32 fortuneID = 3;
+	required int32 redbagID = 4;
+	required int32 submitTimes = 5;
+}
+
+message C2SUserActivitySpringFortuneRewardSubmitProto{
+	required int32 activityID = 1;
+	required int32 rewardType = 2;
+}
+
+message S2CUserActivitySpringFortuneRewardSubmitRetProto{
+	required uint32  errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 rewardType = 3;
+}
+
+message C2SUserActivitySpringFortuneShareSubmitProto{
+	required int32 activityID = 1;
+}
+
+message S2CUserActivitySpringFortuneShareSubmitRetProto{
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+}
+
+message C2SUserActivityWaterPlantSubmitProto{
+	required int32 activityID = 1;
+	required int32 watertype = 2;
+}
+
+message S2CUserActivityWaterPlantSubmitRetProto{
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 watertype = 3;
+	optional int32 diary = 4;
+	optional int32 growth =5;
+}
+
+message C2SUserActivityWaterPlantRewardSubmitProto{
+	required int32 activityID = 1;
+}
+
+message S2CUserActivityWaterPlantRewardSubmitRetProto{
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+}
+
+message C2SUserActivityGainConsumeRewardSubmitProto{
+	required int32 activityID = 1;
+	required int32 activitySubID = 2;
+}
+
+message S2CUserActivityGainConsumeRewardSubmitRetProto{
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 activitySubID = 3;
+}
+
+message C2SUserActivityDefendTaskBattleProto{
+	required int32 activityID = 1;
+	required int32 taskID = 2;
+	repeated int32 cardIDs = 3;
+}
+
+message S2CUserActivityDefendTaskBattleRetProto{
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 taskID = 3;
+	required bool battleResult = 4;
+	required int32 taskScore = 5;
+}
+
+message C2SUserActivityDefendTasklineSubmitProto{
+	required int32 activityID = 1;
+	required int32 tasklineID = 2;
+}
+
+message S2CUserActivityDefendTasklineSubmitRetProto{
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 tasklineID = 3;
+}
+
+// task id 0 recevied card reward
+message C2SUserActivityDefendTaskRewardProto{
+	required int32 activityID = 1;
+	required int32 taskID = 2;
+}
+
+message S2CUserActivityDefendTaskRewardRetProto{
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 taskID = 3;
+}
+
+// ======= 资源副本 ========
+
+message BaseResDungeonPeerInfoProto {
+	required int64 accntID = 1;
+	required string charName = 2;
+	required int32 charHeadID = 3;
+	required int32 charHeadFrameID = 4;
+	required string firmName = 5;
+	required int32 firmLevel = 6;
+	required string userDesc = 7;
+	repeated int32 firmProps = 8;	// 包含公司属性 以及课程属性
+	repeated int32 defenceCards = 9;
+	repeated BaseResDungeonCardInfoProto peerCards = 10;
+	optional UserSpaceOthersInfoProto spaceInfo = 11;
+}
+
+message BaseResDungeonThemeInfoProto {
+	required int32 themeId = 1;
+	required bool isPass = 2;
+	required bool isRewardGet = 3;
+	required BaseResDungeonPeerInfoProto peerInfo = 4;
+}
+
+message BaseResDungeonCardInfoProto {
+	required int32 cardID = 1;	
+	required int32 cardRank = 2;
+	required int32 cardLevel = 3;
+	repeated int32 cardRestProps = 4;  //剩余属性数值, 包含firmProps
+	repeated int32 cardProps = 5;
+	required int32 cardEvolution = 6;
+	required int32 cardStat = 7; // 0 未使用, 1 已使用  2 死亡
+	optional int32 cardCriticalRate = 8;
+	optional int32 cardCriticalBonus = 9;
+	optional int32 cardCriticalPropID = 10;
+	optional bool frameUnlock = 11;
+	optional int32 talentStatus = 12;
+}
+
+message BaseResDungeonBoxInfoProto {
+	required int32 boxID = 1;
+	required int32 boxStatus = 2; // 0 未派遣 1 已派遣 2 已领奖 3 已加速
+	required int64 boxEndTime = 3;
+	repeated BasePairValueProto cardCandidates = 4; // card id -> buff value
+	repeated int32 dispatchedCards = 5;
+}
+
+// 资源副本面板信息
+
+message BaseResDungeonInfoProto {
+	repeated int32 defenceCards = 1;
+	repeated int32 firmProps = 2;
+	repeated BaseResDungeonThemeInfoProto themes = 3;
+	repeated BaseResDungeonCardInfoProto cards = 4;
+	required bool canReset = 5;
+	required int32 themeLibraryId = 6;
+	required int32 gobackTimes = 7;
+	optional int32 yestodayMaxThemeId = 8;
+	repeated BaseResDungeonBoxInfoProto boxes = 9;
+	repeated int32 boxInUseCards = 10; // 已使用卡牌
+}
+
+message C2SUserResDungeonInfoProto {	
+}
+
+message S2CUserResDungeonInfoRetProto {
+	required uint32 errCodeID = 1;
+	
+	optional BaseResDungeonInfoProto info = 2;
+	
+}
+
+// 资源副本领取奖励
+message C2SUserGetResDungeonThemeRewardProto {
+	required int32 themeId = 1;
+}
+
+message S2CUserGetResDungeonThemeRewardRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 themeId = 2;
+	
+	repeated BaseItemInfoProto itemInfos = 3;
+}
+
+// 批量资源副本领取奖励
+message C2SUserGetResDungeonThemeRewardsProto {
+	repeated int32 themeIds = 1;
+}
+
+message S2CUserGetResDungeonThemeRewardsRetProto {
+	required uint32 errCodeID = 1;
+	repeated int32 themeIds = 2;
+	repeated BaseItemInfoProto itemInfos = 3;
+}
+
+
+message UserPVPBattleLogProto {
+	required int32 propID = 1;
+	repeated int32 cardIDs = 2;
+}
+
+// 资源副本战斗
+message C2SUserResDungeonThemeBattleProto {
+	required int32 themeId = 1;
+	repeated int32 fightCards = 2;
+}
+
+message S2CUserResDungeonThemeBattleRetProto {
+	required uint32 errCodeID = 1;
+	
+	required int32 themeId = 2;
+	optional int32 myScore = 3;
+	optional int32 peerScore = 4;
+	optional bool battleWin = 5;
+	repeated BaseResDungeonCardInfoProto myCards = 6;
+	repeated BaseResDungeonCardInfoProto peerCards = 7;
+	repeated BaseResDungeonCardInfoProto preMyCards = 8;
+	repeated BaseResDungeonCardInfoProto prePeerCards = 9;
+	repeated int32 defenceCards = 10;
+	repeated int32 ownScores = 11;			// 己方成绩
+	repeated int32 peerScores = 12; 		// 对手成绩
+	repeated UserPVPBattleLogProto ownCriticals = 13;
+	repeated UserPVPBattleLogProto peerCriticals = 14;
+}
+
+// 资源副本重置
+message C2SUserResDungeonThemeResetProto {
+}
+
+message S2CUserResDungeonThemeResetRetProto {
+	required uint32 errCodeID = 1;
+	
+	optional BaseResDungeonInfoProto info = 2;
+	
+}
+
+// 资源副本上阵守护
+message C2SUserResDungeonUpdateDefenceProto {
+	repeated int32 defenceCards = 1;
+}
+
+message S2CUserResDungeonUpdateDefenceRetProto {
+	required uint32 errCodeID = 1;
+	
+	repeated int32 defenceCards = 2;
+}
+
+// 战斗回撤
+message C2SUserResDungeonThemeBattleGobackProto {
+	required int32 themeId = 1;
+}
+
+message S2CUserResDungeonThemeBattleGobackRetProto {
+	required uint32 errCodeID = 1;
+	
+	optional BaseResDungeonThemeInfoProto themeInfo = 2;
+	repeated BaseResDungeonCardInfoProto revertCards = 3;
+}
+
+message C2SUserResDungeonSweepProto {
+}
+
+message S2CUserResDungeonSweepRetProto {
+	required uint32 errCodeID = 1;
+	optional BaseResDungeonInfoProto info = 2;
+}
+
+message C2SUserResDungeonBoxDispatchProto {
+	required int32 boxID = 1;
+	repeated int32 cardIDs = 2;
+}
+
+message S2CUserResDungeonBoxDispatchRetProto {
+	required uint32 errCodeID = 1;
+	required int32 boxID = 2;
+	required int64 boxDispatchEndTime = 3;
+	repeated int32 dispatchedCards = 4;
+}
+
+message C2SUserResDungeonBoxSpeedupProto {
+	required int32 boxID = 1;
+}
+
+message S2CUserResDungeonBoxSpeedupRetProto {
+	required uint32 errCodeID = 1;
+	required int32 boxID = 2;
+	repeated int32 boxInUseCards = 3; // 已使用卡牌
+}
+
+message C2SUserResDungeonBoxFinishProto {
+	required int32 boxID = 1;
+}
+
+message S2CUserResDungeonBoxFinishRetProto {
+	required uint32 errCodeID = 1;
+	required int32 boxID = 2;
+	repeated BaseItemInfoProto boxReward = 3;
+	repeated int32 boxInUseCards = 4; // 已使用卡牌
+}
+
+message C2SUserResDungeonBoxCancelProto {
+	required int32 boxID = 1;
+}
+
+message S2CUserResDungeonBoxCancelRetProto {
+	required uint32 errCodeID = 1;
+	required int32 boxID = 2;
+	repeated int32 boxInUseCards = 3; // 已使用卡牌
+}
+
+// ==============  resdungeon  end =====================
+
+// enterGame Info
+message UserResDungeonInfoProto {
+	optional bool firstEnterFlag = 1;
+	optional bool isRewardCanGet = 2;
+	repeated int32 usedCardIds = 3;
+	repeated BaseResDungeonBoxInfoProto boxes = 4;
+	repeated int32 boxInUseCards = 5; // 已使用卡牌
+	optional int32 currPassCnt = 6; // 当前通关数
+}
+
+// 随机石头
+message C2SUserStoneRandomProto{
+	required int32 stoneID = 1;
+	required int32 stoneNum = 2;
+}
+
+message S2CUserStoneRandomRetProto{
+	required uint32 errCodeID = 1;
+
+	required int32 stoneID = 2;
+	required int32 stoneNum = 3;
+
+	repeated BaseItemsInfoProto goodsSequences = 4;
+}
+
+// ============== birth exam ==========
+
+message C2SUserBirthExamSetProto {
+	required int32 month = 1;
+	required int32 day = 2;
+	repeated int32 answer = 3;  //题目默认对应数组下标
+}
+
+message S2CUserBirthExamSetRetProto {
+	required uint32 errCodeID = 1;
+}
+
+message C2SUserBirthExamRewardSubmitProto {
+}
+
+message S2CUserBirthExamRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	repeated BaseItemInfoProto gainedRwd = 2;
+}
+
+message C2SUserBirthRewardSubmitProto {
+}
+
+message S2CUserBirthRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	repeated BaseItemInfoProto gainRwd = 2;
+}
+
+message C2SUserBirthDisplayRewardProto {
+}
+
+message S2CUserBirthDisplayRewardRetProto {
+	required uint32 errCodeID = 1;
+	repeated BaseItemInfoProto gainRwd = 2;
+}
+
+
+//  ======== key value set ==========
+message C2SUserSetKeyValueProto {
+	required BaseStringPairValueProto pair = 1;
+}
+
+message S2CUserSetKeyValueRetProto {
+	required uint32 errCodeID = 1;
+}
+
+message C2SUserGetKeyValuesProto {
+	repeated string keys = 1;
+}
+
+message S2CUserGetKeyValuesRetProto {
+	required uint32 errCodeID = 1;
+	repeated BaseStringPairValueProto pairs = 2;
+}
+
+
+// 种花答题
+message C2SUserActivityAnswerExamProto {
+	required int32 activityID = 1;               // 活动ID
+	repeated BasePairValueProto answers = 2;     // 客户端发过来的答案
+}
+
+// 答题后的返回值
+message S2CUserActivityAnswerExamRetProto {
+	required int32 activityID = 1;
+	required BaseActivityAnswerExamScoreProto score  = 2;
+	required int32 reviewCnt = 3;
+	required int32 days = 4;     // 活动开始到现在的天数
+	required bool canExam = 5;
+	required int32 errCodeID = 6;
+	required int32 answerCnt = 7;
+}
+
+message C2SUserActivityReviewExamProto {
+	required int32 activityID = 1;
+	required int32 reviewCnt = 2;    // 复习次数
+}
+
+message S2CUserActivityReviewExamRetProto {
+	required int32 activityID = 1;
+	required bool canFreeExam  = 2;      // 是否有免费次数
+	required int64 freeReviewTime = 3;  // 免费复习时间戳
+	required BaseItemsInfoProto item = 4;  // 返回的道具
+	required int32 errCodeID = 5;
+}
+
+// 事件1 剧情
+message C2SUserEventStorySubmitProto {
+	required int32 issueID = 1;    // 分期ID
+	required int32 roleid = 2;    // 角色ID
+	required int32 storyID = 3;    // 剧情ID
+}
+
+message S2CUserEventStorySubmitRetProto {
+	required int32 issueID = 1;              // 分期ID 
+	required int32 roleid = 2;               // 主角ID
+	required int32 storyID = 3;              // 剧情ID
+	required int32 errCodeID  = 4;           // 错误码
+}
+
+// 事件3 图鉴事件
+message C2SUserTuJianSubmitProto {
+	required int32 issueID = 1;
+	required int32 roleID = 2;
+	required int32 eventSerial = 3;
+	required int32 eventAns = 4;
+}
+
+message S2CUserTuJianSubmitRetProto {
+	required int32 issueID = 1;
+	required int32 roleID = 2;
+	optional BaseTuJianEventInfoProto event = 3;
+	required int32 errCodeID = 4;
+	required int32 eventSerial = 5;
+	required int32 eventAns = 6;
+}
+
+// 领取Buff奖励
+message C2SUserObtainBuffRewardProto {
+	required int32 issueID = 1;       // 活动ID, 分期ID
+	required int32 category = 2;    // 分类，大类
+	required int32 buffID = 3;      // 大类下的buffID
+}
+
+message S2CUserObtainBuffRewardRetProto {
+	required int32 issueID = 1;              // 分期ID
+	optional BaseBuffDataInfoProto buffInfo = 2;    // 当前Buff信息
+	required int32 errCodeID = 3;          // 错误码
+}
+
+// 商店兑换奖励
+message C2SUserSingleCardGoodsBuyProto {
+	required int32 issueID = 1;      // 活动ID,分期ID
+	required int32 goodsid = 2;      // 商品ID
+	required int32 goodsNum = 3;     // 商品数量
+}
+
+message S2CUserSingleCardGoodsBuyRetProto {
+	required int32 issueID = 1;
+	required int32 goodsid = 2;
+	required int32 goodsNum = 3;
+	required int32 errCodeID = 4;
+}
+
+// 领取图鉴奖励
+message C2SUserObtainTuJianRewardProto {
+	required int32 issueID = 1;
+	required int32 roleID = 2;
+}
+
+message S2CUserObtainTuJianRewardRetProto {
+	required int32 issueID = 1;
+	required int32 roleID = 2;
+	required int32 errCodeID = 3;
+}
+// ============== 召回 ===============
+
+message BaseRecallLogProto {
+	required BaseUserBriefInfoProto briefInfo = 1;
+	required int32 score = 2;
+}
+
+message BaseRecallActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+		
+	required string code = 9;
+	repeated BaseRecallLogProto logs = 10;
+	required int32 shareRwdCnt = 11;
+}
+
+message BasePrivilegeCardActivitiesInfo {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+		
+	required int64 buyTm = 9;
+	repeated int32 rewardedPos = 10;
+}
+
+
+message BaseRecallTaskActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+	
+	required int64 loginTm = 9;	
+	required string targetCode = 10;
+	required bool islosingPlayer = 11;  //??
+}
+
+message C2SUserActivityRecallBindCodeProto {
+	required int32 activityID = 1;
+	required string code = 2;
+}
+
+message S2CUserActivityRecallBindCodeRetProto {
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required string code = 3;
+}
+
+message C2SUserActivityRecallGetUserBriefInfoProto {
+	required int32 activityID = 1;
+	required string code = 2;
+}
+
+message S2CUserActivityRecallGetUserBriefInfoRetProto {
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	optional BaseUserBriefInfoProto briefInfo = 3;
+}
+
+message C2SUserActivityRecallGetLogsProto {
+	required int32 activityID = 1;
+}
+
+message S2CUserActivityRecallGetLogsRetProto {
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	repeated BaseRecallLogProto logs = 3;	
+}
+
+message C2SUserActivityRecallShareProto {
+	required int32 activityID = 1;
+}
+
+message S2CUserActivityRecallShareRetProto {
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	repeated BaseItemInfoProto rwds = 3;
+}
+
+
+message S2CUserActivityBuffChangeProto {
+	required int32 issueID = 1;
+	required BaseBuffDataInfoProto buffInfo = 2;
+}
+
+
+//   特权卡购买附加奖励领取协议
+message C2SUserActivityPrivilegeCardRewardSubmitProto {
+	required int32 activityID = 1;
+	required int32 rewardPos = 2;
+}
+
+message S2CUserActivityPrivilegeCardRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 rewardPos = 3;
+	repeated BaseItemInfoProto itemInfos = 4;
+}
+
+//====== 主线卡池 =============
+
+message BaseMainQuestActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+	
+	repeated int32 buffIds = 9;
+	required int32 wishMaleRoleId = 10;
+	required int32 dailyCardCallCnt = 11;
+	required int64 dailyLastRefreshTm = 12;
+	repeated int32 awardedIds = 13;  // 已经领过奖的
+	required int32 dailyScore = 14;
+}
+
+message C2SUserActivityMainQuestWishProto {
+	required int32 activityID = 1;
+	required int32 wishMaleRoleId = 2;
+}
+
+message S2CUserActivityMainQuestWishRetProto {
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 wishMaleRoleId = 3;
+}
+
+message C2SUserActivityMainQuestExchangeProto {
+	required int32 activityID = 1;               // 活动ID
+	required int32 exchangeCnt = 2;
+	required int32 wishMaleRoleId = 3;
+}
+
+message BaseActivityMainQuestExchangeInfo {
+	required int32 exchangeResult = 1;   // 1111-4444  每位对应显示的相应位置
+	repeated BaseItemInfoProto rwds = 2;
+}
+
+message S2CUserActivityMainQuestExchangeRetProto {
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	repeated BaseActivityMainQuestExchangeInfo infos = 3;
+	required int32 wishMaleRoleId = 4;
+}
+
+// ========== 答题点就送ver3 =============
+message BaseAnswerExam3ActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activitySwitch = 6;
+	
+	required bool activityRedDot = 7;
+	required int32 activityRecommend = 8;
+	
+	required bool canExam = 9;                 			// 今天是否答过题
+	required bool canFreeExam = 10;             		// 免费答题
+	required int64 freeExamTime = 11;           		// 免费答题时间戳
+	required int32 todayExamTimes = 12;         		// 今天答题次数 
+	repeated BasePairValueInt32Int64Proto logs = 13;    // 分数记录
+	required int32 days = 14;   						// 当前的天数
+	required int32 answerCnt = 15;
+	optional bool rewardFlag = 16;
+	repeated BasePairValuesProto answerLogs = 17;    // 答案记录 
+}
+
+// 答题
+message C2SUserActivityAnswerExam3Proto {
+	required int32 activityID = 1;               // 活动ID
+	repeated BasePairValueProto answers = 2;     // 客户端发过来的答案
+}
+
+// 答题后的返回值
+message S2CUserActivityAnswerExam3RetProto {
+	required int32 activityID = 1;
+	required BasePairValueInt32Int64Proto log  = 2;
+	required int32 reviewCnt = 3;
+	required int32 days = 4;     // 活动开始到现在的天数
+	required bool canExam = 5;
+	required int32 errCodeID = 6;
+	required int32 answerCnt = 7;
+}
+
+// 复习
+message C2SUserActivityReviewExam3Proto {
+	required int32 activityID = 1;
+	required int32 reviewCnt = 2;    // 复习次数
+}
+
+message S2CUserActivityReviewExam3RetProto {
+	required int32 activityID = 1;
+	required bool canFreeExam  = 2;      // 是否有免费次数
+	required int64 freeReviewTime = 3;  // 免费复习时间戳
+	required BaseItemsInfoProto item = 4;  // 返回的道具
+	required int32 errCodeID = 5;
+}
+
+message C2SUserActivityAnswerExam3RewardSubmitProto{
+	required int32 activityID = 1;
+}
+
+message S2CUserActivityAnswerExam3RewardSubmitRetProto{
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+}
+
+message C2SUserActivityMainQuestInfoProto {
+	required int32 activityID = 1;
+}
+
+message S2CUserActivityMainQuestInfoRetProto {
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 wishMaleRoleId = 3;
+	repeated int32 buffIds = 4;
+	required int32 dailyCardCallCnt = 5;
+	required int64 dailyLastRefreshTm = 6;
+}
+
+message C2SUserGetRedDotInfoProto {
+}
+
+message S2CUserGetRedDotInfoRetProto {
+	optional uint32 errCodeID = 1;
+	optional bool isWeekCardCanGetRwd = 2;
+	optional bool isWeekCardCanBuy = 3;
+	repeated int32 availWeekCardPackIds = 4;
+}
+
+message S2CUserActivityExtraStoryChangeProto {
+	required int32 changeStatus = 1;
+	repeated BaseItemInfoProto extraStorys = 2;
+}
+
+// ====== Future House ==========
+
+message BaseFHPosInfo {
+	required int32 mapId = 1;
+	required int32 areaId = 2;
+	required Vector3D pos = 3;
+	required int32 roleType = 4; // 0 自己  1,2,3,4 男主
+}
+
+message Vector3D {
+	required double x = 1;
+	required double y = 2;
+	required double z = 3;
+	required int32 w = 4;
+	optional int32 zOrder = 5; 
+}
+
+message BaseFHUnitInfo {
+	required int32 unitId = 1;
+	required int32 unitPatternId = 2;
+	repeated BasePairValueProto boughtUnitPatternIds = 3;
+}
+
+message BaseFHAreaInfo {
+	required int32 areaId = 1;
+	repeated BaseFHUnitInfo unitInfos = 2;
+	required int32 rewardStat = 3; // 0 未领取 1 已领取
+}
+
+// 小屋角色信息
+message UserFHMaleRoleInfoProto {
+	required int32 maleRoleId = 1;
+	repeated BaseFHAreaInfo unlockedAreas = 2;
+	repeated BaseFHPosInfo rolePos = 3;
+	required int64 maleRoleComfortPoint = 4;
+	repeated int32 unlockedInteraction = 5;
+	repeated int32 unlockedNpcInteraction = 6;
+	required int32 relateLevel = 7; 	// 亲密度等级
+	required int32 relateValue = 8; 	// 亲密度数值
+	required int32 emotLevel = 9;		// 心情等级
+	required int32 emotValue = 10;		// 心情值
+	optional int64 angryCDFinTm = 11;	// 生气结束时间
+	optional int64 emotLastRefreshTm = 12;	// 心情上次刷新时间
+	repeated int32 randRewardUnitIds = 13; // 家具随机收菜奖励集合
+	repeated int32 relateRewardReceived = 14; // 已领取亲密度奖励的等级 
+}
+
+// 小屋家具交互进度信息
+message UserFHUnitExploreEventProto {
+	required int32 eventID = 1;				// 探索事件ID
+	required int32 progressRate = 2;		// 交互进度（0：未完成，1：完成可领奖，2：结束）
+	optional int64 cdFinTime = 3;			// cd结束时间，在交互进度为 0 时有效
+	required int32 interaOrder = 4;			// 当前步骤
+	required int32 unitPatternID = 5;		// 组合样式ID
+}
+
+// 小屋家具交互进度信息
+message UserFHUnitExploreInfoProto {
+	repeated UserFHUnitExploreEventProto events = 1;
+}
+
+
+message UserFHInfoProto {
+	required int64 fhCoin = 1;
+	required int64 fhDiamond = 2;
+	repeated UserFHMaleRoleInfoProto maleRoleFHInfo = 3;
+	required UserFHUnitExploreInfoProto unitExploreInfo = 4; // 家具交互进度信息
+	repeated int32 galaryPresentIDs = 5; //图鉴已解锁礼物
+}
+
+// 拉取小屋信息
+message C2SUserFHGetInfoProto {
+}
+
+message S2CUserFHGetInfoRetProto {
+	required UserFHInfoProto info = 1;
+}
+
+// 解锁小屋区域
+message C2SUserFHUnlockAreaProto {
+	required int32 areaId = 1;
+}
+
+message S2CUserFHUnlockAreaRetProto {
+	required uint32 errCodeID = 1;
+	required int32 areaId = 2;
+	optional BaseFHAreaInfo areaInfo = 3;
+}
+
+message C2SUserFHUnlockUnitProto {
+	required int32 unitId = 1;
+}
+
+message S2CUserFHUnlockUnitRetProto {
+	required uint32 errCodeID = 1;
+	required int32 unitId = 2;
+	optional BaseFHUnitInfo unitInfo = 3;
+}
+
+//
+message C2SUserFHSetPosProto {
+	repeated BaseFHPosInfo pos = 1;
+}
+
+message S2CUserFHSetPosRetProto {
+	required uint32 errCodeID = 1;
+	repeated BaseFHPosInfo pos = 2;
+}
+
+message C2SUserFHDecorateProto {
+	required int32 unitId = 1;
+	required int32 unitPatternId = 2;
+}
+
+message S2CUserFHDecorateRetProto {
+	required uint32 errCodeID = 1;
+	required int32 unitId = 2;
+	required int32 unitPatternId = 3;
+}
+
+message C2SUserFHAreaStoryRewardSubmitProto {
+	required int32 areaId = 1;
+}
+
+message C2SUserFHUnitPatternRecoverProto {
+	required int32 unitId = 1;
+	required int32 unitPatternId = 2;
+	required int32 count = 3;
+}
+
+message S2CUserFHUnitPatternRecoverRetProto {
+	required uint32 errCodeID = 1;
+	required int32 unitId = 2;
+	required int32 unitPatternId = 3;
+	required int32 count = 4;
+}
+
+message S2CUserFHAreaStoryRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	required int32 areaId = 2;
+}
+
+message S2CUserFHRelateChangeProto {
+	required int64 fhCoin = 1;
+	required int64 fhDiamond = 2;
+	repeated int64 maleRoleComfortPoint = 3;
+}
+
+
+
+// 小屋派遣协议结构
+message C2SUserHomeDispatchInfoReqProto {
+	required int32 roleID = 1;
+}
+
+message HomeMissionInfoProto {
+	required uint64 uniqueID = 1;           // 任务唯一ID
+	required int32  missionID = 2;          // 派遣任务ID
+	required int64  missionStartTime = 3;   // 派遣任务开始时间(单位毫秒)
+	required int32  state = 4;              // 当前任务状态
+	repeated int32  cardInfo = 5;           // 当前派遣任务使用的卡牌
+	required int64  speedUpTime = 6;        // 加速时间
+}
+
+message S2CUserHomeDispatchInfoReqRetProto {
+	required int32 errCodeID = 1;
+	required int32 roleID = 2;
+	repeated HomeMissionInfoProto missionInfo = 3;
+	required int32 freeRefreshCnt = 4;
+	required int32 resourceRefreshCnt = 5;
+	required int32 CurMissionID = 6;
+	required int32 todaySpeedUpItemCnt = 7;
+	required int64 curMissionEndTime = 8;   // 当前派遣任务结束时间(单位毫秒)
+	repeated int32 availableMissionCnt = 9; // 可派遣的任务数 
+}
+
+message C2SUserHomeStartDispatchReqProto {
+	required int32 roleID = 1;
+	repeated int32 cardInfo = 2;
+	required uint64 uniqueID = 3;
+}
+
+message S2CUserHomeStartDispatchReqRetProto {
+	required int32 errCodeID = 1;
+	required int32 roleID = 2;
+	optional HomeMissionInfoProto missionInfo = 3;
+}
+
+message C2SUserHomeSpeedUpDispatchMissionReqProto {
+	required int32  roleID = 1;
+	required uint64 uniqueID = 2;
+	required int32  cnt      = 3;    // 需要的数量(同时用于区分使用货币还是使用道具)
+}
+
+message S2CUserHomeSpeedUpDispatchMissionReqRetProto {
+	required int32 errCodeID = 1;
+	required int32 roleID = 2;
+	optional HomeMissionInfoProto missionInfo = 3;
+	required int32 todaySpeedUpItemCnt = 4;
+}
+
+message C2SUserHomeObtainDispatchRewardReqProto {
+	required int32 roleID = 1;
+	required uint64 uniqueID = 2;
+}
+
+message S2CUserHomeObtainDispatchRewardReqRetProto {
+	required int32 errCodeID = 1;
+	required int32 roleID = 2;
+	optional HomeMissionInfoProto missionInfo = 3;
+	repeated BaseItemInfoProto items = 4;
+}
+
+message C2SUserHomeCancelDispatchMissionReqProto {
+	required int32 roleID = 1;
+	required uint64 uniqueID = 2;
+}
+
+message S2CUserHomeCancelDispatchMissionReqRetProto {
+	required int32 errCodeID = 1;
+	required int32 roleID =2;
+	optional HomeMissionInfoProto missionInfo = 3;
+}
+
+message C2SUserHomeRefreshDispatchMissionReqProto {
+	required int32 roleID = 1;
+}
+
+message S2CUserHomeRefreshDispatchMissionReqRetProto {
+	required int32 errCodeID = 1;
+	required int32 roleID = 2;
+	repeated HomeMissionInfoProto missionInfo = 3;
+	required int32 freeRefreshCnt = 4;
+	required int32 resourceRefreshCnt = 5;
+}
+
+message C2SUserHomeBubbleGetReqProto {
+	required int32 maleRoleID = 1;
+}
+
+message S2CUserHomeBubbleGetRetProto {
+	required uint32 errCodeID = 1;
+	required int32 maleRoleID = 2;
+	repeated int32 MainStoryBubbles = 3;
+	repeated int32 BriefEVBubbles = 4;
+	repeated BasePairValueInt32Int64Proto MainStoryBook = 5;
+	repeated BasePairValueInt32Int64Proto BriefEVBook = 6;
+}
+
+message C2SUserHomeBubbleFinishReqProto {
+	required int32 maleRoleID = 1;
+	required int32 bubbleType = 2; // 1 主线气泡 2 短事件气泡
+	required int32 eventID = 3;
+}
+
+message S2CUserHomeBubbleFinishRetProto {
+	required uint32 errCodeID = 1;
+	required int32 maleRoleID = 2;
+	required int32 bubbleType = 3; // 1 主线气泡 2 短事件气泡
+	required int32 eventID = 4;
+	optional BaseItemsInfoProto rewards = 5; //
+}
+
+message S2CUserHomeBubbleChangeProto{
+	required int32 maleRoleID = 1;
+	required int32 bubbleType = 2; // 1 主线气泡 2 短事件气泡
+	required int32 eventID = 3;
+}
+
+message S2CUserHomeStoryBookChangeProto{
+	required int32 maleRoleID = 1;
+	required int32 bubbleType = 2; // 1 主线气泡 2 短事件气泡
+	required int32 eventID = 3;
+	required int64 curTime = 4;
+}
+
+message S2CUserHomeInteractionChangeProto{
+	required int32 maleRoleID = 1;
+	required int32 interactionID = 2;
+}
+
+message S2CUserHomeNpcInteractionChangeProto{
+	required int32 maleRoleID = 1;
+	required int32 interactionID = 2;
+}
+
+message C2SUserFHGiftRewardSubmitProto {
+	required int32 maleRoleId = 1;
+}
+
+message S2CUserFHGiftRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	required int32 maleRoleId = 2;
+	repeated BaseItemInfoProto rwds = 3;
+	required int64 lastGiftRwdSubmitTm = 4;
+	required int64 lastGiftCalcTm = 5;
+}
+
+message C2SUserFHBriefInfoProto {
+}
+
+message S2CUserFHBriefInfoRetProto {
+	required uint32 errCodeID = 1;
+	required int64 lastGiftRwdSubmitTm = 2;
+	required int64 lastGiftCalcTm = 3;
+	optional UserFHAchvInfoProto fhAchvInfo = 4;
+	optional UserFHDailyQuestInfoProto fhDailyQuestsInfo = 5;
+}
+
+message C2SUserFHAchvSubmitProto {
+	required int32 achvID = 1;
+}
+
+message S2CUserFHAchvSubmitRetProto {
+	required uint32 errCodeID = 1;
+	required int32 achvID = 2;
+}
+
+message C2SUserFHDailyQuestSubmitProto {
+	required int32 questID = 1;
+}
+
+message S2CUserFHDailyQuestSubmitRetProto {
+	required uint32 errCodeID = 1;
+	required int32 questID = 2;
+}
+
+message C2SUserFHDailyQuestBonusSubmitProto {
+}
+
+message S2CUserFHDailyQuestBonusSubmitRetProto {
+	required uint32 errCodeID = 1;
+}
+
+message S2CUserFHAchvChangeProto {
+	optional BaseQuestInfo info = 1;
+	required int32 maleRoleId = 2;
+}
+
+message S2CUserFHDailyQuestChangeProto {
+	optional BaseQuestInfo info = 1;
+}
+
+message S2CUserActivityBingoQuestChangeProto {
+	required int32 activityId = 1;
+	optional BaseQuestInfo info = 2;
+}
+
+message FHQuestInfo {
+	required int32 maleRoleId = 1; // 非男主成就任务时值为0
+	required BaseQuestInfo info = 2;
+}
+
+message C2SUserFHQuestCountingProto { 
+	repeated FHQuestInfo infos = 1;
+}
+
+message S2CUserFHQuestCountingRetProto {
+	required uint32 errCodeID = 1;
+	repeated FHQuestInfo infos = 2;
+}
+
+// 小屋送礼请求
+message C2SUserFHGivePresentProto {
+	required int32 maleRoleID = 1;
+	required int32 presentID = 2;
+	required int32 presentCnt = 3;
+}
+
+// 小屋送礼响应
+message S2CUserFHGivePresentRetProto {
+	required uint32 errCodeID = 1;
+	optional int32 maleRoleID = 2;
+	optional int32 relateLevel = 3; 	// 亲密度等级
+	optional int32 relateValue = 4; 	// 亲密度数值
+	optional int32 emotLevel = 5;		// 心情等级
+	optional int32 emotValue = 6;		// 心情值
+	optional int64 emotLastRefreshTm = 7;	// 心情上次刷新时间
+	optional int64 cdFinTm = 8;			// 倒计时结束时间
+}
+
+
+// 小屋家具交互请求
+message C2SUserFHUnitExploreSubmitProto {
+	required int32 eventID = 1;			//探索事件ID
+}
+
+// 小屋家具交互响应
+message S2CUserFHUnitExploreSubmitRetProto {
+	required uint32 errCodeID = 1;				
+	repeated UserFHUnitExploreEventProto updEvents = 2; // 有更新的事件列表
+	required int32 behaveID = 3;						// 反馈内容
+	repeated BaseItemInfoProto items = 4; 				// 获得道具
+}
+
+// 小屋家具交互事件更新通知
+message S2CUserFHUnitExploreEventChangeProto {
+	repeated UserFHUnitExploreEventProto updEvents = 1;
+}
+
+// 小屋礼物图鉴更新通知
+message S2CUserFHPresentGalaryChangeProto {
+	repeated int32 galaryGoodsIDs = 1; //图鉴已解锁道具ID
+}
+
+// 小屋男主心情变化通知
+message S2CUserFHMaleEmotChangeProto {
+	required int32 emotLevel = 1;		// 心情等级
+	required int32 emotValue = 2;		// 心情值
+	required int64 cdFinTm = 3;			// 倒计时结束时间
+	required int32 maleRoleID = 4;		// 男主ID
+	optional int64 emotLastRefreshTm = 5;	// 心情上次刷新时间
+}
+
+// 小屋家具交互请求
+message C2SUserFHMaleInteraSubmitProto {
+	required int32 maleID = 1;			//男主ID
+	optional int32 interactionID = 2;   //交互id
+}
+
+// 小屋双人交互响应
+message S2CUserFHMaleInteraSubmitRetProto {
+	required uint32 errCodeID = 1;
+}
+
+//H5bingo活动基本结构
+message BaseH5GroupActivityUserConsumeInfoProto {
+	required int32 jewelConsumeCnt = 1;
+	optional int32 goldConsumeCnt = 2;
+}
+
+message BaseH5GroupActivityFirmInfoProto {
+	required int32 voucherSubmitCnt = 1;
+}
+
+message BaseH5GroupActivityTaskInfoProto {
+	repeated BasePairValueProto taskPassInfos = 1;
+	repeated BasePairValueProto maleRoleLoopTaskCnt = 2;
+}
+// H5每日活动基本结构
+message BaseH5GroupActivityUserDailyConsumeInfoProto {
+	required int32 jewelConsumeCnt = 1;
+	optional int32 goldConsumeCnt = 2;
+}
+
+message BaseH5GroupActivitiesInfoProto {
+	required int32 activityID = 1;
+	required int32 activityWeight = 2;
+	required int64 activityStartTime = 3;
+	required int64 activityEndTime = 4;
+	required string activityTitle = 5;
+	required bool activityRedDot = 6;
+	required bool activitySwitch = 7;
+	required int32 activityRecommend = 8;
+}
+
+message C2SUserH5WebviewRequestProto {
+}
+
+message S2CUserH5WebviewRequestProto {
+	required uint32 errCodeID = 1;
+	required string parameters = 2;
+}
+
+// 主线满星宝箱
+message C2SUserChapterBoxFinishProto {
+	required int32 boxID = 1;
+}
+
+message S2CUserChapterBoxFinishRetProto {
+	required uint32 errCodeID = 1;
+	required int32 boxID = 2;
+	repeated BaseItemInfoProto boxRewards = 3;
+}
+
+message UserChapterBoxInfoProto {
+	repeated int32 ReceivedBoxIds = 1;
+}
+
+message S2CUserPushPackActivitiesInfoNotify {
+	repeated PushPackActivitesInfoProto pushPacks = 1;
+}
+
+// 系统活跃时间
+message C2SUserSystemActiveTimeProto {
+	required int32 systemType = 1;			// 系统类型
+	required int32 activeTime = 2;			// 活跃时间，秒
+}
+
+// 系统活跃时间
+message S2CUserSystemActiveTimeRetProto {
+	required uint32 errCodeID = 1;
+}
+
+
+
+// 自动使用课程卡
+message C2SUserFirmPropAutoStudyStartProto {
+
+}
+message S2CUserFirmPropAutoStudyStartRetProto {
+	required uint32 errCodeID = 1;
+	optional int64 autoStudyStartTime = 2;
+	optional int64 curTime = 3;
+}
+
+message C2SUserFirmPropAutoStudyFinishProto {
+	
+}
+message S2CUserFirmPropAutoStudyFinishRetProto {
+	required uint32 errCodeID  = 1;
+	optional int64 autoStudyStartTime = 2;
+	optional int64 curTime = 3;
+	optional bool hasStorageExp = 4;
+	optional int64 voucherArrangeStartTime = 5;
+	repeated BasePairValueProto voucherArrangeInfos = 6;
+}
+
+message C2SUserFirmPropAutoStudySubmitProto {
+	
+}
+message S2CUserFirmPropAutoStudySubmitRetProto {
+	required uint32 errCodeID = 1;
+	optional int64 curTime = 2;
+	repeated BasePairValueProto autoStudyVoucherUsed = 3;
+}
+
+// 领取亲密度奖励请求
+message C2SUserFHRelateRewardSubmitProto {
+	required int32 maleRoleID = 1;			// 男主角色id
+	required int32 relateLevel = 2;		// 亲密度等级
+}
+
+// 领取亲密度奖励响应
+message S2CUserFHRelateRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	required int32 maleRoleID = 2;			// 男主角色id
+	required int32 relateLevel = 3;		// 亲密度等级
+}
+
+
+// 小屋新手引导奖励
+message C2SUserHomeGuideBonusSubmitProto{
+}
+
+
+message S2CUserHomeGuideBonusSubmitRetProto {
+	required uint32 errCodeID = 1;
+	repeated BaseItemInfoProto rewards = 2;
+}
+
+// 小屋家具收菜
+
+message HomeRandRewardUnitsInfoProto {
+	required int32 maleRoleId = 1;
+	repeated int32 unitIds = 2;
+}
+
+message S2CUserHomeRandRewardUnitsNotify {
+	repeated HomeRandRewardUnitsInfoProto infos = 1;
+}
+
+// 小屋家具随机奖励领取
+
+message C2SUserHomeRandRewardUnitSubmitProto {
+	required int32 maleRoleId = 1;
+	required int32 unitId = 2;
+}
+
+message S2CUserHomeRandRewardUnitSubmitRetProto {
+	required uint32 errCodeID = 1;
+	required int32 maleRoleId = 2;
+	required int32 unitId = 3;
+	repeated BaseItemInfoProto rewards = 4;
+}
+
+
+// 领取累计活跃度奖励
+message C2SUserActivityLivenessAddupSubmitProto {
+	required int32 activityID = 1;
+	required int32 rewardIdx = 2;
+}
+
+// 领取累计活跃度奖励Ret
+message S2CUserActivityLivenessAddupSubmittRetProto {
+	required uint32 errCodeID = 1;
+	required int32 rewardIdx = 2;
+}
+
+
+// 解锁天赋树请求
+message C2SUserCardTalentUnlockProto {
+	required int32 cardID = 1;			// 卡牌id
+	required int32 planIndex = 2;		// 方案索引ID
+}
+
+// 解锁天赋树响应
+message S2CUserCardTalentUnlockRetProto {
+	required uint32 errCodeID = 1;
+	required int32 cardID = 2;			// 卡牌id
+	required int32 planIndex = 3;		// 方案索引ID
+	optional bool frameUnlock = 4;
+	optional int32 talentStatus = 5;
+	repeated int32 addParams = 6;
+}
+
+
+// 领悟卡牌技能请求
+message C2SUserCardSkillLearnProto {
+	required int32 cardID = 1;			// 卡牌ID
+}
+
+// 领悟卡牌技能响应
+message S2CUserCardSkillLearnRetProto {
+	required uint32 errCodeID = 1;
+	required int32 cardID = 2;			// 卡牌ID
+	required int32 skillID = 3;			// 技能唯一id
+}
+
+
+// 保存卡牌技能请求
+message C2SUserCardSkillSaveProto {
+	required int32 cardID = 1;			// 卡牌ID
+	required bool isSave = 2;			// 是否取消，取消的情况下，清空领悟缓存
+}
+
+// 保存卡牌技能响应
+message S2CUserCardSkillSaveRetProto {
+	required uint32 errCodeID = 1;
+	required int32 cardID = 2;			// 卡牌ID
+	required bool isSave = 3;			
+}
+
+
+// 升级卡牌技能请求
+message C2SUserCardSkillUpgradeProto {
+	required int32 cardID = 1;			// 卡牌ID
+}
+
+// 升级卡牌技能响应
+message S2CUserCardSkillUpgradeRetProto {
+	required uint32 errCodeID = 1;
+	required int32 cardID = 2;			// 卡牌ID
+	required int32 skillID = 3;			// 升级后技能唯一id
+}
+
+
+// ***材料副本相关***
+// 开始材料副本
+message C2SUserMaterialTaskDoProto {
+	required int32 taskID = 1;
+}
+
+message S2CUserMaterialTaskDoRetProto {
+	required uint32 errCodeID = 1;
+	required int32 taskID = 2;
+	repeated int32 propSeq = 3;
+}
+
+// 离开材料副本
+message C2SUserMaterialTaskLeaveProto {
+	required int32 taskID = 1;
+	required int32 taskComplete = 2;
+	optional string programName = 3;
+	repeated BaseIntValuesProto eventAnswers = 4;
+	repeated int32 leaderCardIDs = 5;
+}
+
+message S2CUserMaterialTaskLeaveRetProto {
+	required uint32 errCodeID = 1;	
+	required int32 taskID = 2;
+	required int32 taskComplete = 3;
+	optional int32 rewardMultiTimes = 4;
+	repeated BaseItemInfoProto itemItemsInfo = 5;
+	repeated BaseItemInfoProto dropItemsInfo = 6;
+	repeated BaseItemInfoProto cardItemsInfo = 7;
+	optional int32 taskGrade = 8;
+	optional int32 taskScore = 9;
+	optional int32 taskScoreEx = 10;
+	repeated BattleCardsLog cardsLog = 11;
+}
+
+// 扫荡材料副本
+message C2SUserMaterialTaskSweepProto {
+	required int32 taskID = 1;
+	required int32 sweepNum = 2;
+}
+
+message S2CUserMaterialTaskSweepRetProto {
+	required uint32 errCodeID = 1;
+	required int32 taskID = 2;
+	required int32 sweepNum = 3;
+	optional int32 rewardMultiTimes = 4;
+	repeated UserTaskDropRetProto taskDropRetInfos = 5;
+}
+
+// 购买材料副本次数
+message C2SUserMaterialTaskBuyCntProto {
+	required int32 buyCnt = 1;
+}
+
+message S2CUserMaterialTaskBuyCntRetProto {
+	required uint32 errCodeID = 1;
+	required int32 buyCnt = 2;
+	optional int64 buyTime = 3;
+}
+
+// 领取材料副本奖励
+message C2SUserMaterialTaskRewardSubmitProto {
+	required int32 taskID = 1;
+}
+
+message S2CUserMaterialTaskRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	required int32 taskID = 2;
+}
+
+message C2SUserActivityMainQuestGetAwardProto {
+	required int32 awardId = 1;
+}
+
+message S2CUserActivityMainQuestGetAwardRetProto {
+	required uint32 errCodeID = 1;
+	required int32 awardId = 2;
+}
+
+// 看板系统
+message C2SUserBillboardMaleSelectProto {
+	repeated int32 maleID = 1;
+}
+
+message S2CUserBillboardMaleSelectRetProto {
+	required uint32 errCodeID = 1;
+	repeated int32 maleID = 2;
+}
+
+message C2SUserBillboardMaleStateProto {
+	required int32 maleID = 1;
+	required int32 maleStateID = 2;
+	required int32 responseID = 3; 
+	optional int32 remainSecond = 4; // 外出剩余时间（秒） 供校验
+}
+
+message S2CUserBillboardMaleStateRetProto {
+	required uint32 errCodeID = 1;
+	required int32 maleID = 2;
+	required int32 maleStateID = 3;
+	required int32 responseID = 4;
+	optional int32 remainSecond = 5; 
+}
+
+message C2SUserBillboardMaleResponseRewardSubmitProto {
+	required int32 maleID = 1;
+	required int32 responseID = 2; 
+}
+
+message S2SUserBillboardMaleResponseRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	required int32 maleID = 2;
+	required int32 responseID = 3; 
+	optional BaseItemsInfoProto rewardItems = 4; // 物品或好感度
+}
+
+message C2SUserBillboardPurchaseItemProto {
+	required int32 maleID = 1;
+	required int32 itemType = 2;
+	required int32 itemID = 3;
+}
+
+message S2CUserBillboardPurchaseItemRetProto { // 解锁换装和BGM都用这个
+	required uint32 errCodeID = 1;
+	required int32 maleID = 2;
+	required int32 itemType = 3;
+	required int32 itemID = 4;
+}
+
+message C2SUserBillboardDressupSubmitProto { 
+	required int32 maleID = 1;
+	repeated BaseItemInfoProto dressupItem = 2;
+}
+
+message S2CUserBillboardDressupSubmitRetProto {
+	required uint32 errCodeID = 1;
+	required int32 maleID = 2;
+	repeated BaseItemInfoProto dressupItem = 3; // 当前服装
+	optional int32 changeCostumeCnt = 4; // 今天换服装次数
+}
+
+message C2SUserBillboardMusicSubmitProto { 
+	required int32 maleID = 1;
+	required BaseItemInfoProto musicItem = 2;
+}
+
+message S2CUserBillboardMusicSubmitRetProto {
+	required uint32 errCodeID = 1;
+	required int32 maleID = 2;
+	required BaseItemInfoProto musicItem = 3; 
+}
+
+message C2SUserBillboardDateListReqProto {
+	required int32 maleID = 1;
+}
+
+message S2CUserBillboardDateListReqRetProto {
+	required uint32 errCodeID = 1;
+	required int32 maleID = 2;
+	repeated int32 dateList = 3;
+}
+
+message C2SUserBillboardDateEnterProto {
+	required int32 maleID = 1;
+	required int32 dateType = 2;
+	optional int32 dateID = 3; // 非普通约会时要发
+}
+
+message S2CUserBillboardDateEnterRetProto {
+	required uint32 errCodeID = 1;
+	required int32 maleID = 2;
+	required int32 dateType = 3;
+	optional int32 dateID = 4;
+	optional int32 moduleID = 5; // ?
+}
+
+message C2SUserBillboardDateMoveProto { 
+	required int32 maleID = 1;
+	required int32 dateID = 2;
+	required int32 sceneID = 3;
+	required int32 moduleID = 4; 
+}
+
+message S2CUserBillboardDateMoveRetProto {
+	required uint32 errCodeID = 1;
+	required int32 maleID = 2;
+	required int32 dateID = 3;
+	required int32 sceneID = 4;
+	required int32 moduleID = 5;
+	optional int32 nextModuleID = 6;
+}
+
+message C2SUserBillboardDateFinishProto {
+	required int32 maleID = 1;
+	required int32 dateID = 2;
+	required int32 moduleID = 3;
+}
+
+message S2CUserBillboardDateFinishRetProto {
+	required uint32 errCodeID = 1;
+	required int32 maleID = 2;
+	required int32 dateID = 3;
+	required int32 moduleID = 4;
+	optional BaseItemsInfoProto rewardItems = 5;
+}
+
+message C2SUserEnterBillboardProto {
+}
+
+message S2CUserEnterBillboardRetProto {
+	required uint32 errCodeID = 1;
+	optional UserBillboardInfo userBillboardInfo = 2;
+}
+
+message C2SUserBillboardLoginFavorProto {
+	required int32 maleID = 1;
+}
+
+message S2CUserBillboardLoginFavorRetProto {
+	required uint32 errCodeID = 1;
+	required int32 maleID = 2;
+	optional int32 getFavorNum = 3;
+}
+
+// 看板系统信息
+message UserBillboardInfo {
+	repeated int32 maleRoleSelected = 1;
+	required int64 lastEnterTime = 2;
+	required int64 lastUpdateTime = 3;
+	required int32 oneDayDateTicketCnt = 4;
+	required UserOneDayDateInfo currentOneDayDateInfo = 5;
+	repeated UserBillboardMRInfo billboardMaleRoleInfo = 6;
+	required bool shouldGetResponseReward = 7; // 无用字段
+	required int32 responseIDRewardNotGet = 8;
+}
+
+message UserOneDayDateInfo {
+	required int32 currDateMR = 1;
+	required int32 currDateID = 2;
+	required int32 currSceneID = 3;
+	required int32 currModuleID = 4;
+	repeated int32 currChoices = 5;
+	required int32 genModuleID = 6;
+}
+
+message UserBillboardMRInfo {
+	required int32 maleRoleID = 1;
+	required BaseItemInfoProto currMusic = 2;
+	required BBMRDressUpInfo currDressUpInfo = 3;
+	required int32 goOutRewardCnt = 4;
+	required int32 todayFavorExp = 5;
+	repeated int32 unlockedCostume = 6;
+	repeated int32 unlockedVoice = 7;
+	repeated int32 unlockedBackground = 8;
+	repeated int32 unlockedMusic = 9;
+	repeated int32 unlockedAccessory = 10;
+	repeated int32 finishedDate = 11; // 这里存的是结局的moduleID 客户端查表得到dateID
+	repeated TriggeredModuleInfo triggeredDateModules = 12;
+	repeated FinishedDateChoices finishedDateChoices = 13;
+}
+
+message TriggeredModuleInfo {
+	required int32 dateID = 1;
+	repeated int32 moduleID = 2;
+}
+
+message FinishedDateChoices{
+	required int32 dateID = 1; // 这里存的是结局的moduleID 客户端查表得到dateID 名字不改了
+	repeated int32 choiceModuleID = 2; // 该moduleID结局对应的玩家选择
+}
+message BBMRDressUpInfo {
+	required int32 todayChangeCostumeTime = 1;
+	repeated BaseItemInfoProto currentDressupItems = 2;
+}
+
+message S2CUserBBDateTicketChangeProto {
+	required int32 ticketNum = 1;
+	required int64 ticketRecoverTime = 2;
+}
+
+message S2CUserBillboardItemChangeProto {
+	repeated BaseItemInfoProto itemsInfo = 1; // 新增的物品
+}
+
+message S2CUserAchievementChangeProto {
+	repeated BaseQuestInfo achvInfo = 1;
+}
+
+message S2CUserDailyQuestChangeProto {
+	repeated BaseQuestInfo dailyInfo = 1;
+}
+
+message C2SUserExchangeGoodsProto {
+	required int32 storeID = 1;
+	required int32 exchangeGoodID = 2;
+	required int32 exchangeCnt = 3;
+}
+
+message S2CUserExchangeGoodsRetProto {
+	required uint32 errCodeID = 1;
+	required int32 storeID = 2;
+	required int32 exchangeGoodID = 3;
+	required int32 exchangeCnt = 4;
+}
+
+message C2SUserExchangeStoreRefreshProto {
+	required int32 storeID = 1;
+}
+
+message S2CUserExchangeStoreRefreshRetProto {
+	required uint32 errCodeID = 1;
+	required int32 storeID = 2;
+}
+
+
+message C2SUserActivityNewBirthDayMakePresentProto {
+	required int32 activityID = 1;
+	repeated int32 materials = 2;
+}
+
+message S2CUserActivityNewBirthDayMakePresentRetProto {
+	required uint32 errCodeID = 1;
+	repeated BaseItemInfoProto gauaranteeItemInfos = 2;
+	repeated BaseItemInfoProto rewardItemInfos = 3;
+	repeated BasePairValueProto fileUnlock = 4;
+}
+
+
+
+message C2SUserActivityNewBirthDaySendPresentProto {
+	required int32 activityID = 1;
+	repeated int32 itemID = 2;
+	repeated int32 itemNum = 3;
+}
+
+
+message S2CUserActivityNewBirthDaySendPresentRetProto {
+	required uint32 errCodeID = 1;
+	required int32 score = 2;
+	repeated int32 storyUnlock = 3;
+}
+
+message C2SUserActivityNewBirthDayFileSelectProto {
+	required int32 activityID = 1;
+	required int32 fileID = 2;
+	required int32 optionID = 3;
+}
+
+
+message S2CUserActivityNewBirthDayFileSelectRetProto {
+	required uint32 errCodeID = 1;
+}
+
+
+message C2SUserActivityNewBirthDayReadStoryProto {
+	required int32 activityID = 1;
+	required int32 storyID = 2;
+}
+
+
+message S2CUserActivityNewBirthDayReadStoryRetProto {
+	required uint32 errCodeID = 1;
+}
+
+message C2SUserActivityHomeLotterySubmitProto {
+	required int32 activityID = 1;
+	required int32 maleRoleID = 2;
+	required int32 lotteryCnt = 3;  // 现在cnt只能是1
+}
+
+message S2CUserActivityHomeLotterySubmitRetProto {
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 maleRoleID = 3;
+	optional BaseItemsInfoProto rewardItems = 4;
+}
+
+
+// 领取发布消息奖励
+message C2SUserActivityPublishRewardSubmitProto {
+	required int32 activityID = 1;
+	required int32 rewardID = 2;
+}
+
+message S2CUserActivityPublishRewardSubmitRetProto {
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 rewardID = 3;
+	optional BaseItemsInfoProto rewardItems = 4;
+}
+
+// 发布消息
+message C2SUserPublishZoneMsgSubmitProto {
+	required int32 msgType = 1;
+	optional int32 cardID = 2;
+	optional int32 activityID = 3;
+}
+
+message S2CUserPublishZoneMsgSubmitRetProto {
+	required uint32 errCodeID = 1;
+	optional BaseZoneMsgParamProto msg = 2;
+}
+
+// 拉取消息
+message C2SUserGetZoneMsgSubmitProto {
+	required int32 msgType = 1;
+}
+
+message S2CUserGetZoneMsgSubmitRetProto {
+	required uint32 errCodeID = 1;
+	required int32 msgType = 2;
+	repeated BaseZoneMsgParamProto msgs = 3;
+}
+
+
+// 大区消息广播通知
+message S2CUserPublishMsgNtfProto {
+	required int32 msgType = 1;
+	required string nickname = 2;
+	required int64 msgTime = 3;
+	optional int32 cardID = 4;
+}
+
+// 春节翻牌子
+message C2SUserActivitySpringFestivalPieceGainProto {
+	required int32 activityID = 1;
+	required int32 maleID = 2;
+	required int32 pieceIdx = 3;
+}
+
+message S2CUserActivitySpringFestivalPieceGainRetProto {
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 maleID = 3;
+	required int32 pieceIdx = 4;
+	required BaseItemsInfoProto rewards = 5;
+}
+
+message C2SUserActivitySpringFestivalPieceShareProto {
+	required int32 activityID = 1;
+	required int32 maleID = 2;
+}
+
+message S2CUserActivitySpringFestivalPieceShareRetProto {
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 maleID = 3;
+}
+
+message C2SUserActivitySpringFestivalPieceShareRewardProto {
+	required int32 activityID = 1;
+	required int32 maleID = 2;
+}
+
+message S2CUserActivitySpringFestivalPieceShareRewardRetProto {
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 maleID = 3;
+}
+
+message C2SUserActivitySpringFestivalPieceOpenRewardProto {
+	required int32 activityID = 1;
+	required int32 maleID = 2;
+}
+
+message S2CUserActivitySpringFestivalPieceOpenRewardProto {
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 maleID = 3;
+}
+
+// 一元翻倍
+message C2SUserActivityDoubleActivityRewardProto {
+	required int32 activityID = 1;
+}
+
+message S2CUserActivityDoubleActivityRewardRetProto {
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 currentState = 3;
+}
+
+message UserActivityDoubleActivityRefreshInfoProto {
+	required int32 activityID = 1;
+	required int64 lastRefreshTime = 2;
+	required BaseDoubleActivityInfoProto info = 3;
+}
+
+message S2CUserActivityDoubleActivityRefreshNotify {
+	repeated UserActivityDoubleActivityRefreshInfoProto infos = 1;
+}
+
+message C2SUserActivityDoubleActivityCumulationRewardProto {
+	required int32 activityID = 1;
+	required int32 day = 2;
+}
+
+message S2CUserActivityDoubleActivityCumulationRewardRetProto {
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+	required int32 day = 3;
+}
+
+message UserActivityDoubleActivityReturnPresentInfoProto {
+	required int32 activityID = 1;
+	required int32 currentState = 2;
+	required int32 cumulationCnt = 3;
+}
+
+message S2CUserActivityDoubleActivityReturnPresentNotify {
+	repeated UserActivityDoubleActivityReturnPresentInfoProto infos = 1;
+}
+
+message C2SUserYsdkGetBalanceProto{
+}
+
+message S2CUserYsdkGetBalanceRetProto{
+	required uint32 errCodeID = 1;
+	required int32 balance = 2;
+}
+
+message S2CUserClientHotfixNotify {
+	required int32 hotFixVal = 1;
+}
+
+// 获取个人空间数据
+message C2SUserSpaceQueryProto {
+}
+
+message S2CUserSpaceQueryRetProto {
+	required uint32 errCodeID = 1;
+	required UserSpaceInfoProto spaceInfo = 2;
+}
+
+// 更新个人空间签名
+message C2SUserSpaceDescUpdateProto {
+	required string desc = 1;
+}
+
+message S2CUserSpaceDescUpdateRetProto {
+	required uint32 errCodeID = 1;
+	optional string desc = 2;
+}
+
+// 更新个人空间展示卡牌
+message C2SUserSpaceShowCardUpdateProto {
+	required int32 cardPos = 1;
+	required int32 cardID = 2;
+}
+
+message S2CUserSpaceShowCardUpdateRetProto {
+	required uint32 errCodeID = 1;
+	optional int32 cardPos = 2;
+	optional int32 cardID = 3;
+}
+
+message C2SUserActivitySnowTaskMergeProto{
+	required int32 activityID = 1;
+}
+message S2CUserActivitySnowTaskMergeRetProto{
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+}
+
+message C2SUserActivitySnowTaskShareProto{
+	required int32 activityID = 1;
+}
+message S2CUserActivitySnowTaskShareRetProto{
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+}
+
+message C2SUserActivitySnowTaskWatchPVProto{
+	required int32 activityID = 1;
+}
+message S2CUserActivitySnowTaskWatchPVRetProto{
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+}
+
+message C2SUserActivitySnowTaskShareRewardProto{
+	required int32 activityID = 1;
+}
+message S2CUserActivitySnowTaskShareRewardRetProto{
+	required uint32 errCodeID = 1;
+	required int32 activityID = 2;
+}

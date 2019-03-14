@@ -5,6 +5,7 @@
 
 import sys
 import re
+import base64
 from panpbtool.conf import protolabel
 from string import strip
 
@@ -30,16 +31,16 @@ def fix_line_ending():
 fix_line_ending()
 
 def init(context):
-    fp = open("test.bin", 'rb')
+    fp = open("protocol/descriptor.txt", 'rb')
     plugin_require_bin = fp.read()
     fp.close()
 
-    fp = open("protomsg.go", "r")
+    fp = open("protocol/protomsg.go", "r")
     id_descript_data = fp.read()
     fp.close()
     
     code_gen_req = plugin_pb2.CodeGeneratorRequest()
-    code_gen_req.ParseFromString(plugin_require_bin)
+    code_gen_req.ParseFromString(base64.b64decode(plugin_require_bin))
     
     context.raw_data = code_gen_req
     context.id_descript_data = id_descript_data

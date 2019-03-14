@@ -84,4 +84,4 @@ def do_export(context):
 
         file_proto.close()
 
-        compileproto.compile_proto(context, proto_file_path, out_dir)
+        compileproto.compile_proto(proto_file_path, out_dir)
