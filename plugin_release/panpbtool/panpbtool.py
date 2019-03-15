@@ -4,6 +4,7 @@
 import os
 import core.writelua as writelua
 import core.writeproto as writeproto
+import core.readproto as readproto
 
 class Context:
     project = None
@@ -22,3 +23,12 @@ def write(path, project):
 
     writeproto.do_export(context)
     writelua.do_export(context)
+
+def read(path, rule):
+    context = Context()
+    context.write_path = path
+    context.project = None
+    context.adapter = None
+    context.rule = rule
+    readproto.do_read(context)
+    return context.project

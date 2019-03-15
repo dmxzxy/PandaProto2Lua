@@ -1,17 +1,9 @@
-#!/usr/bin/env python
-# -*- encoding:utf8 -*-
 
-import proto_config
 from panpbtool.data import middata
 from panpbtool.conf import prototype
 
-class ProtoFileInputAdapter:
-    context = None
-    def __init__(self, context):
-        self.context = context
-        proto_config.init(context)
-
-    def iterator_enums2(self, enums, belong):
+class baseadapter(object):
+    def iterator_enums(self, enums, belong):
         for enum_index in range(0, len(enums)):
             enum_desc = enums[enum_index]
             enum = belong.add_enum(
@@ -29,15 +21,16 @@ class ProtoFileInputAdapter:
                     location = enum.location + [2, enumvalue_index]
                 )
     
-    def iterator_messages2(self, messages, belong):
+    def iterator_messages(self, messages, belong):
+        rule = self.rule
         for message_index in range(0, len(messages)):
             message_desc = messages[message_index]
 
             message = None
-            if proto_config.is_protocol(self.context, message_desc):
+            if rule.is_protocol(message_desc):
                 message = belong.add_protocol(
-                    id = proto_config.get_protocol_id(self.context, message_desc),
-                    category = proto_config.get_protocol_category(self.context, message_desc),
+                    id = rule.get_protocol_id(message_desc),
+                    category = rule.get_protocol_category(message_desc),
                     name = message_desc.name,
                     fullname = belong.fullname + '.' + message_desc.name,
                     namespace = belong.fullname,
@@ -64,13 +57,17 @@ class ProtoFileInputAdapter:
                     number = field_desc.number,
                     location = message.location + [2, field_index]
                 )
-            self.iterator_enums2(message_desc.enum_type, message)
-            self.iterator_messages2(message_desc.nested_type, message)
+            self.iterator_enums(message_desc.enum_type, message)
+            self.iterator_messages(message_desc.nested_type, message)
 
+    def translate(self, context):
+        self.context = context
 
-    def translate(self):
-        raw_data = self.context.raw_data
-        namespace = proto_config.get_namespace(self.context)
+        rule = context.rule
+        self.rule = rule
+
+        raw_data = context.raw_data
+        namespace = rule.get_namespace()
 
         project = middata.Project()
         for proto_file in raw_data.proto_file:
@@ -86,12 +83,12 @@ class ProtoFileInputAdapter:
             module = project.get_module(fullname = proto_file.package)
             if module == None:
                 module = project.add_module(
-                    name = proto_config.get_module_name(self.context, proto_file),
+                    name = rule.get_module_name(proto_file),
                     fullname = proto_file.package,
                     namespace = namespace,
                     location = [str(proto_file.name)]
                 )
-            self.iterator_enums2(proto_file.enum_type, module)
-            self.iterator_messages2(proto_file.message_type, module)
+            self.iterator_enums(proto_file.enum_type, module)
+            self.iterator_messages(proto_file.message_type, module)
 
         return project
