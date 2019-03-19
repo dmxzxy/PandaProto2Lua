@@ -1,1 +1,0 @@
-%~dp0bin/protoc.exe -I=%~dp0/example --parse_out=%~dp0example --plugin=protoc-gen-parse=%~dp0/plugin/runparse.bat %~dp0/example/ExternalProto.proto
