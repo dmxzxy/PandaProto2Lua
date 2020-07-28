@@ -16,14 +16,14 @@ def write_comment(comment, indent=''):
 
 def write_enum(project, enum, indent=''):
     enum_str = ''
-    enum_str += write_comment(enum.comment, indent)
+    enum_str += write_comment(project.get_comment(enum.location), indent)
     enum_str += indent + 'enum '+ enum.name + ' {\n'
 
     values = enum.values
     for value in values:
         segIndent = indent + file_indent
         enum_str += segIndent+'%s = %d;' % (value.name, value.number)
-        enum_str += write_comment(value.comment, '      ')
+        enum_str += write_comment(project.get_comment(value.location), '      ')
 
     enum_str += indent+'};\n'
     return enum_str

@@ -91,24 +91,24 @@ def do_export(context):
             pb_name = protocol.name
             pb_fullname = protocol.fullname
             module_name = module.name
-            file_lua.write('            [%d] = { id = %d, module = "%s", name = "%s", fullname = "%s", type = %s, ref = %s,},\n'%( \
-                        int(protocol.id),int(protocol.id),module_name,pb_name,pb_fullname,'1','nil'))
+            file_lua.write('            [%d] = { id = %d, module = "%s", name = "%s", fullname = "%s", ref = %s,},\n'%( \
+                        int(protocol.id),int(protocol.id),module_name,pb_name,pb_fullname,'nil'))
         file_lua.write('        },\n')   
         file_lua.write('        responses = {\n')
         for protocol in responseProtos:
             pb_name = protocol.name
             pb_fullname = protocol.fullname
             module_name = module.name
-            file_lua.write('            [%d] = { id = %d, module = "%s", name = "%s", fullname = "%s", type = %s, ref = %s},\n'%( \
-                        int(protocol.id),int(protocol.id),module_name,pb_name,pb_fullname,'1','nil'))
+            file_lua.write('            [%d] = { id = %d, module = "%s", name = "%s", fullname = "%s", ref = %s},\n'%( \
+                        int(protocol.id),int(protocol.id),module_name,pb_name,pb_fullname,'nil'))
         file_lua.write('        },\n')   
         file_lua.write('        notifications = {\n')
         for protocol in notificationProtos:
             pb_name = protocol.name
             pb_fullname = protocol.fullname
             module_name = module.name
-            file_lua.write('            [%d] = { id = %d, module = "%s", name = "%s", fullname = "%s", type = %s, ref = %s},\n'%( \
-                        int(protocol.id),int(protocol.id),module_name,pb_name,pb_fullname,'1','nil'))
+            file_lua.write('            [%d] = { id = %d, module = "%s", name = "%s", fullname = "%s", ref = %s},\n'%( \
+                        int(protocol.id),int(protocol.id),module_name,pb_name,pb_fullname,'nil'))
         file_lua.write('        },\n')   
 
     file_lua.write('    },\n')   

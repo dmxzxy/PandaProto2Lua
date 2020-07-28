@@ -1,0 +1,23 @@
+syntax = "proto2";
+package protobuf;    
+
+enum TestEnum {
+    FIELD_1 = 1;
+}
+
+message TestHelloWorldInfo {
+    required int32 info_field1 = 1;
+}
+
+message C2STestHelloWorldProto {
+    required int32 field1 = 1;
+    required TestEnum field2 = 2;
+}
+
+message S2CTestHelloWorldRetProto {
+    required int32 field1 = 1;
+}
+
+message S2CTestHelloWorldNotify {
+    required int32 field1 = 1;
+}

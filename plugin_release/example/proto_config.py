@@ -13,10 +13,6 @@ class customrule(baserule):
     context = None
     def __init__(self, context):
         self.context = context
-        fp = open(context.write_path + "/protomsg.go", "r", encoding='UTF-8')
-        id_descript_data = fp.read()
-        fp.close()
-        context.id_descript_data = id_descript_data
 
     def get_namespace(self):
         context = self.context
@@ -52,32 +48,17 @@ class customrule(baserule):
 
     def get_protocol_id(self, message_desc):
         context = self.context
-        if not hasattr(context, "proto_ids"):
-            id_descript_data = context.id_descript_data
-            digi_str = re.findall(r'.*=.*', id_descript_data, re.MULTILINE)
-            proto_ids = {}
-            for _str in digi_str:
-                _comment = ''
-                _ret = re.findall(r'\/\/[^\n]*', _str, re.MULTILINE)
-                if len(_ret) > 0:
-                    _str = _str.replace(_ret[0], '')
-                    _comment = _ret[0]
-                _ret = re.findall(r'(.*)=(.*)', _str, re.MULTILINE)
-                if len(_ret[0]) > 1:
-                    _name = str.strip(_ret[0][0]).replace('_', '').lower()
-                    _id = str.strip(_ret[0][1])
-                    proto_ids[_name + 'proto'] = {
-                        'name': _name,
-                        'id': _id,
-                        'comment': _comment,
-                    }
-            context.proto_ids = proto_ids
 
-        message_name = message_desc.name.lower()
-        if message_name in context.proto_ids:
-            id = context.proto_ids[message_name]['id']
-            if id is not None:
-                return int(id)
+        message_name = message_desc.name
+        proto_ids = {
+            "C2STestHelloWorldProto" : 1000,
+            "S2CTestHelloWorldRetProto" : 1000,
+            "S2CTestHelloWorldNotify" : 1001,
+        }
+        if message_name in proto_ids:
+            _id = proto_ids[message_name]
+            if _id is not None:
+                return int(_id)
         else:
             print(message_name + " can not find id/n")
             return -1
