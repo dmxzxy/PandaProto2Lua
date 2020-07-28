@@ -11,18 +11,18 @@ file_indent = '    '
 
 def write_comment(comment, indent=''):
     if comment != None and len(comment) > 0:
-        return indent + '// ' + comment.encode('utf-8') + '\n'
+        return indent + '// ' + comment + '\n'
     return '\n'
 
 def write_enum(project, enum, indent=''):
     enum_str = ''
     enum_str += write_comment(enum.comment, indent)
-    enum_str += indent + 'enum '+ enum.name.encode('utf-8') + ' {\n'
+    enum_str += indent + 'enum '+ enum.name + ' {\n'
 
     values = enum.values
     for value in values:
         segIndent = indent + file_indent
-        enum_str += segIndent+'%s = %d;' % (value.name.encode('utf-8'), value.number)
+        enum_str += segIndent+'%s = %d;' % (value.name, value.number)
         enum_str += write_comment(value.comment, '      ')
 
     enum_str += indent+'};\n'
@@ -31,7 +31,7 @@ def write_enum(project, enum, indent=''):
 def write_message(project, message, indent=''):
     content = ''
     content += write_comment(project.get_comment(message.location), indent)
-    content += indent + 'message '+ message.name.encode('utf-8') + ' {\n'
+    content += indent + 'message '+ message.name + ' {\n'
 
     nested_enums = message.nested_enums
     for enum in nested_enums:
@@ -45,8 +45,8 @@ def write_message(project, message, indent=''):
     for field in fields:
         segIndent = indent + file_indent
         names = field.proto_type.name.split('.')
-        protocolName = names[len(names)-1].encode('utf-8')
-        content += segIndent + '%s %s %s = %d;' % (protolabel.get_name(field.label), protocolName, field.name.encode('utf-8'), field.number)
+        protocolName = names[len(names)-1]
+        content += segIndent + '%s %s %s = %d;' % (protolabel.get_name(field.label), protocolName, field.name, field.number)
         content += write_comment(project.get_comment(field.location), '      ')
 
     content += indent+'};\n'

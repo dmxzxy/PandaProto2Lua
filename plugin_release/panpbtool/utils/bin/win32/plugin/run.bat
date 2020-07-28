@@ -1,1 +1,1 @@
-@py -2 %~dp0makedesc
+@python %~dp0makedesc

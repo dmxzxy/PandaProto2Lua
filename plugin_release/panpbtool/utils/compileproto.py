@@ -2,7 +2,7 @@
 # -*- encoding:utf8 -*-
 import os
 import sys
-import utils
+from utils import utils
 import base64
 from panpbtool.conf import globalsetting
 import google.protobuf.compiler.plugin_pb2 as plugin_pb2

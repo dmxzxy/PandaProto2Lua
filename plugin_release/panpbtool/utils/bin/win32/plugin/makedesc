@@ -7,19 +7,12 @@ import os.path as path
 
 import google.protobuf.compiler.plugin_pb2 as plugin_pb2
 
-if sys.platform == "win32":
-    import msvcrt, os
-    msvcrt.setmode(sys.stdin.fileno(), os.O_BINARY)
-    msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
-
-# sys.stdout = open("descriptor.bin", 'wb')
-
 def main():
     code_generated = plugin_pb2.CodeGeneratorResponse()
     file_desc = code_generated.file.add()
     file_desc.name = 'descriptor.txt'
-    file_desc.content = base64.b64encode(sys.stdin.read())
-    sys.stdout.write(code_generated.SerializeToString())		
+    file_desc.content = base64.b64encode(sys.stdin.buffer.read())
+    sys.stdout.buffer.write(code_generated.SerializeToString())		
 
 if __name__ == "__main__":
     main()

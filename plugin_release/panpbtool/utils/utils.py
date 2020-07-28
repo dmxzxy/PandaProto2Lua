@@ -7,12 +7,12 @@ import traceback, sys
 import base64
 
 def cmd_call(cmd):
-    print 'Executing cmd:[%s]'%cmd
+    print('Executing cmd:[%s]'%cmd)
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,stderr=subprocess.PIPE)  
     (stdoutput,erroutput) = p.communicate()
     p.wait()
     rc = p.returncode
-    if rc <> 0:
+    if rc != 0:
         erroutput = erroutput.decode(sys.getfilesystemencoding())
         stdoutput = stdoutput.decode(sys.getfilesystemencoding())
         if erroutput == u'':

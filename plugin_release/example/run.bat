@@ -1,3 +1,3 @@
-py -2 export.py
+python export.py
 
 pause

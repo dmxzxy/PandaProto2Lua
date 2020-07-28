@@ -5,7 +5,6 @@
 
 import sys
 import re
-from string import strip
 
 from panpbtool.conf import protolabel
 from panpbtool.data.baserule import baserule
@@ -14,7 +13,7 @@ class customrule(baserule):
     context = None
     def __init__(self, context):
         self.context = context
-        fp = open(context.write_path + "/protomsg.go", "r")
+        fp = open(context.write_path + "/protomsg.go", "r", encoding='UTF-8')
         id_descript_data = fp.read()
         fp.close()
         context.id_descript_data = id_descript_data
@@ -65,8 +64,8 @@ class customrule(baserule):
                     _comment = _ret[0]
                 _ret = re.findall(r'(.*)=(.*)', _str, re.MULTILINE)
                 if len(_ret[0]) > 1:
-                    _name = strip(_ret[0][0]).replace('_', '').lower()
-                    _id = strip(_ret[0][1])
+                    _name = str.strip(_ret[0][0]).replace('_', '').lower()
+                    _id = str.strip(_ret[0][1])
                     proto_ids[_name + 'proto'] = {
                         'name': _name,
                         'id': _id,

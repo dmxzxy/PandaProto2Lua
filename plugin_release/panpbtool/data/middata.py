@@ -114,9 +114,9 @@ class Module(BaseData):
         return enum
     
     def add_protocol(self, **kw):
-        enum = Protocol(**kw)
-        self.protocols.append(enum)
-        return enum
+        proto = Protocol(**kw)
+        self.protocols.append(proto)
+        return proto
 
 # required string path
 # required string content

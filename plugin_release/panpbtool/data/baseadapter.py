@@ -18,6 +18,7 @@ class baseadapter(object):
                     name = enumvalue_desc.name, 
                     fullname = enum.fullname + '.' + enumvalue_desc.name,
                     namespace = enum.fullname,
+                    number = enumvalue_desc.number,
                     location = enum.location + [2, enumvalue_index]
                 )
     
